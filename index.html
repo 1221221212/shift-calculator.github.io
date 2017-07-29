@@ -3,7 +3,7 @@
 <head>
     <meta charset="utf-8">
     <meta name="viewport" content="width=device-width, initial-scale=1">
-    <title>Workaholic</title>
+    <title>実働時間カリキュレータ(改)</title>
     <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css" integrity="sha384-BVYiiSIFeK1dGmJRAkycuHAHRg32OmUcww7on3RYdg4Va+PmSTsz/K68vbdEjh4u" crossorigin="anonymous">
     <style>
         body{
@@ -17,7 +17,7 @@
 
 <body>
     <div class="container">
-        <h2>Workaholic v1.0</h2>
+        <h2>実働時間カリキュレータ v2.0</h2>
         <textarea id="shift_textarea" rows="7" class="form-control" placeholder="シフト表を全選択してコピー&ペースト..."></textarea><br>
         <div>
             <input class="btn btn-default" type="submit" value="Submit" id="shift_submit">
@@ -128,7 +128,7 @@ function extractData(){
 
     ///////////lineごとの処理///////////
     for (var line of lines) {
-        var dayMatch = line.match(/\d+\/\d+(?=\([月火水木金土日]\))/g); 
+        var dayMatch = line.match(/\d+\/\d+(?=\([月火水木金土日]\))/g);
         // Array<String> matches
         // ["8/14"] or null
         //console.log(dayMatch);
@@ -194,10 +194,10 @@ function buildTableContent() {
 
     var keys = Object.keys(theYggdrasil);
     keys.sort(function(a,b){
-        var _as = a.split("."); 
-        var _bs = b.split("."); 
-        if (parseInt(_as[0]) > parseInt(_bs[0])) return 1; 
-        if (parseInt(_as[0]) < parseInt(_bs[0])) return -1; 
+        var _as = a.split(".");
+        var _bs = b.split(".");
+        if (parseInt(_as[0]) > parseInt(_bs[0])) return 1;
+        if (parseInt(_as[0]) < parseInt(_bs[0])) return -1;
         if (parseInt(_as[1]) > parseInt(_bs[1])) return 1;
         if (parseInt(_as[1]) < parseInt(_bs[1])) return -1;
         if (parseInt(_as[2]) > parseInt(_bs[2])) return 1;
