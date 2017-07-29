@@ -209,7 +209,7 @@ function extractData(){
 
     ///////////lineごとの処理///////////
     for (var line of lines) {
-        var dayMatch = line.match(/\d+\/\d+(?=\([月火水木金土日]\))/g); 
+        var dayMatch = line.match(/\d+\/\d+(?=\([月火水木金土日]\))/g);
         // Array<String> matches
         // ["8/14"] or null
         //console.log(dayMatch);
@@ -283,10 +283,10 @@ function buildTableContent() {
 
     var keys = Object.keys(theYggdrasil);
     keys.sort(function(a,b){
-        var _as = a.split("."); 
-        var _bs = b.split("."); 
-        if (parseInt(_as[0]) > parseInt(_bs[0])) return 1; 
-        if (parseInt(_as[0]) < parseInt(_bs[0])) return -1; 
+        var _as = a.split(".");
+        var _bs = b.split(".");
+        if (parseInt(_as[0]) > parseInt(_bs[0])) return 1;
+        if (parseInt(_as[0]) < parseInt(_bs[0])) return -1;
         if (parseInt(_as[1]) > parseInt(_bs[1])) return 1;
         if (parseInt(_as[1]) < parseInt(_bs[1])) return -1;
         if (parseInt(_as[2]) > parseInt(_bs[2])) return 1;
@@ -447,7 +447,9 @@ function getRestMin(bondedMin) {
     var restMin = 0;
     if (isin(bondedMin, 270, 360)){ //4h30m - 6h
         restMin = 30;
-    } else if (isin(bondedMin, 360, 720)){ //6h - 12h
+    } else if (isin(bondedMin, 360, 420)){ //6h - 7h
+        restMin = 45;
+    } else if (isin(bondedMin, 420, 720)){ //7h - 12h
         restMin = 60;
     } else if (bondedMin >= 720){ //12h -
         restMin = 120;
