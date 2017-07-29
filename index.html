@@ -263,7 +263,9 @@ function getRestMin(bondedMin) {
     var restMin = 0;
     if (isin(bondedMin, 270, 360)){ //4h30m - 6h
         restMin = 30;
-    } else if (isin(bondedMin, 360, 720)){ //6h - 12h
+    } else if (isin(bondedMin, 360, 420)){ //6h - 6h45m
+        restMin = 45;
+    } else if (isin(bondedMin, 420, 720)){ //7h - 12h
         restMin = 60;
     } else if (bondedMin >= 720){ //12h -
         restMin = 120;
