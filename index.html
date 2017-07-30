@@ -57,12 +57,12 @@ you cannot:
         #shift_table div{
             margin: 3em 0;
             border: 1px solid #eeeeee;
-            border-left: 5px solid #018257;
+            border-left: 5px solid #1b809e;
             border-radius: 2px;
             padding: 20px
         }
         #shift_table div h4{
-            color :#018257;
+            color :#1b809e;
             font-weight: bold;
         }
         #shift_table div p{
@@ -77,6 +77,7 @@ you cannot:
             <div id="showTerm"></div>
         </div>
         <h2>Workaholic v1.0</h2>
+        <p>textareaにシフト表をコピペしてsubmit。submitしたときに、同時にデータをブラウザに保存します。</p>
         <textarea id="shift_textarea" rows="7" class="form-control" placeholder="シフト表を全選択してコピー&ペースト..."></textarea><br>
         <div>
             <input class="btn btn-default" type="submit" value="Submit" id="shift_submit">
@@ -91,6 +92,7 @@ you cannot:
         </div>
         <div class="json">
             <h4>バックアップ用</h4>
+            <p>下のtextareaには上のデータがjson形式で表示されます。これをどこかのファイルで保存・共有しておくと、ブラウザが変わったりデバイスが変わってもデータを引き継ぐことができます。</p>
             <textarea id="json_textarea" rows="7" class="form-control" placeholder="" onclick="this.focus();this.select()" readonly="readonly"></textarea>
 
             <div class="checkbox">
@@ -105,7 +107,7 @@ you cannot:
                 <input class="btn btn-default" type="submit" value="Submit" id="json_submit">
             </div>
         </div>
-        <a href="http://www.access-counter.net" target="_blank">&nbsp;&nbsp;<img src="http://www.access-counter.net/services/imagedigits/counter.php?aut=9a471b0ff7bd26910780ac9d067d410605120f62f62cf41b245c3ec0d2fb5dbdc91764fe06800784c07f76522b" alt="無料カウンター" border="0" /></a>
+        <p>powered by <a href="http://getbootstrap.com/">bootstrap</a></p>
     </div> <!-- /container -->
 
 </body>
@@ -230,7 +232,7 @@ function extractData(){
 
     ///////////lineごとの処理///////////
     for (var line of lines) {
-        var dayMatch = line.match(/\d+\/\d+(?=\([月火水木金土日]\))/g);
+        var dayMatch = line.match(/\d+\/\d+(?=\([月火水木金土日]\))/g); 
         // Array<String> matches
         // ["8/14"] or null
         //console.log(dayMatch);
@@ -303,10 +305,10 @@ function buildTableContent() {
     var keys = Object.keys(theYggdrasil);
     // 並び替え (2017.8.0と2016.9.1など...)
     keys.sort(function(a,b){
-        var _as = a.split(".");
-        var _bs = b.split(".");
-        if (parseInt(_as[0]) > parseInt(_bs[0])) return 1;
-        if (parseInt(_as[0]) < parseInt(_bs[0])) return -1;
+        var _as = a.split("."); 
+        var _bs = b.split("."); 
+        if (parseInt(_as[0]) > parseInt(_bs[0])) return 1; 
+        if (parseInt(_as[0]) < parseInt(_bs[0])) return -1; 
         if (parseInt(_as[1]) > parseInt(_bs[1])) return 1;
         if (parseInt(_as[1]) < parseInt(_bs[1])) return -1;
         if (parseInt(_as[2]) > parseInt(_bs[2])) return 1;
@@ -331,7 +333,7 @@ function buildTableContent() {
 
         /*
          * _WorkingTreeの構造は
-         *
+         * 
          * {
          *   - "modified" : "2017/7/30"
          *   - "2017/8/1" : [勤務時間Obj1, 勤務時間Obj2...]
@@ -352,7 +354,7 @@ function buildTableContent() {
 
                 var dateObj = new Date(keyDay); // Date("2017/8/1")
                 var _dtime = dateObj.getTime() - today.getTime(); // 今(ただしhtml読み込み時点の時間)との時間差ms
-                if (theNearestDate == null || (_dtime > 0 && _dtime < Math.abs(theNearestDate.getTime() - _nowms))){
+                if (theNearestDate == null || (_dtime > 0 && _dtime < Math.abs(theNearestDate.getTime() - today.getTime()))){
                     // 今より勤務日程があとで、より現時点との時間的距離が近い
                     theNearestDate = dateObj;
                     theNearestWorkTime = shifts;
@@ -533,8 +535,8 @@ function addYearToDay(theDay) {
     var theDate = parseInt(_day[1]);
 
     // 年明け前に正月のシフト考えるような年明けを挟むときの処理
-    year = thisYear;
-    if (thisMonth >= 10 && _theMonth <= 2){
+    year = today.getFullYear();
+    if (today.getMonth() >= 10 && _theMonth <= 2){
         year ++;
     }
 
