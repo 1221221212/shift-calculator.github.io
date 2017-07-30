@@ -460,7 +460,7 @@ function showTerm(keyTerm) {
                     alldayrest += getRestMin(bonded);
                 }
                 html += '<div class="block"><p><strong>{0}</strong></p><p>勤務時間: {1}</p><p>実働時間: {2}h</p></div>'
-                            .format(makeDateString(keyDay, '{0}/{1}/{2} ({3})'), makeWorktimeString(shifts), (bonded-rest)/60);
+                            .format(makeDateString(keyDay, '{0}/{1}/{2} ({3})'), makeWorktimeString(shifts), (alldaybonded-alldayrest)/60);
             }
         }
     }
