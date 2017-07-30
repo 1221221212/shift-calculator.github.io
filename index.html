@@ -58,12 +58,12 @@ you cannot:
         #shift_table div{
             margin: 3em 0;
             border: 1px solid #eeeeee;
-            border-left: 5px solid #1b809e;
+            border-left: 5px solid #004c36;
             border-radius: 2px;
             padding: 20px
         }
         #shift_table div h4{
-            color :#1b809e;
+            color :#004c36;
             font-weight: bold;
         }
         #shift_table div p{
@@ -78,7 +78,6 @@ you cannot:
             <div id="showTerm"></div>
         </div>
         <h2>Workaholic v1.0</h2>
-        <p>textareaにシフト表をコピペしてsubmit。submitしたときに、同時にデータをブラウザに保存します。</p>
         <textarea id="shift_textarea" rows="7" class="form-control" placeholder="シフト表を全選択してコピー&ペースト..."></textarea><br>
         <div>
             <input class="btn btn-default" type="submit" value="Submit" id="shift_submit">
@@ -93,7 +92,6 @@ you cannot:
         </div>
         <div class="json">
             <h4>バックアップ用</h4>
-            <p>下のtextareaには上のデータがjson形式で表示されます。これをどこかのファイルで保存・共有しておくと、ブラウザが変わったりデバイスが変わってもデータを引き継ぐことができます。</p>
             <textarea id="json_textarea" rows="7" class="form-control" placeholder="" onclick="this.focus();this.select()" readonly="readonly"></textarea>
 
             <div class="checkbox">
@@ -108,7 +106,7 @@ you cannot:
                 <input class="btn btn-default" type="submit" value="Submit" id="json_submit">
             </div>
         </div>
-        <p>powered by <a href="http://getbootstrap.com/">bootstrap</a></p>
+        <a href="http://www.access-counter.net" target="_blank"><img src="http://www.access-counter.net/services/imagedigits/counter.php?aut=9e434e00f8eb71c550d9ab9a077c110004465e31fc2da1187c0e64c180ab0db7c9176ffc0e900f8d8d7a761e65dd" alt="無料カウンター" border="0" /></a>
     </div> <!-- /container -->
 
 </body>
@@ -124,7 +122,7 @@ you cannot:
 theYggdrasil = {}; // 全部のデータを格納するobj
 /*
  * theYggdrasil(全部のデータを格納するobj)の構造は
- * 
+ *
  * {
  *   - "2017.8.0" : 8月上半期の勤務obj
  *   - "2017.8.1" : 8月下半期の勤務obj
@@ -241,7 +239,7 @@ function extractData(){
 
     ///////////lineごとの処理///////////
     for (var line of lines) {
-        var dayMatch = line.match(/\d+\/\d+(?=\([月火水木金土日]\))/g); 
+        var dayMatch = line.match(/\d+\/\d+(?=\([月火水木金土日]\))/g);
         // Array<String> matches
         // ["8/14"] or null
 
@@ -316,10 +314,10 @@ function buildTableContent() {
     var keys = Object.keys(theYggdrasil);
     // 並び替え (2017.8.0と2016.9.1など...)
     keys.sort(function(a,b){
-        var _as = a.split("."); 
-        var _bs = b.split("."); 
-        if (parseInt(_as[0]) > parseInt(_bs[0])) return 1; 
-        if (parseInt(_as[0]) < parseInt(_bs[0])) return -1; 
+        var _as = a.split(".");
+        var _bs = b.split(".");
+        if (parseInt(_as[0]) > parseInt(_bs[0])) return 1;
+        if (parseInt(_as[0]) < parseInt(_bs[0])) return -1;
         if (parseInt(_as[1]) > parseInt(_bs[1])) return 1;
         if (parseInt(_as[1]) < parseInt(_bs[1])) return -1;
         if (parseInt(_as[2]) > parseInt(_bs[2])) return 1;
@@ -344,7 +342,7 @@ function buildTableContent() {
 
         /*
          * _WorkingTree(半期の勤務obj)の構造は
-         * 
+         *
          * {
          *   - "modified" : "2017/7/30"
          *   - "2017/8/1" : [勤務時間Obj1, 勤務時間Obj2...]
@@ -466,7 +464,7 @@ function showTerm(keyTerm) {
     //日付ごとに処理
     /*
      * _WorkingTreeの構造は、8月上半期なら
-     * 
+     *
      * {
      *   - "modified" : "2017/7/30"
      *   - "2017/8/1" : [勤務時間Obj1, 勤務時間Obj2...]
