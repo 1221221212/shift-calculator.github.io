@@ -125,7 +125,7 @@ you cannot:
         <!--insert table here...-->
         <div id="shift_table" style="margin: 3em 0;"></div>
         <div id="addWorktime">
-            <button class="btn btn-primary" type="submit" id="add_submit" style="background-color:#01917b">勤務時間を手動追加</button>
+            <button class="btn btn-primary" type="submit" id="add_submit" style="color:#01917b">勤務時間を手動追加</button>
         </div>
         <div class="checkbox">
             <label>
@@ -794,7 +794,7 @@ function initAddWorktime(){
 
     var html = '<h3>勤務時間の追加</h3><div class="input-group a">{0}<div class="input-group-addon">年</div>{1}<div class="input-group-addon">月</div>{2}<div class="input-group-addon">日</div></div>'.format(year_sel, month_sel, date_sel);
     html += hhmmformformat.format(asel, aselz, afsel, afselz);
-    html += '<button class="btn btn-primary" type="submit" onclick="addWorktime()" style="background-color:#01917b">Add</button> <button class="btn btn-default" type="submit" onclick="initAddWorktime()">Reset</button>';
+    html += '<button class="btn btn-primary" type="submit" onclick="addWorktime()" style="color:#01917b">Add</button> <button class="btn btn-default" type="submit" onclick="initAddWorktime()">Reset</button>';
 
     $("#addWorktime").innerHTML = html;
 }
