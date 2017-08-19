@@ -143,6 +143,24 @@ you cannot:
                 勤務時間の削除時に警告を表示しない
             </label>
         </div>
+        <div class="json">
+            <h4>バックアップ用</h4>
+            <p>下のtextareaには上のデータがjson形式で表示されます。これをどこかのファイルで保存・共有しておくと、ブラウザが変わったりデバイスが変わってもデータを引き継ぐことができます。</p>
+            <textarea id="json_textarea" rows="7" class="form-control" placeholder="" onclick="this.focus();this.select()" readonly="readonly"></textarea>
+
+            <div class="checkbox">
+                <label>
+                    <input type="checkbox" value="" id="json_checkbox">
+                    JSONを整理して表示
+                </label>
+            </div>
+            <br>
+            <textarea id="json_input_textarea" rows="3" class="form-control" placeholder="データが消えたとき用、バックアップのjsonから読み込み..."></textarea><br>
+            <div style="margin-bottom: 6em">
+                <button class="btn btn-default" type="submit" id="json_submit">Submit</button>
+            </div>
+        </div>
+
 <font size="1">
 免責事項<br>
 当サイトは、細心の注意を払って運営しておりますが、この情報の正確性および完全性を保証するものではありません。<br>
