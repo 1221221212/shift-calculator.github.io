@@ -1,7 +1,7 @@
 <!DOCTYPE html>
 <html>
 <!--
-special thanks for yudai takegawa
+made by Yudai Takegawa & Naoki Iwasa
 (c) 2017 all rights reserved
 
 you can:
@@ -12,7 +12,7 @@ you cannot:
 -->
 <head>
     <meta charset="utf-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <meta name="viewport" content="width=device-width, initial-scale=1, user-scalable=no">
     <title>Workaholic</title>
     <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css" integrity="sha384-BVYiiSIFeK1dGmJRAkycuHAHRg32OmUcww7on3RYdg4Va+PmSTsz/K68vbdEjh4u" crossorigin="anonymous">
     <style>
@@ -76,7 +76,7 @@ you cannot:
             background-color: #eeeeee;
         }
         #shift_table div{
-            margin: 3em 0;
+            margin: 3em 0 1em;
             border: 1px solid #eeeeee;
             border-left: 5px solid #01917b;
             border-radius: 2px;
@@ -89,12 +89,15 @@ you cannot:
         #shift_table div p{
             font-size: 2em;
         }
+        #shift_table .h4{
+            margin-bottom: 3em;
+        }
         #success, #error {
             margin-top: 1em;
             padding: 1em;
         }
         #addWorktime{
-            margin-bottom: 4em;
+            margin-bottom: 3em;
         }
         #addWorktime .input-group{
             max-width: 300px;
@@ -105,16 +108,16 @@ you cannot:
             max-width: 370px !important;
         }
     </style>
-<script>
-  (function(i,s,o,g,r,a,m){i['GoogleAnalyticsObject']=r;i[r]=i[r]||function(){
-  (i[r].q=i[r].q||[]).push(arguments)},i[r].l=1*new Date();a=s.createElement(o),
-  m=s.getElementsByTagName(o)[0];a.async=1;a.src=g;m.parentNode.insertBefore(a,m)
-  })(window,document,'script','https://www.google-analytics.com/analytics.js','ga');
+    <script>
+      (function(i,s,o,g,r,a,m){i['GoogleAnalyticsObject']=r;i[r]=i[r]||function(){
+      (i[r].q=i[r].q||[]).push(arguments)},i[r].l=1*new Date();a=s.createElement(o),
+      m=s.getElementsByTagName(o)[0];a.async=1;a.src=g;m.parentNode.insertBefore(a,m)
+      })(window,document,'script','https://www.google-analytics.com/analytics.js','ga');
 
-  ga('create', 'UA-105309611-1', 'auto');
-  ga('send', 'pageview');
+      ga('create', 'UA-105309611-1', 'auto');
+      ga('send', 'pageview');
 
-</script>
+    </script>
 </head>
 
 <body>
@@ -125,11 +128,7 @@ you cannot:
         <div id="editBack">
             <div id="editWorktime"></div>
         </div>
-        <h2>Workaholic v1.3.3</h2>
-       <Div Align="right">
-         <a href="https://twitter.com/intent/tweet?screen_name=n12212212121" class="twitter-mention-button" data-related="n12212212121">Tweet to @n12212212121</a>
-　　　　　<script>!function(d,s,id){var js,fjs=d.getElementsByTagName(s)[0],p=/^http:/.test(d.location)?'http':'https';if(!d.getElementById(id)){js=d.createElement(s);js.id=id;js.src=p+'://platform.twitter.com/widgets.js';fjs.parentNode.insertBefore(js,fjs);}}(document, 'script', 'twitter-wjs');</script>
-　　　　</Div>
+        <h2>Workaholic v1.4.0</h2>
         <textarea id="shift_textarea" rows="7" class="form-control" placeholder="シフト表を全選択してコピー&ペースト..."></textarea><br>
         <div>
             <button class="btn btn-default" type="submit" id="shift_submit">勤務時間を追加/上書き</button>
@@ -141,18 +140,75 @@ you cannot:
         <div id="addWorktime">
             <button class="btn btn-primary" type="submit" id="add_submit" style="background-color:#01917b;border-color:#01917b">勤務時間を手動追加</button>
         </div>
-        <div class="checkbox">
-            <label>
-                <input type="checkbox" value="" id="delete_checkbox">
-                表のコラムの削除時に警告を表示しない
-            </label>
+
+        <div style="margin-bottom: 5em;margin-top: 3em;">
+            <div class="checkbox">
+                <label>
+                    <input type="checkbox" value="" id="delete_checkbox">
+                    表のコラムの削除時に警告を表示しない
+                </label>
+            </div>
+            <div class="checkbox">
+                <label>
+                    <input type="checkbox" value="" id="delete_day_checkbox">
+                    勤務時間の削除時に警告を表示しない
+                </label>
+            </div>
+            <div class="checkbox">
+                <label>
+                    <input type="checkbox" value="" id="reset_checkbox" checked>
+                    追加後リセット
+                </label>
+            </div>
+
+            <br><br>
+
+        <div>
+          <h4>出勤経路検索</h4>
+          <input type="text" id="ytfrom" size="10" placeholder="例: 郡山">を出発して
+          勤務時間の<input type="text" id="yttime" size="1" placeholder="例: 30">分前に
+          <input type="text" id="ytto" size="10" placeholder="例: 桜島" value="桜島">に、
+          到着する経路を
+          <p class="checkbox" style="display: inline"><button id="saveTransit" style="display: inline">検索して経路を保存</button></p><br>
+          <div class="checkbox">
+                <strong>交通手段</strong>
+                <label>
+                    <input type="checkbox" value="" id="al_checkbox">
+                    空路
+                </label>
+                <label>
+                    <input type="checkbox" value="" id="shin_checkbox">
+                    新幹線
+                </label>
+                <label>
+                    <input type="checkbox" value="" id="ex_checkbox">
+                    有料特急
+                </label>
+                <label>
+                    <input type="checkbox" value="" id="hb_checkbox">
+                    高速バス
+                </label>
+                <label>
+                    <input type="checkbox" value="" id="lb_checkbox" checked="">
+                    路線/連絡バス
+                </label>
+                <label>
+                    <input type="checkbox" value="" id="sr_checkbox">
+                    フェリー
+                </label>
+            </div>
+            <strong>表示順序</strong>
+            <select id="display_sel">
+                <option selected="">到着が早い順</option>
+                <option>乗り換え回数順</option>
+                <option>料金が安い順</option>
+            </select><br>
+            <strong>経由地</strong>
+            <input type="text" id="ytvia" size="10" placeholder="例: 天王寺"><small style="color: #777">(経由は任意、コンマ','で区切って3つまで複数追加)</small>
+            <p class="checkbox">経路のURLを使用して、経路を限定する <input type="text" size="60" placeholder="URLを貼り付け..." id="yturl"></p>
+          </div>
         </div>
-        <div class="checkbox" style="margin-bottom: 5em;">
-            <label>
-                <input type="checkbox" value="" id="delete_day_checkbox">
-                勤務時間の削除時に警告を表示しない
-            </label>
-        </div>
+
         <div class="json">
             <h4>バックアップ用</h4>
             <form>
@@ -176,6 +232,7 @@ you cannot:
                 <button class="btn btn-default" type="submit" id="json_submit">Submit</button>
             </div>
           </div>
+          </div>
 
           <script>
           function hyoji1(num)
@@ -191,8 +248,7 @@ you cannot:
           }
 
           </script>
-
-
+          <div>
           <font size="1">
             免責事項<br>
             当サイトは、細心の注意を払って運営しておりますが、この情報の正確性および完全性を保証するものではありません。<br>
@@ -201,12 +257,14 @@ you cannot:
             当方は、利用者が当サイトに含まれる情報もしくは内容をご利用されたことで直接・間接的に生じた損失に関し一切責任を負うものではありません。<br>
           </font>
           <br>
-          <a href="http://www.access-counter.net" target="_blank"><img src="http://www.access-counter.net/services/imagedigits/counter.php?aut=9e434e00f8eb71c550d9ab9a077c110004465e31fc2da1187c0e64c180ab0db7c9176ffc0e900f8d8d7a761e65dd" alt="無料カウンター" border="0" /></a>
-          　<br><br>
+          <a href="https://twitter.com/intent/tweet?screen_name=n12212212121" class="twitter-mention-button" data-related="n12212212121">Tweet to @n12212212121</a>
+          <script>!function(d,s,id){var js,fjs=d.getElementsByTagName(s)[0],p=/^http:/.test(d.location)?'http':'https';if(!d.getElementById(id)){js=d.createElement(s);js.id=id;js.src=p+'://platform.twitter.com/widgets.js';fjs.parentNode.insertBefore(js,fjs);}}(document, 'script', 'twitter-wjs'); </script>
+          <br>
           <span style="opacity: 0.6;">
-            Copyright &copy; 2017 Naoki Iwasa All Rights Reserved.<br>last updated at 2017.8.28
+            Copyright &copy; 2017 Naoki Iwasa and Yudai Takegawa All Rights Reserved.<br>last updated at 2017.9.3
           </span>
-　　　　</div> <!-- /container -->
+        </div>
+      </div> <!-- /container -->
 </body>
 <script type="text/javascript">
 
@@ -218,7 +276,6 @@ var hhmmformformat = '<div class="input-group"><div class="input-group-addon">�
  *  - json_checkbox         :  チェックボックスがcheckedであるなら1
  *  - delete_checkbox       :  同上
  *  - delete_day_checkbox   :  同上
- *  - bookmarked            :  ブックマークした日付
  */
 
 theYggdrasil = {};
@@ -240,21 +297,23 @@ showingTerm = false;
 showingEdit = false;
 
 // 実行日のdate obj。
-// 年月日だけわかればいいのでHTMLが読まれる段階で作成。
+// 年月日だけわかればいい
 today = new Date();
-
+today = new Date(today.getFullYear(), today.getMonth(), today.getDate());
 /*
  * チェックボックスの初期化とイベントハンドラ登録。
  */
 function initCheckboxAttr() {
-    var checkboxIds = ["json_checkbox", "delete_checkbox", "delete_day_checkbox"];
+    var checkboxIds = ["json_checkbox", "delete_checkbox", "delete_day_checkbox", "reset_checkbox", "al_checkbox", "shin_checkbox", "ex_checkbox", "hb_checkbox", "lb_checkbox", "sr_checkbox"];
     for (var boxId of checkboxIds){
         var node = $("#" + boxId);
         var item = localStorage.getItem(boxId);
-        if (item === "1"){
-            node.checked = true;
-        } else {
-            node.checked = false;
+        if (item != null){
+            if (item === "1"){
+                node.checked = true;
+            } else {
+                node.checked = false;
+            }
         }
         // register onchange event handler
         // チェックボックスの値が変化するたびに、チェックボックスをチェックしてデータをlocalStorageに格納。
@@ -265,11 +324,34 @@ function initCheckboxAttr() {
     }
 }
 
+function initTextboxAttr(){
+    var ids = ["yttime", "ytfrom", "ytto", "ytvia", "yturl"];
+    for (var boxId of ids){
+        var node = $("#" + boxId);
+        var item = localStorage.getItem(boxId);
+        if (item != null && item != ""){
+            node.value = item;
+        }
+    }
+    var item2 = localStorage.getItem("display_sel");
+    if (item != null && item != ""){
+        $("#display_sel").selectedIndex = parseInt(item2);
+    }
+    $("#saveTransit").onclick = function(e){
+        for (var boxId of ids){
+            localStorage.setItem(boxId, $("#" + boxId).value)
+        }
+        localStorage.setItem("display_sel", $("#display_sel").selectedIndex);
+        buildTableContent();
+    }
+}
+
 /*
  * bodyが読み込まれたときに発火する関数。
  */
 function bodyLoadEvent() {
     initCheckboxAttr();
+    initTextboxAttr();
 
     $('#termBack').onclick = function(e){
         if (showingTerm){
@@ -324,13 +406,16 @@ function bodyLoadEvent() {
 function pushWorktime(shifts, sh, sm, fh, fm){
     var start = {"hour": sh, "min": sm};
     var finish = {"hour": fh, "min": fm};
+    var _obj = {"start": start, "finish": finish};
+    var count = 0;
     var _shifts = [];
     var merged = false;
+
     for (var shift of shifts){
-        if (timeEquals(shift["finish"], start)){
-             _shifts.push({"start": shift["start"], "finish": finish})
+        if (!merged && timeEquals(shift["finish"], start)){
+            _shifts.push({"start": shift["start"], "finish": finish})
             merged = true;
-        } else if (timeEquals(shift["start"], finish)){
+        } else if (!merged && timeEquals(shift["start"], finish)){
             _shifts.push({"start": start, "finish": shift["finish"]})
             merged = true;
         } else {
@@ -340,7 +425,30 @@ function pushWorktime(shifts, sh, sm, fh, fm){
     if (!merged){
         _shifts.push({"start": start, "finish": finish})
     }
+    _shifts.sort(function(a,b){
+        var a_h = a["start"]["hour"];
+        var a_m = a["start"]["min"];
+        var b_h = b["start"]["hour"];
+        var b_m = b["start"]["min"];
+        if (a_h > b_h) return 1;
+        if (a_h < b_h) return -1;
+        if (a_m > b_m) return 1;
+        if (a_m < b_m) return -1;
+        return 0;
+    });
     return _shifts;
+}
+
+function larger(time1, time2){
+    if (time1["hour"] > time2["hour"]){
+        return time1;
+    } else if (time1["hour"] < time2["hour"]){
+        return time2;
+    } else if (time1["min"] > time2["min"]){
+        return time1;
+    } else {
+        return time2;
+    }
 }
 
 /*
@@ -400,7 +508,15 @@ function extractData(){
 
         if (timeMatch != null){
             //この行が11:30-20:15とか書いてある行
-            theWorktime = pushWorktime(theWorktime, parseInt(timeMatch[1]), parseInt(timeMatch[2]), parseInt(timeMatch[3]), parseInt(timeMatch[4]));
+            var sh = parseInt(timeMatch[1]);
+            var sm = parseInt(timeMatch[2]);
+            var fh = parseInt(timeMatch[3]);
+            var fm = parseInt(timeMatch[4]);
+
+            if (fh < sh || (fh === sh && fm < sm)){
+                fh += 24;
+            }
+            theWorktime = pushWorktime(theWorktime, sh, sm, fh, fm);
         }
     }
     ///////////end: lineごとの処理///////////
@@ -443,6 +559,11 @@ function saveData() {
 function buildTableContent() {
     var theNearestDate = null; // 次の勤務dayのdateobj
     var theNearestWorkTime = []; //次の勤務デイの勤務時間Array
+
+    var theSecNearestDate = null; // 次の勤務dayのdateobj
+    var theSecNearestWorkTime = []; //次の勤務デイの勤務時間Array
+
+    var nowMs = Date.now();
 
     var keys = Object.keys(theYggdrasil);
     // 並び替え (2017.8.0と2016.9.1など...)
@@ -500,11 +621,22 @@ function buildTableContent() {
                 var shifts = _WorkingTree[keyDay]; // Array<Object> [勤務時間Obj1, 勤務時間Obj2...]
 
                 var dateObj = new Date(keyDay); // Date("2017/8/1")
-                var _dtime = dateObj.getTime() - today.getTime(); // 今(ただしhtml読み込み時点の時間)との時間差ms
-                if (_dtime > 0 && (theNearestDate == null || _dtime < Math.abs(theNearestDate.getTime() - today.getTime()))){
-                    // 今より勤務日程があとで、より現時点との時間的距離が近い。比較対象がない(=null)ならもうそれを採用だ。
-                    theNearestDate = dateObj;
-                    theNearestWorkTime = shifts;
+                dateObj.setHours(shifts[shifts.length-1]["start"]["hour"]);
+                dateObj.setMinutes(shifts[shifts.length-1]["start"]["min"]);
+                var _dtime = dateObj.getTime() - nowMs; // 現在との時間差ms
+                if (_dtime >= 0){
+                    if (theNearestDate == null){
+                        theNearestDate = dateObj;
+                        theNearestWorkTime = shifts;
+                    } else {
+                        if (_dtime < Math.abs(theNearestDate.getTime() - nowMs)){
+                            theNearestDate = dateObj;
+                            theNearestWorkTime = shifts;
+                        } else if (theSecNearestDate == null || _dtime < Math.abs(theSecNearestDate.getTime() - nowMs)){
+                            theSecNearestDate = dateObj;
+                            theSecNearestWorkTime = shifts;
+                        }
+                    }
                 }
 
                 for (var shift of shifts){
@@ -519,10 +651,79 @@ function buildTableContent() {
     }
 
     tableHtml += '</table>'
+
+    var nextWorkHtml = '';
     if (theNearestDate != null) {
-        tableHtml = '<div><h4>次の出勤日:</h4><p>{0} {1}</p></div>'.format(makeDateString(theNearestDate, '{1}/{2} ({3})'), makeWorktimeString(theNearestWorkTime)) + tableHtml;
+        var style = theSecNearestDate == null ? ' style="margin-bottom:3em"': '';
+        var transit = makeYahooTransitURL(theNearestDate);
+        var transithtml = '';
+        if (transit != ''){
+            transithtml = '<a href="{0}" target="_new">Yahoo 路線で出勤経路を検索</a>'.format(transit);
+        }
+        nextWorkHtml += '<div{0}><h4>次の出勤日:</h4><p>{1} {2}</p>{3}</div>'.format(style, makeDateString(theNearestDate, '{1}/{2} ({3})'), makeWorktimeString(theNearestWorkTime), transithtml);
     }
+    if (theSecNearestDate != null) {
+        var transit = makeYahooTransitURL(theSecNearestDate);
+        var transithtml = '';
+        if (transit != ''){
+            transithtml = '<small><a href="{0}" target="_new">Yahoo 路線で出勤経路を検索</a></small>'.format(transit);
+        }
+        nextWorkHtml += '<h4 class="h4">その次: {0} {1} {2}</h4>'.format(makeDateString(theSecNearestDate, '{1}/{2} ({3})'), makeWorktimeString(theSecNearestWorkTime), transithtml);
+    }
+
+    tableHtml = nextWorkHtml + tableHtml;
+
     $("#shift_table").innerHTML = tableHtml;
+}
+
+function makeYahooTransitURL(date){
+    var timeinput = parseInt($("#yttime").value);
+    if (isNaN(timeinput))　return '';
+    var frominput = encodeURI($("#ytfrom").value);
+    if (frominput === '') return '';
+    var toinput = encodeURI($("#ytto").value);
+    if (toinput === '') return '';
+    var date = new Date(date.getTime() - timeinput * 60 * 1000)
+    var u = 'https://transit.yahoo.co.jp/search/result';
+    u += '?flatlon=';
+    u += '&from=' + encodeURI($("#ytfrom").value);
+    u += '&tlatlon=';
+    u += '&to=' + encodeURI($("#ytto").value);
+    var viainputs = $("#ytvia").value.split(",")
+    if (viainputs.length >= 1) u += '&via=' + encodeURI(viainputs[0]);
+    if (viainputs.length === 2) u += '&via=' + encodeURI(viainputs[1]);
+    if (viainputs.length === 3) u += '&via=' + encodeURI(viainputs[2]);
+    u += '&y=' + date.getFullYear();
+    var suff = date.getMonth() < 9 ? '0' : '';
+    u += '&m=' + suff + (date.getMonth() + 1);
+    var suff2 = date.getDate() < 10 ? '0' : '';
+    u += '&d=' + suff2 + date.getDate();
+    u += '&hh=' + date.getHours();
+    var minutes = date.getMinutes() + '';
+    u += '&m2=' + minutes.charAt(1);
+    u += '&m1=' + minutes.charAt(0);
+    u += '&type=4'; // 到着時刻設定
+    u += '&ticket=ic';
+    if ($("#al_checkbox").checked) u += '&al=1';
+    if ($("#shin_checkbox").checked) u += '&shin=1';
+    if ($("#ex_checkbox").checked) u += '&ex=1';
+    if ($("vhb_checkbox").checked) u += '&hb=1';
+    if ($("#lb_checkbox").checked) u += '&lb=1';
+    if ($("#sr_checkbox").checked) u += '&sr=1';
+    var sigma = [0, 2, 1];
+    u += '&s=' + sigma[$("#display_sel").selectedIndex];
+    u += '&expkind=1';
+    u += '&ws=1';
+    u += '&kw=';
+    var match_from = $("#yturl").value.match(/from=([%A-Z1-9]+)/);
+    var match_to = $("#yturl").value.match(/to=([%A-Z1-9]+)/);
+    if (match_from != null && match_to != null && match_from[1] === frominput && match_to[1] === toinput){
+        var match_mtf = $("#yturl").value.match(/mtf=(\d+)/);
+        if (match_mtf != null){
+            u += '&mtf=' + match_mtf[1];
+        }
+    }
+    return u;
 }
 
 /*
@@ -673,7 +874,7 @@ function edit(keyDay, keyTerm){
         var hfsel = '<select class="form-control" id="hfsel">';
         hasel = '<select class="form-control" id="hasel">';
         hafsel = '<select class="form-control" id="hafsel">';
-        for (var i = 0; i < 24; i++){
+        for (var i = 0; i < 31; i++){
             var str = '<option>{0}</option>'.format(i);
             var strSel = '<option selected>{0}</option>'.format(i);
             if (shift["start"]["hour"] === i){
@@ -751,9 +952,16 @@ function addWorktime(){
     var fh = $("#afsel").selectedIndex;
     var fm = 15 * $("#afselz").selectedIndex;
 
+    var wtobj = {"start":{"hour":sh,"min":sm},"finish":{"hour":fh,"min":fm}};
+
     var _postfix = date <= 15 ? '0' : '1';
     var keyTerm = '{0}.{1}.{2}'.format(year, month, _postfix);
     var keyDay = '{0}/{1}/{2}'.format(year, month, date);
+
+    if (!canAdd(keyTerm, keyDay, wtobj)){
+        printError('勤務時間が不正確または競合 ({0} {1})'.format(keyDay, makeWorktimeString([wtobj])));
+        return;
+    }
 
     var shiftStr = '';
     if (theYggdrasil.hasOwnProperty(keyTerm)){
@@ -774,7 +982,10 @@ function addWorktime(){
     var shiftStr2 = makeWorktimeString(theYggdrasil[keyTerm][keyDay]);
 
     printSuccess('勤務時間を追加しました。 {0}: {1} -> {2}'.format(keyDay, shiftStr, shiftStr2));
-    //initAddWorktime();
+
+    if ($("#reset_checkbox").checked){
+        initAddWorktime();
+    }
 }
 
 function initAddWorktime(){
@@ -810,7 +1021,7 @@ function initAddWorktime(){
 
     var asel = '<select class="form-control" id="asel">';
     var afsel = '<select class="form-control" id="afsel">';
-    for (var i = 0; i < 24; i++){
+    for (var i = 0; i < 31; i++){
         if (i === 12){
             asel += '<option selected>{0}</option>'.format(i);
             afsel += '<option selected>{0}</option>'.format(i);
@@ -852,11 +1063,57 @@ function monthday(year, month){
     return lastday[month];
 }
 
+function isLargerThan(time1, time2){
+    return time1["hour"] > time2["hour"] || (time1["hour"] === time2["hour"] && time1["min"] > time2["min"]);
+}
+
+function isLargerOrEqualTo(time1, time2){
+    return isLargerThan(time1, time2) || timeEquals(time1, time2);
+}
+
+function compatible(wt1, wt2){
+    if (timeEquals(wt1["start"], wt2["start"]) || timeEquals(wt1["finish"], wt2["finish"])){
+        return false;
+    } else if (isLargerThan(wt1["start"], wt2["start"])){
+        return isLargerOrEqualTo(wt1["start"], wt2["finish"]);
+    } else {
+        return isLargerOrEqualTo(wt2["start"], wt1["finish"]);
+    }
+}
+
+function canAdd(keyTerm, keyDay, wtobj){
+    return canSave(keyTerm, keyDay, wtobj, -1);
+}
+
+function canSave(keyTerm, keyDay, wtobj, exclude){
+    if (timeEquals(wtobj["start"], wtobj["finish"])){
+        return false;
+    }
+    if (!theYggdrasil.hasOwnProperty(keyTerm) || !theYggdrasil[keyTerm].hasOwnProperty(keyDay)){
+        return true;
+    }
+    var ar = theYggdrasil[keyTerm][keyDay];
+    for (var i = 0; i < ar.length; i++){
+        if (i === exclude) continue;
+        if (!compatible(ar[i], wtobj)){
+            return false;
+        }
+    }
+    return true;
+}
+
 function addEdit(keyDay, keyTerm){
     var sh = $("#hasel").selectedIndex;
     var sm = 15 * $("#masel").selectedIndex;
     var fh = $("#hafsel").selectedIndex;
     var fm = 15 * $("#mafsel").selectedIndex;
+
+    var wtobj = {"start":{"hour":sh,"min":sm},"finish":{"hour":fh,"min":fm}};
+
+    if (!canAdd(keyTerm, keyDay, wtobj)){
+        printError('勤務時間が不正確または競合 ({0} {1})'.format(keyDay, makeWorktimeString([wtobj])));
+        return;
+    }
 
     var shiftStr = makeWorktimeString(theYggdrasil[keyTerm][keyDay]);
 
@@ -896,6 +1153,13 @@ function saveEdit(keyDay, keyTerm, x){
         var fh = $("#hfsel").selectedIndex;
         var fm = 15 * $("#mfsel").selectedIndex;
 
+        var wtobj = {"start":{"hour":sh,"min":sm},"finish":{"hour":fh,"min":fm}};
+
+        if (!canSave(keyTerm, keyDay, wtobj, x)){
+            printError('勤務時間が不正確または競合 ({0} {1})'.format(keyDay, makeWorktimeString([wtobj])));
+            return;
+        }
+
         var shiftStr = makeWorktimeString([theYggdrasil[keyTerm][keyDay][x]]);
 
         var newArray = [];
@@ -911,6 +1175,8 @@ function saveEdit(keyDay, keyTerm, x){
         $("#showTerm").innerHTML = '';
         saveData();
         showTerm(keyTerm);
+        sm = sm == 0 ? '00' : sm + '';
+        fm = fm == 0 ? '00' : fm + '';
         printSuccess('変更内容を保存しました。 {0}: {1} -> {2}'.format(keyDay, shiftStr, '{0}:{1}-{2}:{3}'.format(sh, sm, fh, fm)));
     }
 }
@@ -1017,10 +1283,6 @@ function getBondedMinute(worktimeObj){
     var startM = _st["min"];
     var finishH = _fn["hour"];
     var finishM = _fn["min"];
-
-    if (finishH < startH || (finishH == startH && finishM < startM)){
-        finishH += 24;
-    }
 
     return (finishH - startH) * 60 + (finishM - startM);
 }
