@@ -128,7 +128,7 @@ you cannot:
         <div id="editBack">
             <div id="editWorktime"></div>
         </div>
-        <h2>Workaholic v1.4.0</h2>
+        <h2>Workaholic v1.4.1</h2>
         <textarea id="shift_textarea" rows="7" class="form-control" placeholder="シフト表を全選択してコピー&ペースト..."></textarea><br>
         <div>
             <button class="btn btn-default" type="submit" id="shift_submit">勤務時間を追加/上書き</button>
@@ -162,54 +162,83 @@ you cannot:
             </div>
 
             <br><br>
+            <div>
+            <table class="table">
+              <h4>通勤経路設定</h4>
+                <tr>
+                    <th>発着地設定</th>
+                    <td>
+                        <div class="form-inline">
+                            勤務時間の
+                            <input type="text" id="yttime" placeholder="例: 30" class="form-control" size="2">分前に
+                            <input type="text" id="ytfrom" placeholder="例: 郡山" class="form-control" size="10">から
+                            <input type="text" id="ytto" placeholder="例: 桜島" value="桜島" class="form-control" size="10">に
+                            <input type="text" id="ytvia" placeholder="例: 天王寺" class="form-control" size="10">経由で<small style="color: #777">(経由は任意、コンマ','で区切って3つまで複数追加)</small>
+                            到着
+                            <br>
+                            <span style="opacity: 0.6;">ヒント! 思っている駅と違う駅が出る場合は、県名や路線名を入れてください。 </span>
+                        </div>
+                    </td>
+                </tr>
+                <tr>
+                    <th>交通手段</th>
+                    <td>
+                        <div class="checkbox">
+                            <label>
+                                <input type="checkbox" value="" id="al_checkbox">
+                                空路
+                            </label>
+                            <label>
+                                <input type="checkbox" value="" id="shin_checkbox">
+                                新幹線
+                            </label>
+                            <label>
+                                <input type="checkbox" value="" id="ex_checkbox">
+                                有料特急
+                            </label>
+                            <label>
+                                <input type="checkbox" value="" id="hb_checkbox">
+                                高速バス
+                            </label>
+                            <label>
+                                <input type="checkbox" value="" id="lb_checkbox" checked="">
+                                路線/連絡バス
+                            </label>
+                            <label>
+                                <input type="checkbox" value="" id="sr_checkbox">
+                                フェリー
+                            </label>
+                        </div>
+                    </td>
+                </tr>
+                <tr>
+                    <th>表示順序</th>
+                    <td>
+                        <div class="form-inline">
+                            <select id="display_sel" class="form-control" style="max-width:12em;">
+                                <option selected="">到着が早い順</option>
+                                <option>乗り換え回数順</option>
+                                <option>料金が安い順</option>
+                            </select>
+                        </div>
+                    </td>
+                </tr>
+                <tr>
+                    <th>経路URL</th>
+                    <td>
+                        <div class="form-inline">経路のURLを使用して、経路を限定する <input type="text" placeholder="URLを貼り付け..." id="yturl" class="form-control" size="45"></div>
+                    </td>
+                </tr>
+                <tr>
+                    <td>
+                        <button id="saveTransit" type="button" class="btn btn-primary" style="background-color:#01917b;border-color:#01917b">経路を保存</button>
+                    </td>
+                    <td></td>
+                </tr>
+            </table>
 
-        <div>
-          <h4>出勤経路検索</h4>
-          <input type="text" id="ytfrom" size="10" placeholder="例: 郡山">を出発して
-          勤務時間の<input type="text" id="yttime" size="1" placeholder="例: 30">分前に
-          <input type="text" id="ytto" size="10" placeholder="例: 桜島" value="桜島">に
-          到着する経路を
-          <p class="checkbox" style="display: inline"><button id="saveTransit" style="display: inline">検索して保存</button></p><br>
-          <div class="checkbox">
-                <strong>交通手段</strong>
-                <label>
-                    <input type="checkbox" value="" id="al_checkbox">
-                    空路
-                </label>
-                <label>
-                    <input type="checkbox" value="" id="shin_checkbox">
-                    新幹線
-                </label>
-                <label>
-                    <input type="checkbox" value="" id="ex_checkbox">
-                    有料特急
-                </label>
-                <label>
-                    <input type="checkbox" value="" id="hb_checkbox">
-                    高速バス
-                </label>
-                <label>
-                    <input type="checkbox" value="" id="lb_checkbox" checked="">
-                    路線/連絡バス
-                </label>
-                <label>
-                    <input type="checkbox" value="" id="sr_checkbox">
-                    フェリー
-                </label>
-            </div>
-            <strong>表示順序</strong>
-            <select id="display_sel">
-                <option selected="">到着が早い順</option>
-                <option>乗り換え回数順</option>
-                <option>料金が安い順</option>
-            </select><br>
-            <strong>経由地</strong>
-            <input type="text" id="ytvia" size="10" placeholder="例: 天王寺"><small style="color: #777">(経由は任意、コンマ','で区切って3つまで複数追加)</small>
-            <p class="checkbox">経路のURLを使用して、経路を限定する <input type="text" size="60" placeholder="URLを貼り付け..." id="yturl"></p>
-          </div>
-        </div>
 
-        <div class="json">
+            <div class="json">
             <h4>バックアップ用</h4>
             <form>
               <input type="button" value="表示" onclick="hyoji1(0)">
@@ -261,7 +290,7 @@ you cannot:
           <script>!function(d,s,id){var js,fjs=d.getElementsByTagName(s)[0],p=/^http:/.test(d.location)?'http':'https';if(!d.getElementById(id)){js=d.createElement(s);js.id=id;js.src=p+'://platform.twitter.com/widgets.js';fjs.parentNode.insertBefore(js,fjs);}}(document, 'script', 'twitter-wjs'); </script>
           <br>
           <span style="opacity: 0.6;">
-            Copyright &copy; 2017 Naoki Iwasa and Yudai Takegawa All Rights Reserved.<br>last updated at 2017.9.3
+            Copyright &copy; 2017 Naoki Iwasa and Yudai Takegawa All Rights Reserved.<br>last updated at 2017.9.4
           </span>
         </div>
       </div> <!-- /container -->
