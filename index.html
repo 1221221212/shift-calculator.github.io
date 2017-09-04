@@ -264,19 +264,6 @@ you cannot:
 
               </div>
         </div>
-        <script>
-        function hyoji1(num)
-        {
-          if (num == 0)
-          {
-            document.getElementById("disp").style.display="block";
-          }
-          else
-          {
-            document.getElementById("disp").style.display="none";
-          }
-        }
-        </script>
         <font size="1">
           免責事項<br>
           当サイトは、細心の注意を払って運営しておりますが、この情報の正確性および完全性を保証するものではありません。<br>
@@ -1347,6 +1334,20 @@ function $(elemId) {
     } else {
         return document.getElementsByTagName(elemId);
     }
+}
+
+/*
+ *バックアップの表示非表示の切り替え
+ */
+function hyoji1(num){
+  if (num == 0)
+  {
+    document.getElementById("disp").style.display="block";
+  }
+  else
+  {
+    document.getElementById("disp").style.display="none";
+  }
 }
 
 /*
