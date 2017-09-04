@@ -128,7 +128,7 @@ you cannot:
         <div id="editBack">
             <div id="editWorktime"></div>
         </div>
-        <h2>Workaholic v1.4.1</h2>
+        <h2>Workaholic v1.4.2</h2>
         <textarea id="shift_textarea" rows="7" class="form-control" placeholder="シフト表を全選択してコピー&ペースト..."></textarea><br>
         <div>
             <button class="btn btn-default" type="submit" id="shift_submit">勤務時間を追加/上書き</button>
@@ -140,164 +140,160 @@ you cannot:
         <div id="addWorktime">
             <button class="btn btn-primary" type="submit" id="add_submit" style="background-color:#01917b;border-color:#01917b">勤務時間を手動追加</button>
         </div>
-
         <div style="margin-bottom: 5em;margin-top: 3em;">
-            <div class="checkbox">
-                <label>
-                    <input type="checkbox" value="" id="delete_checkbox">
-                    表のコラムの削除時に警告を表示しない
-                </label>
-            </div>
-            <div class="checkbox">
-                <label>
-                    <input type="checkbox" value="" id="delete_day_checkbox">
-                    勤務時間の削除時に警告を表示しない
-                </label>
-            </div>
-            <div class="checkbox">
-                <label>
-                    <input type="checkbox" value="" id="reset_checkbox" checked>
-                    追加後リセット
-                </label>
-            </div>
-
-            <br><br>
-            <div>
-            <table class="table">
-              <h4>通勤経路設定</h4>
-                <tr>
-                    <th>発着地設定</th>
-                    <td>
-                        <div class="form-inline">
-                            勤務時間の
-                            <input type="text" id="yttime" placeholder="例: 30" class="form-control" size="2">分前に
-                            <input type="text" id="ytfrom" placeholder="例: 郡山" class="form-control" size="10">から
-                            <input type="text" id="ytto" placeholder="例: 桜島" value="桜島" class="form-control" size="10">に
-                            <input type="text" id="ytvia" placeholder="例: 天王寺" class="form-control" size="10">経由で<small style="color: #777">(経由は任意、コンマ','で区切って3つまで複数追加)</small>
-                            到着
-                            <br>
-                            <span style="opacity: 0.6;">ヒント! 思っている駅と違う駅が出る場合は、県名や路線名を入れてください。 </span>
-                        </div>
-                    </td>
-                </tr>
-                <tr>
-                    <th>交通手段</th>
-                    <td>
-                        <div class="checkbox">
-                            <label>
-                                <input type="checkbox" value="" id="al_checkbox">
-                                空路
-                            </label>
-                            <label>
-                                <input type="checkbox" value="" id="shin_checkbox">
-                                新幹線
-                            </label>
-                            <label>
-                                <input type="checkbox" value="" id="ex_checkbox">
-                                有料特急
-                            </label>
-                            <label>
-                                <input type="checkbox" value="" id="hb_checkbox">
-                                高速バス
-                            </label>
-                            <label>
-                                <input type="checkbox" value="" id="lb_checkbox" checked="">
-                                路線/連絡バス
-                            </label>
-                            <label>
-                                <input type="checkbox" value="" id="sr_checkbox">
-                                フェリー
-                            </label>
-                        </div>
-                    </td>
-                </tr>
-                <tr>
-                    <th>表示順序</th>
-                    <td>
-                        <div class="form-inline">
-                            <select id="display_sel" class="form-control" style="max-width:12em;">
-                                <option selected="">到着が早い順</option>
-                                <option>乗り換え回数順</option>
-                                <option>料金が安い順</option>
-                            </select>
-                        </div>
-                    </td>
-                </tr>
-                <tr>
-                    <th>経路URL</th>
-                    <td>
-                        <div class="form-inline">経路のURLを使用して、経路を限定する <input type="text" placeholder="URLを貼り付け..." id="yturl" class="form-control" size="45"></div>
-                        <br>
-                        <span style="opacity: 0.6;">ヒント! 経路のURLはYahoo!乗り換えサイトのルート共有にあります。</span>
-
-                    </td>
-                </tr>
-                <tr>
-                    <td>
-                        <button id="saveTransit" type="button" class="btn btn-primary" style="background-color:#01917b;border-color:#01917b">経路を保存</button>
-                    </td>
-                    <td></td>
-                </tr>
-            </table>
-
-
-            <div class="json">
-            <h4>バックアップ用</h4>
-            <form>
-              <input type="button" value="表示" onclick="hyoji1(0)">
-              <input type="button" value="非表示" onclick="hyoji1(1)">
-            </form>
-            <br>
-            <div id="disp" style="display:none">
-            <p>下のtextareaには上のデータがjson形式で表示されます。これをどこかのファイルで保存・共有しておくと、ブラウザが変わったりデバイスが変わってもデータを引き継ぐことができます。</p>
-            <textarea id="json_textarea" rows="7" class="form-control" placeholder="" onclick="this.focus();this.select()" readonly="readonly"></textarea>
-
-            <div class="checkbox">
-                <label>
-                    <input type="checkbox" value="" id="json_checkbox">
-                    JSONを整理して表示
-                </label>
-            </div>
-            <br>
-            <textarea id="json_input_textarea" rows="3" class="form-control" placeholder="データが消えたとき用、バックアップのjsonから読み込み..."></textarea><br>
-            <div style="margin-bottom: 6em">
-                <button class="btn btn-default" type="submit" id="json_submit">Submit</button>
-            </div>
+          <div class="checkbox">
+              <label>
+                  <input type="checkbox" value="" id="delete_checkbox">
+                  表のコラムの削除時に警告を表示しない
+              </label>
           </div>
+          <div class="checkbox">
+              <label>
+                  <input type="checkbox" value="" id="delete_day_checkbox">
+                  勤務時間の削除時に警告を表示しない
+              </label>
           </div>
-
-          <script>
-          function hyoji1(num)
-          {
-            if (num == 0)
-            {
-              document.getElementById("disp").style.display="block";
-            }
-            else
-            {
-              document.getElementById("disp").style.display="none";
-            }
-          }
-
-          </script>
-          <div>
-          <font size="1">
-            免責事項<br>
-            当サイトは、細心の注意を払って運営しておりますが、この情報の正確性および完全性を保証するものではありません。<br>
-            当サイトは、利用者が反映した時点でのモバイルシフトに準拠して実働時間の計算を行っています。モバイルシフトに反映されない場合、モバイルシフトに反映されても当サイトに利用者が反映しない場合にはその値を考慮することができません。<br>
-            また計算方法も最新でなかったり、正確でなかったりする可能性があります。<br>
-            当方は、利用者が当サイトに含まれる情報もしくは内容をご利用されたことで直接・間接的に生じた損失に関し一切責任を負うものではありません。<br>
-          </font>
-          <br>
-          <a href="https://twitter.com/intent/tweet?screen_name=n12212212121" class="twitter-mention-button" data-related="n12212212121">Tweet to @n12212212121</a>
-          <script>!function(d,s,id){var js,fjs=d.getElementsByTagName(s)[0],p=/^http:/.test(d.location)?'http':'https';if(!d.getElementById(id)){js=d.createElement(s);js.id=id;js.src=p+'://platform.twitter.com/widgets.js';fjs.parentNode.insertBefore(js,fjs);}}(document, 'script', 'twitter-wjs'); </script>
-          <br>
-          <span style="opacity: 0.6;">
-            Copyright &copy; 2017 Naoki Iwasa and Yudai Takegawa All Rights Reserved.last updated at 2017.9.4
-          </span>
+          <div class="checkbox">
+              <label>
+                  <input type="checkbox" value="" id="reset_checkbox" checked>
+                  追加後リセット
+              </label>
+          </div>
         </div>
+        <div>
+          <table class="table">
+            <h4>通勤経路設定</h4>
+              <tr>
+                  <th>発着地設定</th>
+                  <td>
+                      <div class="form-inline">
+                          勤務時間の
+                          <input type="text" id="yttime" placeholder="例: 30" class="form-control" size="2">分前に
+                          <input type="text" id="ytfrom" placeholder="例: 郡山" class="form-control" size="10">から
+                          <input type="text" id="ytto" placeholder="例: 桜島" value="桜島" class="form-control" size="10">に
+                          <input type="text" id="ytvia" placeholder="例: 天王寺" class="form-control" size="10">経由で<small style="color: #777">(経由は任意、コンマ','で区切って3つまで複数追加)</small>
+                          到着
+                          <br>
+                          <span style="opacity: 0.6;">ヒント! 思っている駅と違う駅が出る場合は、県名や路線名を入れてください。 </span>
+                      </div>
+                  </td>
+              </tr>
+              <tr>
+                  <th>交通手段</th>
+                  <td>
+                      <div class="checkbox">
+                          <label>
+                              <input type="checkbox" value="" id="al_checkbox">
+                              空路
+                          </label>
+                          <label>
+                              <input type="checkbox" value="" id="shin_checkbox">
+                              新幹線
+                          </label>
+                          <label>
+                              <input type="checkbox" value="" id="ex_checkbox">
+                              有料特急
+                          </label>
+                          <label>
+                              <input type="checkbox" value="" id="hb_checkbox">
+                              高速バス
+                          </label>
+                          <label>
+                              <input type="checkbox" value="" id="lb_checkbox" checked="">
+                              路線/連絡バス
+                          </label>
+                          <label>
+                              <input type="checkbox" value="" id="sr_checkbox">
+                              フェリー
+                          </label>
+                      </div>
+                  </td>
+              </tr>
+              <tr>
+                  <th>表示順序</th>
+                  <td>
+                      <div class="form-inline">
+                          <select id="display_sel" class="form-control" style="max-width:12em;">
+                              <option selected="">到着が早い順</option>
+                              <option>乗り換え回数順</option>
+                              <option>料金が安い順</option>
+                          </select>
+                      </div>
+                  </td>
+              </tr>
+              <tr>
+                  <th>経路URL</th>
+                  <td>
+                      <div class="form-inline">経路のURLを使用して、経路を限定する <input type="text" placeholder="URLを貼り付け..." id="yturl" class="form-control" size="45"></div>
+                      <br>
+                      <span style="opacity: 0.6;">ヒント! 経路のURLはYahoo!乗り換えサイトのルート共有にあります。</span>
+
+                  </td>
+              </tr>
+              <tr>
+                  <td>
+                      <button id="saveTransit" type="button" class="btn btn-primary" style="background-color:#01917b;border-color:#01917b">経路を保存</button>
+                  </td>
+                  <td></td>
+              </tr>
+          </table>
+        </div>
+        <br>
+        <div class="json">
+          <h4>バックアップ用</h4>
+          <form>
+                <input type="button" value="表示" onclick="hyoji1(0)">
+                <input type="button" value="非表示" onclick="hyoji1(1)">
+              </form>
+          <br>
+          <div id="disp" style="display:none">
+                <p>下のtextareaには上のデータがjson形式で表示されます。これをどこかのファイルで保存・共有しておくと、ブラウザが変わったりデバイスが変わってもデータを引き継ぐことができます。</p>
+                <textarea id="json_textarea" rows="7" class="form-control" placeholder="" onclick="this.focus();this.select()" readonly="readonly"></textarea>
+
+                <div class="checkbox">
+                    <label>
+                        <input type="checkbox" value="" id="json_checkbox">
+                        JSONを整理して表示
+                    </label>
+                </div>
+                <br>
+                <textarea id="json_input_textarea" rows="3" class="form-control" placeholder="データが消えたとき用、バックアップのjsonから読み込み..."></textarea><br>
+                <div style="margin-bottom: 6em">
+                    <button class="btn btn-default" type="submit" id="json_submit">Submit</button>
+                </div>
+
+              </div>
+        </div>
+        <script>
+        function hyoji1(num)
+        {
+          if (num == 0)
+          {
+            document.getElementById("disp").style.display="block";
+          }
+          else
+          {
+            document.getElementById("disp").style.display="none";
+          }
+        }
+        </script>
+        <font size="1">
+          免責事項<br>
+          当サイトは、細心の注意を払って運営しておりますが、この情報の正確性および完全性を保証するものではありません。<br>
+          当サイトは、利用者が反映した時点でのモバイルシフトに準拠して実働時間の計算を行っています。モバイルシフトに反映されない場合、モバイルシフトに反映されても当サイトに利用者が反映しない場合にはその値を考慮することができません。<br>
+          また計算方法も最新でなかったり、正確でなかったりする可能性があります。<br>
+          当方は、利用者が当サイトに含まれる情報もしくは内容をご利用されたことで直接・間接的に生じた損失に関し一切責任を負うものではありません。<br>
+        </font>
+        <br>
+        <a href="https://twitter.com/intent/tweet?screen_name=n12212212121" class="twitter-mention-button" data-related="n12212212121">Tweet to @n12212212121</a>
+        <script>!function(d,s,id){var js,fjs=d.getElementsByTagName(s)[0],p=/^http:/.test(d.location)?'http':'https';if(!d.getElementById(id)){js=d.createElement(s);js.id=id;js.src=p+'://platform.twitter.com/widgets.js';fjs.parentNode.insertBefore(js,fjs);}}(document, 'script', 'twitter-wjs'); </script>
+        <br>
+        <span style="opacity: 0.6;">
+          Copyright &copy; 2017 Naoki Iwasa and Yudai Takegawa All Rights Reserved.last updated at 2017.9.5
+        </span>
       </div> <!-- /container -->
 </body>
+
 <script type="text/javascript">
 
 var hhmmformformat = '<div class="input-group"><div class="input-group-addon">開始時刻</div>{0}<div class="input-group-addon">時</div>{1}<div class="input-group-addon">分</div></div><div class="input-group"><div class="input-group-addon">終了時刻</div>{2}<div class="input-group-addon">時</div>{3}<div class="input-group-addon">分</div></div>';
