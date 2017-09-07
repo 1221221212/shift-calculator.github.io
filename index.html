@@ -169,6 +169,26 @@ you cannot:
         <p id="error" style="display: none" class="danger"></p>
         <!--insert table here...-->
         <div id="shift_table" style="margin: 3em 0;"></div>
+        <div style="margin-bottom: 5em;margin-top: 3em;">
+            <div class="checkbox">
+                <label>
+                    <input type="checkbox" value="" id="delete_checkbox">
+                    表のコラムの削除時に警告を表示しない
+                </label>
+            </div>
+            <div class="checkbox">
+                <label>
+                    <input type="checkbox" value="" id="delete_day_checkbox">
+                    勤務時間の削除時に警告を表示しない
+                </label>
+            </div>
+            <div class="checkbox">
+                <label>
+                    <input type="checkbox" value="" id="reset_checkbox" checked>
+                    追加後リセット
+                </label>
+            </div>
+        </div>
         <div id="addWorktime">
             <button class="btn btn-primary" type="submit" id="add_submit" style="background-color:#01917b;border-color:#01917b">勤務時間を手動追加</button>
         </div>
@@ -232,14 +252,6 @@ you cannot:
                     </div>
                 </td>
             </tr>
-            <!--
-            <tr>
-                <th>経路URL</th>
-                <td>
-                    <div class="form-inline">経路のURLを使用して、経路を限定する <input type="text" placeholder="URLを貼り付け..." id="yturl" class="form-control disabled" size="45" disabled=""></div>
-                </td>
-            </tr>
-            -->
             <tr>
                 <td>
                     <button id="saveTransit" type="button" class="btn btn-primary"  style="background-color:#01917b;border-color:#01917b">経路を保存</button>
@@ -247,34 +259,6 @@ you cannot:
                 <td></td>
             </tr>
         </table>
-
-        <div style="margin-bottom: 5em;margin-top: 3em;">
-            <div class="checkbox">
-                <label>
-                    <input type="checkbox" value="" id="delete_checkbox">
-                    表のコラムの削除時に警告を表示しない
-                </label>
-            </div>
-            <div class="checkbox">
-                <label>
-                    <input type="checkbox" value="" id="delete_day_checkbox">
-                    勤務時間の削除時に警告を表示しない
-                </label>
-            </div>
-            <div class="checkbox">
-                <label>
-                    <input type="checkbox" value="" id="reset_checkbox" checked>
-                    追加後リセット
-                </label>
-            </div>
-            <!--
-            <div style="margin-top: 4em">
-                <p><strong>経路を限定するためのURLについて</strong></p>
-                <p>目的地まで行くのに複数の経路があって、ある一つの経路だけを表示したい場合に、下記の方法でURLをコピーし貼り付ければ、そのルートだけを表示できます。</p>
-                <div><a href="src/urlusage.jpg"><img src="src/urlusage.jpg" alt="urlusage.jpg" class="img-thumbnail" style="width:100%;max-width:600px;"></a></div>
-            </div>
-            -->
-        </div>
 
         <div class="json">
           <div style="display:none">
