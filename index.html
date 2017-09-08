@@ -338,7 +338,7 @@ you cannot:
                 </button>
               </div>
               <div class="modal-body">
-                <form class="form-horizontal" id="sendmail" method="POST" action="sendmail.php">
+                <form class="form-horizontal" id="sendmail" method="POST" action="sendmail.php"  onSubmit="return checkSubmit()">
                   <span class=" glyphicon glyphicon-user">Name※</span>
                   <div class="form-group">
                     <input type="text" name="Name" class="form-control" dataCheck="mandatory">
@@ -352,7 +352,7 @@ you cannot:
                     <textarea name="inquiry" class="form-control" rows="10" dataCheck="mandatory"></textarea>
                   </div>
                   <div class="form-group">
-                    <button class="btn btn-primary" id="submit" onSubmit="return checkSubmit()" style="background-color:#01917b;border-color:#01917b">
+                    <button class="btn btn-primary" id="submit" style="background-color:#01917b;border-color:#01917b">
                       <span class="glyphicon glyphicon-send">　Send　</span>
                     </button>
                   </div>
