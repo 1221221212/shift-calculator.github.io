@@ -16,6 +16,8 @@ you cannot:
     <title>Workaholic</title>
     <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0-beta/css/bootstrap.min.css" integrity="sha384-/Y6pD6FV/Vv2HJnA6t+vslU6fwYXjCFtcEpHbNJ0lyAFsXTsjBbfaDjzALeQsN6M" crossorigin="anonymous">
     <link href="https://fonts.googleapis.com/css?family=Londrina+Outline" rel="stylesheet">
+    <script src="http://ajax.googleapis.com/ajax/libs/jquery/1.8.3/jquery.min.js"></script>
+    <script type="text/javascript" src="mail.js" charset="UTF-8"></script>
 
     <style>
         body{
@@ -323,6 +325,44 @@ you cannot:
             </div>
           </div>
         </div>
+        <!-- 作者へのフォームを入れたい　-->
+        <span class="b">・</span>
+        <a href="" data-toggle="modal" data-target="#ContactModal">作者へ(準備中)</a>
+        <div class="modal fade" id="ContactModal" tabindex="-1" role="dialog" aria-labelledby="ContactModalLabel" aria-hidden="true">
+          <div class="modal-dialog" role="document">
+            <div class="modal-content">
+              <div class="modal-header">
+                <h5 class="modal-title" id="ContactModalLabel">作者へ</h5>
+                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                  <span aria-hidden="true">&times;</span>
+                </button>
+              </div>
+              <div class="modal-body">
+                <form class="form-horizontal" id="sendmail" method="POST" action="sendmail.php">
+                  <span class=" glyphicon glyphicon-user">Name※</span>
+                  <div class="form-group">
+                    <input type="text" name="Name" class="form-control" dataCheck="mandatory">
+                  </div>
+                  <span class="glyphicon glyphicon-envelope">Email</span>
+                  <div class="form-group">
+                    <input type="text" name="mailNo" class="form-control" placeholder="" dataCheck="mail">
+                  </div>
+                  <span class=" glyphicon glyphicon glyphicon-pencil">Message※</span>
+                  <div class="form-group">
+                    <textarea name="inquiry" class="form-control" rows="10" dataCheck="mandatory"></textarea>
+                  </div>
+                  <div class="form-group">
+                    <button class="btn btn-primary" id="submit" onSubmit="return checkSubmit()" style="background-color:#01917b;border-color:#01917b">
+                      <span class="glyphicon glyphicon-send">　Send　</span>
+                    </button>
+                  </div>
+                </form>
+              </div>
+            </div>
+          </div>
+        </div>
+
+
         <br>
         <small>Copyright &copy; 2017 Naoki Iwasa All Rights Reserved.<br>last updated at 2017.9.7</small>
         </footer>
@@ -1388,6 +1428,9 @@ function $(elemId) {
     } else {
         return document.getElementsByTagName(elemId);
     }
+}
+function checkSubmit() {
+  return confirm("送信しても良いですか？");
 }
 
 /*
