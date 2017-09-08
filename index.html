@@ -334,9 +334,8 @@ you cannot:
                   <span aria-hidden="true">&times;</span>
                 </button>
               </div>
-              <form action="mail.php" method="post">
               <div class="modal-body">
-                <form>
+                <form action="mail.php" method="post">
                   <div class="form-group">
                     <label for="name" class="form-control-label" required="required">Name*</label>
                     <input type="text" class="form-control" name="name">
@@ -349,13 +348,10 @@ you cannot:
                     <label for="message-text" class="form-control-label">Message*</label>
                     <textarea class="form-control" id="message" required="required"></textarea>
                   </div>
+              　  <p class="modalBody">返信が必要な場合はEmailを入力してください。返信できない場合もあります。</p>
+                  <button type="submit" class="btn btn-primary" style="background-color:#01917b;border-color:#01917b">Send message</button>
                 </form>
-              　<p class="modalBody">返信が必要な場合はEmailを入力してください。返信できない場合もあります。</p>
               </div>
-              <div class="modal-footer">
-                <button type="submit" class="btn btn-primary" style="background-color:#01917b;border-color:#01917b">Send message</button>
-              </div>
-            </form>
             </div>
           </div>
         </div>
