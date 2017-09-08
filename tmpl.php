@@ -2,7 +2,7 @@
 mb_language('ja');
 mb_internal_encoding('UTF-8');
 
-$mailTo = "★メールアドレス設置★";
+$mailTo = "iwasa.naoki.24u@st.kyoto-u.ac.jp";
 $subject = mb_encode_mimeheader("フォームより送信されました");
 $from = "From:".$outputdata["mailNo"];
 
