@@ -343,7 +343,7 @@ you cannot:
                 </button>
               </div>
               <div class="modal-body">
-                <form action="https://docs.google.com/forms/d/e/1FAIpQLSeFOneYAejrfWEDs_w3HZ4ZY7yxcbNSXax3rLYxGkb0UgQX0g/formResponse" method="POST" target="iframe_hidden" onSubmit="return checkSubmit()">
+                <form action="https://docs.google.com/forms/d/e/1FAIpQLSeFOneYAejrfWEDs_w3HZ4ZY7yxcbNSXax3rLYxGkb0UgQX0g/formResponse" method="POST" target="iframe_hidden" onSubmit="return check()">
                   <span class=" glyphicon glyphicon-user">Name ※required</span>
                   <div class="form-group">
                     <input type="text" name="entry.1205454870" class="form-control" required>
@@ -1434,8 +1434,14 @@ function $(elemId) {
         return document.getElementsByTagName(elemId);
     }
 }
-function checkSubmit() {
-  return confirm("送信しても良いですか？");
+
+function check(){
+	if(window.confirm('送信してよろしいですか？')){
+		return true;
+	}
+	else{
+		return false; // 送信を中止
+	}
 }
 
 /*
