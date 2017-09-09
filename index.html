@@ -322,15 +322,17 @@ you cannot:
                 </button>
               </div>
               <div class="modal-body">
-                2017.9.7 v.1.0.0<br>
-                更新履歴を開始しました。
+                2017.9.7   v.1.0.1<br>
+                更新履歴を開始しました。<br>
+                2017.9.9   v.1.1.1<br>
+                作者へのコンタクトフォームを実装しました。
               </div>
             </div>
           </div>
         </div>
         <!-- 作者へのフォームを入れたい　-->
         <span class="b">・</span>
-        <a href="" data-toggle="modal" data-target="#ContactModal">作者へ(準備中)</a>
+        <a href="" data-toggle="modal" data-target="#ContactModal">作者へ</a>
         <div class="modal fade" id="ContactModal" tabindex="-1" role="dialog" aria-labelledby="ContactModalLabel" aria-hidden="true">
           <div class="modal-dialog" role="document">
             <div class="modal-content">
@@ -342,17 +344,17 @@ you cannot:
               </div>
               <div class="modal-body">
                 <form action="https://docs.google.com/forms/d/e/1FAIpQLSeFOneYAejrfWEDs_w3HZ4ZY7yxcbNSXax3rLYxGkb0UgQX0g/formResponse" method="POST" target="iframe_hidden" onSubmit="return checkSubmit()">
-                  <span class=" glyphicon glyphicon-user">Name※</span>
+                  <span class=" glyphicon glyphicon-user">Name ※required</span>
                   <div class="form-group">
-                    <input type="text" name="entry.1205454870" class="form-control">
+                    <input type="text" name="entry.1205454870" class="form-control" required>
                   </div>
                   <span class="glyphicon glyphicon-envelope">Email</span>
                   <div class="form-group">
-                    <input type="text" name="entry.1410027005" class="form-control">
+                    <input type="email" name="entry.1410027005" class="form-control">
                   </div>
-                  <span class=" glyphicon glyphicon glyphicon-pencil">Message※</span>
+                  <span class=" glyphicon glyphicon glyphicon-pencil">Message ※required</span>
                   <div class="form-group">
-                    <textarea name="entry.1685385619" class="form-control" rows="10"></textarea>
+                    <textarea name="entry.1685385619" class="form-control" rows="10" required></textarea>
                   </div>
                   <p class="modalBody">返信が必要な場合はEmailを入力してください。返信できない場合もあります。</p>
                   <div class="form-group">
@@ -367,7 +369,7 @@ you cannot:
           </div>
         </div>
         <br>
-        <small>Copyright &copy; 2017 Naoki Iwasa All Rights Reserved.<br>last updated at 2017.9.7</small>
+        <small>Copyright &copy; 2017 Naoki Iwasa All Rights Reserved.<br>last updated at 2017.9.9 v.1.1.1</small>
         </footer>
     </div> <!-- /container -->
 
