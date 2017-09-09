@@ -139,6 +139,9 @@ you cannot:
         .modalBody{
           opacity: 0.7
         }
+        iframe {
+          display:none;
+        }
 
     </style>
 
@@ -263,6 +266,7 @@ you cannot:
                 <td></td>
             </tr>
         </table>
+        </div>
 
         <div class="json">
           <div style="display:none">
@@ -337,18 +341,18 @@ you cannot:
                 </button>
               </div>
               <div class="modal-body">
-                <form class="form-horizontal" id="sendmail" method="POST" action="sendmail.php"  onSubmit="return checkSubmit()">
+                <form action="https://docs.google.com/forms/d/1O2_Dpznb2kUdzKYO6FPWKqsSUMUWhTyvh5GA5DZ-SsE/formResponse" method="POST" target="iframe_hidden">
                   <span class=" glyphicon glyphicon-user">Name※</span>
                   <div class="form-group">
-                    <input type="text" name="Name" class="form-control" dataCheck="mandatory">
+                    <input type="text" name="entry.1205454870" class="form-control">
                   </div>
                   <span class="glyphicon glyphicon-envelope">Email</span>
                   <div class="form-group">
-                    <input type="text" name="mailNo" class="form-control" placeholder="" dataCheck="mail">
+                    <input type="text" name="entry.1410027005" class="form-control">
                   </div>
                   <span class=" glyphicon glyphicon glyphicon-pencil">Message※</span>
                   <div class="form-group">
-                    <textarea name="inquiry" class="form-control" rows="10" dataCheck="mandatory"></textarea>
+                    <textarea name="entry.1685385619" class="form-control" rows="10"></textarea>
                   </div>
                   <p class="modalBody">返信が必要な場合はEmailを入力してください。返信できない場合もあります。</p>
                   <div class="form-group">
@@ -357,12 +361,11 @@ you cannot:
                     </button>
                   </div>
                 </form>
+                <iframe name="iframe_hidden"></iframe>
               </div>
             </div>
           </div>
         </div>
-
-
         <br>
         <small>Copyright &copy; 2017 Naoki Iwasa All Rights Reserved.<br>last updated at 2017.9.7</small>
         </footer>
