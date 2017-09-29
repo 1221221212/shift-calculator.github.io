@@ -340,7 +340,7 @@ you cannot:
           </div>
         </div>
         <span class="b">・</span>
-        <a href="" data-toggle="modal" data-target="#ContactModal">作者へ</a>
+        <a href="" data-toggle="modal" data-target="#ContactModal" onClick="clearForm">作者へ</a>
         <div class="modal fade" id="ContactModal" tabindex="-1" role="dialog" aria-labelledby="ContactModalLabel" aria-hidden="true">
           <div class="modal-dialog" role="document">
             <div class="modal-content">
@@ -1411,7 +1411,7 @@ function $2(elemId) {
 var timerId;
 function check(){
 	if(window.confirm('送信してよろしいですか？')){
-    document.getElementById("Message").value="";
+    
     $('#ContactModal').modal('hide')
     document.getElementById("thanks").style.display = "block";
     timerId = setTimeout( closeBox , 5000 );
@@ -1427,6 +1427,9 @@ function closeBox() {
 function setRoute(){
   document.getElementById("setRoute").style.display="block";
   document.getElementById("setRouteButton").style.display="none";
+}
+function clearForm(){
+document.getElementById("Message").value="";
 }
 
 /*
