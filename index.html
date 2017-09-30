@@ -129,6 +129,9 @@ you cannot:
         footer small, footer a{
           color: #fff;
         }
+        footer a{
+          text-decoration: underline;
+        }
         .b{
           color: white;
         }
@@ -141,6 +144,9 @@ you cannot:
         }
         iframe {
           display:none;
+        }
+        a{
+          color: #01917b;
         }
     </style>
 
@@ -771,7 +777,7 @@ function buildTableContent() {
     var secNextWH = '';
     var advice = '';
     if (theNearestDate != null) {
-        nextWorkHtml = '<div><h4>次の出勤日:</h4><p>{0} {1}</p></div>'.format(makeDateString(theNearestDate, '{1}/{2} ({3})'), makeWorktimeStringWithLink(theNearestDate, theNearestWorkTime));
+        nextWorkHtml = '<div><h4>次の出勤日:</h4><p>{0} {1}</p></div>'.format(makeDateString(theNearestDate, '{1}/{2} ({3})<br>'), makeWorktimeStringWithLink(theNearestDate, theNearestWorkTime));
         advice = '<p style="margin:2em 0 3em 0;"><small>tips: 出勤時間をクリックすると、Yahoo路線で出勤の経路を検索できます。</small></p>'
     }
     if (theSecNearestDate != null) {
@@ -1411,7 +1417,6 @@ function $2(elemId) {
 var timerId;
 function check(){
 	if(window.confirm('送信してよろしいですか？')){
-    
     $('#ContactModal').modal('hide')
     document.getElementById("thanks").style.display = "block";
     timerId = setTimeout( closeBox , 5000 );
