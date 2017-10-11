@@ -705,7 +705,7 @@ function buildTableContent() {
     });
     ////end: 並び替え////
 
-    var tableHtml = '<table class="table table-striped"><tr><th>#</th><th>期間</th><th>実働時間/日数/回数</th><th>作成日</th></tr>';
+    var tableHtml = '<table class="table table-striped"><tr><th>#</th><th>期間</th><th>時間/日数/回数</th><th>作成日</th></tr>';
 
     // 半月毎の処理
     // keysはtheYggdrasilのkey配列を並び替えたもの
@@ -907,9 +907,9 @@ function makeDateString(input, formatting){
 /*
  * 一覧tableのtrをつくる関数。
  *
- * # |  期間   | 　実働時間/日数/回数 　|  作成日時
+ * # |  期間 | 　実働時間/日数/回数 　|  作成日時
  * --+--------+---------+----------------------
- * × | 8月前半 |  40.25 / 5日 / 6回  | '17/7/30
+ * × | 8月前 |  40.25 / 5日 / 6回  | '17/7/30
  */
 function makeTrHtml(keyTerm, actualTime, daysWorked,　workNumber, modifiedDay) {
     var _t  = '<tr>'
@@ -922,11 +922,11 @@ function makeTrHtml(keyTerm, actualTime, daysWorked,　workNumber, modifiedDay) 
 }
 
 /*
- * "2017.8.0"とかの形式的な記述から"8月前半"という人が読みやすい文字列を返す関数。
+ * "2017.8.0"とかの形式的な記述から"8月前"という人が読みやすい文字列を返す関数。
  */
 function parseKeyTerm(keyTerm) {
     var _ks = keyTerm.split(".");
-    var _post = _ks[2] == "0" ? "前半" : "後半";
+    var _post = _ks[2] == "0" ? "前" : "後";
     return '{0}月{1}'.format(_ks[1], _post);
 }
 
