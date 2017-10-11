@@ -703,7 +703,7 @@ function buildTableContent() {
     });
     ////end: 並び替え////
 
-    var tableHtml = '<table class="table table-striped"><tr><th>#</th><th>期間</th><th>実働時間</th><th>出勤日数/回数</th><th>作成日時</th></tr>';
+    var tableHtml = '<table class="table table-striped"><tr><th>#</th><th>期間</th><th>実働時間/日数/回数</th><th>作成日</th></tr>';
 
     // 半月毎の処理
     // keysはtheYggdrasilのkey配列を並び替えたもの
@@ -746,7 +746,7 @@ function buildTableContent() {
             } else {
                 var shifts = _WorkingTree[keyDay]; // Array<Object> [勤務時間Obj1, 勤務時間Obj2...]
 
-                var dateObj = new Date(keyDay); // Date("2017/8/1"
+                var dateObj = new Date(keyDay); // Date("2017/8/1")
                 workNumber+=shifts.length;
                 dateObj.setHours(shifts[shifts.length-1]["start"]["hour"]);
                 dateObj.setMinutes(shifts[shifts.length-1]["start"]["min"]);
@@ -913,8 +913,7 @@ function makeTrHtml(keyTerm, actualTime, daysWorked,　workNumber, modifiedDay) 
     var _t  = '<tr>'
     _t += '<td><img src="src/delete.svg" title="このデータを削除" class="delete" onclick="deleteTerm(\'{0}\')"></td>'.format(keyTerm);
     _t += '<td title="詳しいデータを見る" class="hoverer" onclick="showTerm(\'{0}\')">{1}</td>'.format(keyTerm, parseKeyTerm(keyTerm));
-    _t += '<td>{0}</td>'.format(actualTime/60);
-    _t += '<td>{0}日/{1}回</td>'.format(daysWorked-1,workNumber);
+    _t += '<td>{0} / {1}日 / {2}回</td>'.format(actualTime/60,daysWorked-1,workNumber);
     _t += '<td>{0}</td>'.format(modifiedDay);
     _t += '</tr>';
     return _t;
