@@ -109,12 +109,6 @@ you cannot:
         #setRouteButton{
             margin-bottom: 2em
         }
-        #salaryButton{
-            margin-bottom: 2em
-        }
-        #calculateSalary{
-            margin-bottom: 2em
-        }
         #thanks{
           display:none;
           position: fixed;
@@ -130,6 +124,7 @@ you cannot:
           text-align: center;
           padding-top: 15px;
           padding-bottom: 10px;
+          margin-top: 2em;
           background-color: #01917b;
         }
         footer small, footer a{
@@ -180,7 +175,7 @@ you cannot:
         <div id="editBack">
             <div id="editWorktime"></div>
         </div>
-        <textarea id="shift_textarea" rows="7" class="form-control" placeholder="シフト表を全選択してコピー&ペースト..."></textarea><br>
+        <textarea id="shift_textarea" rows="7" class="form-control" placeholder="シフトをコピー&ペースト"></textarea><br>
         <div>
           <button class="btn btn-primary" type="submit" style="background-color:#01917b;border-color:#01917b" id="shift_submit">勤務時間を追加/上書き</button>
         </div>
@@ -209,15 +204,14 @@ you cannot:
             </div>
         </div>
         <div id="addWorktime">
-            <button class="btn btn-primary" type="submit" id="add_submit" style="background-color:#01917b;border-color:#01917b;">勤務時間を手動追加</button>
+          <button class="btn btn-primary" type="submit" id="add_submit" style="background-color:#01917b;border-color:#01917b;">勤務時間を手動追加</button>
         </div>
-
         <div id="setRouteButton">
-        <button class="btn btn-primary" style="background-color:#01917b;border-color:#01917b" onclick="setRoute()">出勤経路設定</button>
+          <button class="btn btn-primary" style="background-color:#01917b;border-color:#01917b" onclick="setRoute()">出勤経路設定</button>
         </div>
         <div style="display:none" id="setRoute">
           <h4>出勤経路検索</h4>
-        <table class="table">
+          <table class="table">
             <tr>
                 <th>発着地設定</th>
                 <td>
@@ -280,19 +274,12 @@ you cannot:
                 </td>
                 <td></td>
             </tr>
-        </table>
+          </table>
         </div>
-        <div id="salaryButton">
-        <button class="btn btn-primary" style="background-color:#01917b;border-color:#01917b" onclick="salary()">給与概算</button>
+        <div id="salary">
+          <button class="btn btn-primary" type="submit" id="salary_submit" style="background-color:#01917b;border-color:#01917b">給与概算</button>
         </div>
-        <div style="display:none" id="salary">
-          <h4>給与概算</h4>
-          残念でした。まだ作ってる途中です。<br>
-          <button id="calculateSalary" type="button" class="btn btn-primary" style="background-color:#01917b;border-color:#01917b">Calculate</button>
-
-        </div>
-
-
+        <div id="trap" style="display:none;">残念でした。準備中です。</div>
         <div class="json">
           <div style="display:none">
             <h4>バックアップ用</h4>
@@ -316,7 +303,7 @@ you cannot:
           thank you : )
         </div>
       </div> <!-- /container -->
-        <footer>
+      <footer>
         <a href="" data-toggle="modal" data-target="#ToSModal">利用規約</a>
         <div class="modal fade" id="ToSModal" tabindex="-1" role="dialog" aria-labelledby="ToSModalTitle" aria-hidden="true">
           <div class="modal-dialog" role="document">
@@ -420,6 +407,7 @@ you cannot:
     <script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0-beta/js/bootstrap.min.js" integrity="sha384-h0AbiXch4ZDo7tp9hKZ4TsHbi047NrKGLO3SEJAg45jXxnGIfYzk4Si90RDIqNm1" crossorigin="anonymous"></script>
 
 </body>
+
 <script type="text/javascript">
 
 var hhmmformformat = '<div class="input-group"><div class="input-group-addon">開始時刻</div>{0}<div class="input-group-addon">時</div>{1}<div class="input-group-addon">分</div></div><div class="input-group"><div class="input-group-addon">終了時刻</div>{2}<div class="input-group-addon">時</div>{3}<div class="input-group-addon">分</div></div>';
@@ -437,9 +425,9 @@ theYggdrasil = {};
  * theYggdrasil(全部のデータを格納するobj)の構造は
  *
  * {
- *   - "2017.8.0" : 8月上半期の勤務obj
- *   - "2017.8.1" : 8月下半期の勤務obj
- *   - "2017.9.0" : 9月上半期の勤務obj
+ *   - "2017.8" - "2017.8.0" : 8月上半期の勤務obj
+ *              - "2017.8.1" : 8月下半期の勤務obj
+ *   - "2017.9" - "2017.9.0" : 9月上半期の勤務obj
  *   - ...
  * }
  */
@@ -534,6 +522,10 @@ function bodyLoadEvent() {
 
     $2('#add_submit').onclick = function(){
         initAddWorktime();
+    };
+
+    $2('#salary_submit').onclick = function(){
+        initSalary();
     };
 
     var local_data = localStorage.getItem("data");
@@ -931,7 +923,7 @@ function makeDateString(input, formatting){
  * 一覧tableのtrをつくる関数。
  *
  * # |  期間 | 　実働時間/日数/回数 　|  作成日時
- * --+--------+---------+----------------------
+ * --+------+---------------------+---------
  * × | 8月前 |  40.25 / 5日 / 6回  | '17/7/30
  */
 function makeTrHtml(keyTerm, actualTime, daysWorked,　workNumber, modifiedDay) {
@@ -1416,7 +1408,7 @@ function addYearToDay(theDay) {
     var theDate = parseInt(_day[1]);
     // 年明け前に正月のシフト考えるような年明けを挟むときの処理
     year = today.getFullYear();
-    // このHTMLを開いている付きが11,12月で、textareaからのデータの月が1,2月。
+    // このHTMLを開いている月が11,12月で、textareaからのデータの月が1,2月。
     // jsonやloclaStorageから読み込むときにこの処理は行われない。
     if (today.getMonth() >= 10 && _theMonth <= 2){
         year ++;
@@ -1447,7 +1439,7 @@ function check(){
 		return true;
 	}
 	else{
-		return false; // 送信を中止
+		return false;
 	}
 }
 function closeBox() {
@@ -1460,9 +1452,25 @@ function setRoute(){
 function clearForm(){
   document.getElementById("Message").value="";
 }
-function salary(){
-  document.getElementById("salary").style.display="block";
-  document.getElementById("salaryButton").style.display="none";
+
+function initSalary(){
+  var _month = Object.keys(theYggdrasil);
+  var month_sel = '<select class="form-control" id="monthaw">';
+  for (var i=0;i<_month.length;i++){
+    month_sel +="<option value="+_month[i]+">"+_month[i]+'月'+"</option>";
+  }
+    month_sel += '</select>';
+  var html = '<h4>給与概算</h4><div class="form-inline">{0}&nbsp;<input type="number" placeholder="時給" class="form-control" size="5" id="hourWage">&nbsp;<input type="number" placeholder="交通費" class="form-control" size="5" id="trans"></form>&nbsp;'.format(month_sel);
+  html += '<button class="btn btn-primary" type="submit" onclick="calculateSalary()" style="background-color:#01917b;border-color:#01917b">Calculate</button>';
+  $2("#salary").innerHTML = html;
+}
+
+function calculateSalary(){
+  var hour = parseInt($2("#hourWage").value);
+  var trans = parseInt($2("#trans").value);
+
+  document.getElementById("trap").style.display="block";
+
 }
 
 /*
