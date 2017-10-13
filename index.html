@@ -107,7 +107,13 @@ you cannot:
             text-align: right;
         }
         #setRouteButton{
-            margin-bottom: 2em
+            margin-bottom: 2em;
+        }
+        #salary .form-group{
+            margin: 4px;
+        }
+        #transit_table th {
+          width: 6rem;
         }
         #thanks{
           display:none;
@@ -211,9 +217,9 @@ you cannot:
         </div>
         <div style="display:none" id="setRoute">
           <h4>出勤経路検索</h4>
-          <table class="table">
+          <table class="table" id="transit_table">
             <tr>
-                <th>発着地設定</th>
+                <th>発着地</th>
                 <td>
                     <div class="form-inline">
                         勤務時間の
@@ -1455,22 +1461,33 @@ function clearForm(){
 
 function initSalary(){
   var _month = Object.keys(theYggdrasil);
-  var month_sel = '<select class="form-control" id="monthaw">';
+  var month_sel = '<select class="form-control">';
   for (var i=0;i<_month.length;i++){
     month_sel +="<option value="+_month[i]+">"+_month[i]+'月'+"</option>";
   }
     month_sel += '</select>';
-  var html = '<h4>給与概算</h4><div class="form-inline">{0}&nbsp;<input type="number" placeholder="時給" class="form-control" size="5" id="hourWage">&nbsp;<input type="number" placeholder="交通費" class="form-control" size="5" id="trans"></form>&nbsp;'.format(month_sel);
-  html += '<button class="btn btn-primary" type="submit" onclick="calculateSalary()" style="background-color:#01917b;border-color:#01917b">Calculate</button>';
+  var html = '<h4>給与概算</h4><form><div class="form-inline"><div class="form-group">{0}</div>&nbsp;<div class="form-group"><input type="number" placeholder="時給" class="form-control" size="5" id="hourWage"></div>&nbsp;<div class="form-group"><input type="number" placeholder="交通費" class="form-control" size="5" id="trans"></div></div>'.format(month_sel);
+  html += '<button class="btn btn-primary" type="submit" id="calculateSalary_button" onclick="calculateSalary()" style="background-color:#01917b;border-color:#01917b">Calculate</button></form>';
   $2("#salary").innerHTML = html;
+
+  var hour_data = localStorage.getItem("hour");
+  if(hour_data != null){
+    document.getElementById('hourWage').value = hour_data;
+  }
+
+  var trans_data = localStorage.getItem("trans");
+  if(trans_data != null){
+    document.getElementById('trans').value = trans_data;
+  }
+
 }
 
 function calculateSalary(){
   var hour = parseInt($2("#hourWage").value);
   var trans = parseInt($2("#trans").value);
-
+    localStorage.setItem("hour", hour);
+    localStorage.setItem("trans", trans);
   document.getElementById("trap").style.display="block";
-
 }
 
 /*
