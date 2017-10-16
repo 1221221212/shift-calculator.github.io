@@ -1463,12 +1463,12 @@ function clearForm(){
 
 function initSalary(){
   var keys = Object.keys(theYggdrasil);
-  var month_sel = '<select class="form-control">';
+  var month_sel = '<select class="form-control" style="max-width:7em;">';
   for (var keyTerm of keys){
     month_sel +='<option value="{0}">{1}</option>'.format(keys[keyTerm], parseKeyTerm(keyTerm));
   }
     month_sel += '</select>';
-  var html = '<h4>給与概算</h4><form><div class="form-group">{0}</div><div class="form-group"><input type="number" placeholder="時給" class="form-control" id="hourWage"></div><div class="form-group"><input type="number" placeholder="交通費" class="form-control" id="trans"></div>'.format(month_sel);
+  var html = '<h4>給与概算</h4><form><div class="form-group">{0}</div><div class="form-inline"><div class="form-group"><input type="number" placeholder="時給" class="form-control" id="hourWage"></div><div class="form-group"><input type="number" placeholder="交通費" class="form-control" id="trans"></div></div>'.format(month_sel);
   html += '<button class="btn btn-primary" type="button" id="calculateSalary_button" onclick="calculateSalary()" style="background-color:#01917b;border-color:#01917b">Calculate</button></form>';
   $2("#salary").innerHTML = html;
 
