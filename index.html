@@ -121,6 +121,12 @@ you cannot:
           bottom: 1em;
           left: 1em;
         }
+        #salary .form-control{
+          margin-left: 1rem;
+        }
+        .employmentPattern{
+          margin-left: 1rem;
+        }
         .a{
             max-width: 370px !important;
         }
@@ -1468,7 +1474,7 @@ function initSalary(){
     month_sel +='<option value="{0}">{1}</option>'.format(keys[keyTerm], parseKeyTerm(keyTerm));
   }
     month_sel += '</select>';
-  var html = '<h4>給与概算</h4><form><div class="form-group">{0}</div><div class="form-inline"><div class="form-group"><input type="number" placeholder="時給" class="form-control" id="hourWage"></div><div class="form-group"><input type="number" placeholder="交通費" class="form-control" id="trans"></div></div>'.format(month_sel);
+  var html = '<h4>給与概算</h4><form><div class="form-group"><label><b>期間</b></label>{0}</div><div class="form-group"><label><b>時給</b></label><input type="number" class="form-control" id="hourWage"></div><div class="form-group"><label><b>交通費</b></label><input type="number" class="form-control" id="trans"></div><div class="form-group"><p class="control-label"><b>雇用体系</b></p><div class="employmentPattern"><div class="radio-inline"><label><input type="radio" value="1" name="employmentPattern" id="regular">Regular</label></div><div class="radio-inline"><label><input type="radio" value="2" name="employmentPattern" id="casular">Casular</label></div><div class="radio-inline"><label><input type="radio" value="3" name="employmentPattern" id="casual">Casual</label></div><div class="radio-inline"><label><input type="radio" value="4" name="employmentPattern" id="seasonal">Seasonal</label></div></div></div><div class="form-group"><div class="checkbox"><label><input id="highscool" type="checkbox">私は高校生です。</label></div></div></div>'.format(month_sel);
   html += '<button class="btn btn-primary" type="button" id="calculateSalary_button" onclick="calculateSalary()" style="background-color:#01917b;border-color:#01917b">Calculate</button></form>';
   $2("#salary").innerHTML = html;
 
