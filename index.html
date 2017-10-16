@@ -347,7 +347,20 @@ you cannot:
               </div>
               <div class="modal-body">
                 <p>
+<<<<<<< HEAD
+                2017.10.16 v.1.1.6<br>
+                前半と後半の合計表示に向けた準備を行いました。<br>
                 2017.10.12 v.1.1.5<br>
+                2017.10.14 v.1.1.5<br>
+=======
+<<<<<<< HEAD
+                2017.10.16 v.1.1.6<br>
+                前半と後半の合計表示に向けた準備を行いました。<br>
+                2017.10.12 v.1.1.5<br>
+=======
+                2017.10.14 v.1.1.5<br>
+>>>>>>> 9f584c6ffdf91802b9e7a2e62b3ff39fbb4fa02a
+>>>>>>> 97d715c499621cefd56e1ba46291b2f23a2de2cc
                 給与計算の実装に向けた準備を行いました。<br>
                 2017.10.11 v.1.1.4<br>
                 実働日数、勤務回数を表示しました。<br>
@@ -405,7 +418,15 @@ you cannot:
         <span class="b">・</span>
         <a href="https://crew-pn.usjc.co.jp/cws/mbl/Menu-1" target="_blank">モバイル</a>
         <br>
-        <small>Copyright &copy; 2017 Naoki Iwasa All Rights Reserved.<br>last updated at 2017.10.12 v.1.1.5</small>
+<<<<<<< HEAD
+        <small>Copyright &copy; 2017 Naoki Iwasa All Rights Reserved.<br>last updated at 2017.10.16 v.1.1.6</small>
+=======
+<<<<<<< HEAD
+        <small>Copyright &copy; 2017 Naoki Iwasa All Rights Reserved.<br>last updated at 2017.10.16 v.1.1.6</small>
+=======
+        <small>Copyright &copy; 2017 Naoki Iwasa All Rights Reserved.<br>last updated at 2017.10.14 v.1.1.5</small>
+>>>>>>> 9f584c6ffdf91802b9e7a2e62b3ff39fbb4fa02a
+>>>>>>> 97d715c499621cefd56e1ba46291b2f23a2de2cc
       </footer>
 
     <script src="https://code.jquery.com/jquery-3.2.1.slim.min.js" integrity="sha384-KJ3o2DKtIkvYIK3UENzmM7KCkRr/rE9/Qpg6aAZGJwFDMVNA/GpGFF93hXpG5KkN" crossorigin="anonymous"></script>
@@ -726,7 +747,7 @@ function buildTableContent() {
     });
     ////end: 並び替え////
 
-    var tableHtml = '<table class="table table-striped"><tr><th>#</th><th>期間</th><th>時間/日数/回数</th><th>作成日</th></tr>';
+    var tableHtml = '<table class="table table-striped"><tr><th>#</th><th>期間</th><th>実働時間</th><th>出勤日数/回数</th></tr>';
 
     // 半月毎の処理
     // keysはtheYggdrasilのkey配列を並び替えたもの
@@ -799,7 +820,7 @@ function buildTableContent() {
             }
 
         }
-        tableHtml += makeTrHtml(keyTerm, wholeBondedMin - wholeRestMin, daysWorked, workNumber, modifiedDay);
+        tableHtml += makeTrHtml(keyTerm, wholeBondedMin - wholeRestMin, daysWorked, workNumber);
     }
 
     tableHtml += '</table>'
@@ -928,16 +949,16 @@ function makeDateString(input, formatting){
 /*
  * 一覧tableのtrをつくる関数。
  *
- * # |  期間 | 　実働時間/日数/回数 　|  作成日時
- * --+------+---------------------+---------
- * × | 8月前 |  40.25 / 5日 / 6回  | '17/7/30
+ * # |  期間  | 実働時間  |  出勤日数/回数  |
+ * --+-------+----------+---------------+
+ * × | 8月前  |  40.25   |　  5日 / 6回   |
  */
-function makeTrHtml(keyTerm, actualTime, daysWorked,　workNumber, modifiedDay) {
+function makeTrHtml(keyTerm, actualTime, daysWorked,　workNumber) {
     var _t  = '<tr>'
     _t += '<td><img src="src/delete.svg" title="このデータを削除" class="delete" onclick="deleteTerm(\'{0}\')"></td>'.format(keyTerm);
     _t += '<td title="詳しいデータを見る" class="hoverer" onclick="showTerm(\'{0}\')">{1}</td>'.format(keyTerm, parseKeyTerm(keyTerm));
-    _t += '<td>{0} / {1}日 / {2}回</td>'.format(actualTime/60,daysWorked-1,workNumber);
-    _t += '<td>\'{0}</td>'.format(modifiedDay.slice(2));
+    _t += '<td>{0}</td>'.format(actualTime/60);
+    _t += '<td>{0}日 / {1}回</td>'.format(daysWorked-1,workNumber);
     _t += '</tr>';
     return _t;
 }
@@ -947,7 +968,7 @@ function makeTrHtml(keyTerm, actualTime, daysWorked,　workNumber, modifiedDay) 
  */
 function parseKeyTerm(keyTerm) {
     var _ks = keyTerm.split(".");
-    var _post = _ks[2] == "0" ? "前" : "後";
+    var _post = _ks[2] == "0" ? "前半" : "後半";
     return '{0}月{1}'.format(_ks[1], _post);
 }
 
@@ -1460,14 +1481,14 @@ function clearForm(){
 }
 
 function initSalary(){
-  var _month = Object.keys(theYggdrasil);
+  var keys = Object.keys(theYggdrasil);
   var month_sel = '<select class="form-control">';
-  for (var i=0;i<_month.length;i++){
-    month_sel +="<option value="+_month[i]+">"+_month[i]+'月'+"</option>";
+  for (var keyTerm of keys){
+    month_sel +='<option value="{0}">{1}</option>'.format(keys[keyTerm], parseKeyTerm(keyTerm));
   }
     month_sel += '</select>';
   var html = '<h4>給与概算</h4><form><div class="form-inline"><div class="form-group">{0}</div>&nbsp;<div class="form-group"><input type="number" placeholder="時給" class="form-control" size="5" id="hourWage"></div>&nbsp;<div class="form-group"><input type="number" placeholder="交通費" class="form-control" size="5" id="trans"></div></div>'.format(month_sel);
-  html += '<button class="btn btn-primary" type="submit" id="calculateSalary_button" onclick="calculateSalary()" style="background-color:#01917b;border-color:#01917b">Calculate</button></form>';
+  html += '<button class="btn btn-primary" type="button" id="calculateSalary_button" onclick="calculateSalary()" style="background-color:#01917b;border-color:#01917b">Calculate</button></form>';
   $2("#salary").innerHTML = html;
 
   var hour_data = localStorage.getItem("hour");
