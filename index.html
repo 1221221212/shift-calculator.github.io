@@ -1498,7 +1498,7 @@ function initSalary(){
     document.getElementsByName('employmentPattern')[employ_data].checked = true;
   }
   var highschool_data = localStorage.getItem("highschool");
-  if(highschool_data = true){
+  if(highschool_data == "true"){
     $('input[name="highschool"]').prop('checked', true);
     document.getElementById('trans').disabled = true;
   }
