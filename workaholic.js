@@ -73,7 +73,7 @@ function makeTimeOptions() {
 			for (var i = -3; i <= 1; i++) {
 				var y = today.getFullYear()+i;
 				$('<option>', {
-					text: y+'年',
+					text: y+'年のシフトです。',
 					'value': y,
 					'selected': i==0
 				}).appendTo(this);
