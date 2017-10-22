@@ -95,8 +95,8 @@ you cannot:
 <textarea id="shiftBox" class="form-control" placeholder="シフト表を全選択してコピー&ペースト..." rows=7 style="margin-bottom: 1em"></textarea>
 
 <div class="form-group form-inline" style="margin-bottom: 2.5em">
-  <select class="form-control" id="yearSel" style="margin-right: .8em;margin-bottom: .5em" data-opt="year"></select>
-	<button type="button" class="btn btn-primary" onclick="addWTWithTA()" style="margin-bottom: .5em">勤務時間を追加/上書き</button>
+  <select class="form-control" id="yearSel" style="margin-right: .8em;margin-bottom: .5em;max-width:7em;" data-opt="year"></select>
+	<button type="button" class="btn btn-primary" onclick="addWTWithTA()" style="margin-bottom: .5em">シフトを追加/上書き</button>
 </div>
 
 <div style="margin-bottom: 3em;">
@@ -630,38 +630,42 @@ you cannot:
         <p class="aaa">支給面</p>
         <p class="bbb">
           ・基本給 = <br>
-          &ensp;&ensp;入力した時給 * 実働時間<br>
+          &ensp;&ensp;時給 * 実働時間<br>
           ・時間外手当 = <br>
-          &ensp;&ensp;入力した時給の25% * 8時間を超えの勤務時間<br>
+          &ensp;&ensp;時給の25% * 8時間を超えの勤務時間<br>
           ・深夜早朝手当 = <br>
-          &ensp;&ensp;入力した時給の25% * 22:00~翌06:00の勤務時間<br>
+          &ensp;&ensp;時給の25% * 22:00~翌06:00の勤務時間<br>
           ・着替手当 = <br>
           &ensp;&ensp;250 * 勤務日数<br>
           ・交通費(学校年度年齢18未満以下は0)<br>
-           &ensp;＜レギュラの場合＞<br>
+           &ensp;＜レギュラーの場合＞<br>
            &ensp;&nbsp;その月が入力した支給月の場合→定期代
            &ensp;&nbsp;それ以外は0<br>
            &ensp;＜その他＞<br>
-           &ensp;&nbsp;入力した交通費 * 勤務日数<br>
+           &ensp;&nbsp;交通費 * 勤務日数<br>
            &ensp;&nbsp;30000円を超える場合は30000円。<br>
         </p>
         <p class="aaa">控除面</p>
         <p class="bbb">
-          上記の支給額の合計をxxとする。40歳未満の扶養家族0人の人を想定する。<br>
+          上記の支給額の合計をxxとする。　<br>40歳未満の扶養家族0人の人を想定する。<br>
           &ensp;＜レギュラー　カジュラーのみ＞<br>
-          &emsp;・雇用手当 = xx 0.3%<br>
+          &emsp;・雇用手当 = xx * 0.3%<br>
           &emsp;&ensp;（雇用保険法等の一部を改正する法律を参照）<br>
           &emsp;・健保基本保険料 = xx * 3.2%<br>
           &emsp;&ensp;（大阪府の協会けんぽが制定する保険料率を参照）<br>
           &emsp;・健保特定保険料 = xx * 1.865%<br>
-          （同上）<br>
+          &emsp;&ensp;（同上）<br>
           &ensp;＜レギュラーのみ＞<br>
           &emsp;・組合費 = 一律700円<br>
           &ensp;＜全員＞<br>
           &emsp;・所得税<br>
-          &ensp;&ensp;その上で給与所得の源泉徴収税額表の甲欄を参照。<br>
+          &ensp;&ensp;課税対象支給額から社会保険料などを差し引きいたものを課税対象額とする。<br>&ensp;&ensp;その上で給与所得の源泉徴収税額表の甲欄を参照。<br>
           &emsp;&ensp;平成24年3月31日財務省告示第115号別表第一<br>&emsp;&ensp;（平成28年３月31日財務省告示第105号改正）
         </p>
+        <p class="aaa">注意事項</p>
+        <p class="bbb">
+          この機能は、みなさんの入力したシフトに基づき給与を概算するものであり、みなさんの給与を保証するものではありません。<br>
+          欠勤、遅刻、早退、勤務の一部または全部の解消、残業などを考慮することができません。それゆえに大きな誤差が生まれることもあります。しかし当サイトには勤務時間を自動で変更したり、勤務を追加・削除する機能が備わっています。それを利用して誤差を小さくすることはできます。
       </div>
       <div class="modal-footer">
         <button type="button" class="btn btn-outline-secondary" data-dismiss="modal">Close</button>
@@ -975,6 +979,8 @@ function saveSalarySettingWithModal(btnElem){
   //modalを閉じる
   $('#salarySettingModal').modal('hide');
 }
+
+$('#calMethodModal').on('shown.bs.modal', function (e) {$('body').addClass('modal-open');})
 
 </script>
 </body>

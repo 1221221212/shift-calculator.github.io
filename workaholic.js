@@ -73,7 +73,7 @@ function makeTimeOptions() {
 			for (var i = -3; i <= 1; i++) {
 				var y = today.getFullYear()+i;
 				$('<option>', {
-					text: y+'年のシフトです。',
+					text: y+'年',
 					'value': y,
 					'selected': i==0
 				}).appendTo(this);
@@ -210,9 +210,10 @@ function loadWtArrayFromLS(){
 
 //複数のWorktimeをwtArrayにpush
 function addAllWithTA(worktimes) {
-	if ($('#interterm_checkbox').prop('checked')){
-		for (var hmk in splitByHalfMonth(worktimes)){
-			addHalfMonthWt(obj[hmk]);
+	if ($('#inter_term_checkbox').prop('checked')){
+		obj = splitByHalfMonth(worktimes);
+  for (var hmk in obj){
+		addHalfMonthWt(obj[hmk]);
 		}
 	} else {
 		addHalfMonthWt(worktimes);
@@ -1035,8 +1036,8 @@ function setCalcSalaryModalContent(){
 		var pension = Math.round( wholeGivenYen * 0.0915 * deductArray[emp][3] ); // 厚生年金保険料率は18.30%で自己負担はその半分。
 		var union = Math.round( 700 * deductArray[emp][4] ); //一律700円だよ
 
-		var deduction = empIns + healthInsS + healthInsB + pension + union; //交通費は課税対象じゃないはずが明細見てる限りなぜか課税対象
-		var taxable = wholeGivenYen - deduction;
+		var deduction = empIns + healthInsS + healthInsB + pension + union;
+		var taxable = wholeGivenYen - union - transPay - chgCostume;
 
 		var taxArray = [0,88000,89000,90000,91000,92000,93000,94000,95000,96000,99000];
 
@@ -1080,7 +1081,7 @@ function setCalcSalaryModalContent(){
 		wholeOmittedYen = deduction + tax;
 
 		var _a = new Array();
-    	_a.push('<span class="aaa">' + '支給計: ' + insertComma(Math.round(wholeGivenYen)) + '円');
+    _a.push('<span class="aaa">' + '支給計: ' + insertComma(Math.round(wholeGivenYen)) + '円');
 		_a.push('<span class="bbb">' + '基本給: ' + insertComma(Math.round(wholeBaseSalary)) + '円');
 		_a.push('<span class="bbb">' + '深夜早朝手当: ' + insertComma(Math.round(wholeMidnightBonus)) + '円');
 		_a.push('<span class="bbb">' + '時間外手当: ' + insertComma(Math.round(wholeLongBonus)) + '円');
@@ -1094,10 +1095,11 @@ function setCalcSalaryModalContent(){
 			_a.push('<span class="bbb">' + '健保特定保険: ' + insertComma(healthInsS) + '円');
 			_a.push('<span class="bbb">' + '厚生年金保険: ' + insertComma(pension) + '円');
 		}
+		_a.push('<span class="bbb">' + '課税対象: ' + insertComma(Math.round(taxable)) + '円');
+		_a.push('<span class="bbb">' + '所得税: ' + insertComma(tax) + '円');
 		if(emp == 0){
 			_a.push('<span class="bbb">' + '組合費: ' + insertComma(union) + '円');
 		}
-		_a.push('<span class="bbb">' + '所得税: ' + insertComma(tax) + '円');
 		_a.push('<span class="aaa">' + '勤怠関連')
     	_a.push('<span class="bbb">' + '出勤日数: ' + days.length + '日');
     	_a.push('<span class="bbb">' + '休日日数: ' + (monthday(full_year, month) - days.length) + '日');
