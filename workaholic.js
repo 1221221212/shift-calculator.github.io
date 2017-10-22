@@ -1037,7 +1037,7 @@ function setCalcSalaryModalContent(){
 		var union = Math.round( 700 * deductArray[emp][4] ); //一律700円だよ
 
 		var deduction = empIns + healthInsS + healthInsB + pension + union;
-		var taxable = wholeGivenYen - union - transPay - chgCostume;
+		var taxable = wholeGivenYen - deduction - transPay - chgCostume;
 
 		var taxArray = [0,88000,89000,90000,91000,92000,93000,94000,95000,96000,99000];
 
