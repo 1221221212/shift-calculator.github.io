@@ -62,7 +62,7 @@ you cannot:
     .modal select[data-opt]{max-width: 100px}
     .aaa{padding-left: .5rem; font-size: 0.9rem;}
     .bbb{padding-left: 1rem; font-size: 0.8rem;}
-    .aaa, .bbb{display: block;}
+    .aaa, .bbb{display: block; text-align: left}
     .monthData small{display: block;}
     .fpickr-invalid {background-color: #ffe5e5 !important;border-color: #fcb3b3 !important}
     .fpickr-valid {background-color: #f1ffef !important;border-color: #b6e0b1 !important}
@@ -162,6 +162,56 @@ you cannot:
                   このため,Google Analyticsから提供されるトラッキングコードを活用してユーザーのアクセス情報を取得していますが,Googleが収集する情報は匿名のトラフィックデータであり,個人を特定する情報ではありません。
                   これらの情報について,当サイトではもっぱらサイトの質の向上を図り,より良いサービスを利用者に提供するためにだけに活用していますので,ご了承願います。
                 </p>
+              </div>
+            </div>
+          </div>
+        </div>
+        <span class="b">・</span>
+        <a href="" data-toggle="modal" data-target="#methodModal">仕様</a>
+        <div class="modal fade" id="methodModal" tabindex="-1" role="dialog" aria-labelledby="methodModal" aria-hidden="true">
+          <div class="modal-dialog" role="document">
+            <div class="modal-content">
+              <div class="modal-header">
+                <h5 class="modal-title" id="ToSModalTitle">仕様</h5>
+                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                  <span aria-hidden="true">&times;</span>
+                </button>
+              </div>
+              <div class="modal-body">
+                <div class="MethodBody">
+                <p class="aaa">・使える形式</p>
+                <p class="bbb">
+                  MM/DD(WW)　<br>
+                  HH:MM-HH:MM<br>
+                月、日、曜日、開始時間と終了時間が以上の形式で入っていること。<br>
+                １日に２回以上の勤務があっても使えます。ただし、終了時間と次の勤務の開始時間が同時刻の場合は、一本の勤務として計算します。
+                </p>
+                <p class="aaa">・計算方法</p>
+                <p class="bbb">
+                終了時間から開始時間までの時間差分を拘束時間とします。<br>
+                拘束時間が<br>
+                0時間以上4時間30分未満 →　0分<br>
+                4時間30分以上6時間未満 →　30分<br>
+                6時間以上7時間未満 → 45分<br>
+                7時間以上12時間未満 → 1時間<br>
+                12時間以上 → 2時間<br>
+                の休憩時間を与え、拘束時間から休憩時間を引いたものを実働時間をして表示します。<br>
+                みなさんが反映したシフトを元に計算を行っており、みなさんがシフトを反映しない場合や、欠勤、遅刻、早退、勤務の一部または全部の解消、残業など、シフトに反映されない場合は、その値を考慮することができません。<br>
+                より正確な値を得るためには、時間を手動で編集する機能を使い、正確な勤務時間を反映してください。
+                <p class="aaa">・特徴</p>
+                <p class="bbb">
+                  ローカルストレージにデータを保持します。閲覧履歴の削除時などに同時にデータが削除される恐れがあるのでご注意ください。<br>
+                  主にモバイル端末での仕様を想定しています。 PCやタブレットでも使用可能です。<br>
+                </p>
+                <p class="aaa">・動作確認</p>
+                <p class="bbb">
+                  Google Chrome (Windows/iPhone/Mac)<br>
+                  Firefox (Windows/Mac)<br>
+                  Internet Explorer 11<br>
+                </p>
+              </p>
+              <p class="bbb">その他、質問、要望などありましたら、ご気軽に「作者へ」の欄からお申し付けください。</p>
+              </div>
               </div>
             </div>
           </div>
@@ -566,7 +616,7 @@ you cannot:
                 <label class="custom-control custom-checkbox" style="margin: 0">
                   <input type="checkbox" class="custom-control-input" onchange="transDisable(this);checkSalarySettingValidity();" name="highschool" autoload id="hs_student_checkbox">
                   <span class="custom-control-indicator"></span>
-                  <span class="custom-control-description">学校年度年齢18歳以下はチェック</span>
+                  <span class="custom-control-description">学校年度年齢18歳以下</span>
                 </label>
               </td>
             </tr>
@@ -629,14 +679,10 @@ you cannot:
       <div class="modal-body">
         <p class="aaa">支給面</p>
         <p class="bbb">
-          ・基本給 = <br>
-          &ensp;&ensp;時給 * 実働時間<br>
-          ・時間外手当 = <br>
-          &ensp;&ensp;時給の25% * 8時間を超えの勤務時間<br>
-          ・深夜早朝手当 = <br>
-          &ensp;&ensp;時給の25% * 22:00~翌06:00の勤務時間<br>
-          ・着替手当 = <br>
-          &ensp;&ensp;250 * 勤務日数<br>
+          ・基本給 = 時給 * 実働時間<br>
+          ・時間外手当 = 時給の25% * 8時間を超えの勤務時間<br>
+          ・深夜早朝手当 = 時給の25% * 22:00~翌06:00の勤務時間<br>
+          ・着替手当 = 250 * 勤務日数<br>
           ・交通費(学校年度年齢18未満以下は0)<br>
            &ensp;＜レギュラーの場合＞<br>
            &ensp;&nbsp;その月が入力した支給月の場合→定期代
@@ -644,23 +690,22 @@ you cannot:
            &ensp;＜その他＞<br>
            &ensp;&nbsp;交通費 * 勤務日数<br>
            &ensp;&nbsp;30000円を超える場合は30000円。<br>
+           上記のうち交通費と着替手当以外を課税対象支給額とする。
         </p>
         <p class="aaa">控除面</p>
         <p class="bbb">
-          上記の支給額の合計をxxとする。　<br>40歳未満の扶養家族0人の人を想定する。<br>
+          上記の支給額の合計をxxとする。標準報酬額は用いない。<br>40歳未満の扶養家族0人の人を想定する。<br>
           &ensp;＜レギュラー　カジュラーのみ＞<br>
-          &emsp;・雇用手当 = xx * 0.3%<br>
-          &emsp;&ensp;（雇用保険法等の一部を改正する法律を参照）<br>
+          &emsp;・雇用保険 = xx * 0.3%<br>
           &emsp;・健保基本保険料 = xx * 3.2%<br>
-          &emsp;&ensp;（大阪府の協会けんぽが制定する保険料率を参照）<br>
           &emsp;・健保特定保険料 = xx * 1.865%<br>
           &emsp;&ensp;（同上）<br>
+          &emsp;・厚生年金保険 = xx * 9.15%<br>
           &ensp;＜レギュラーのみ＞<br>
           &emsp;・組合費 = 一律700円<br>
           &ensp;＜全員＞<br>
           &emsp;・所得税<br>
-          &ensp;&ensp;課税対象支給額から社会保険料などを差し引きいたものを課税対象額とする。<br>&ensp;&ensp;その上で給与所得の源泉徴収税額表の甲欄を参照。<br>
-          &emsp;&ensp;平成24年3月31日財務省告示第115号別表第一<br>&emsp;&ensp;（平成28年３月31日財務省告示第105号改正）
+          &ensp;&ensp;給与所得の源泉徴収税額表の甲欄を参照。<br>
         </p>
         <p class="aaa">注意事項</p>
         <p class="bbb">
