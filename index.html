@@ -596,19 +596,28 @@ you cannot:
             <tr>
               <th style="min-width: 100px;">時給</th>
               <td class="form-group form-inline" style="margin-bottom: 0">
-                <input type="number" class="form-control" id="hourWage" style="max-width:10em;margin-right: .8em" autoload onchange="checkSalarySettingValidity();">円
+                <input type="number" class="form-control" id="hourWage" style="max-width:7em;margin-right: .8em" autoload onchange="checkSalarySettingValidity();">円
               </td>
             </tr>
             <tr>
               <th>交通費</th>
               <td class="form-group">
-                <div class="form-inline">
-                  <input type="number" class="form-control" id="trans" style="max-width:10em;margin-right: .8em" autoload onchange="checkSalarySettingValidity();">円
+                <div id="forNonRegular">
+                  <div class="form-inline" style="margin:.5em 0">
+                    往復<input type="number" class="form-control" id="trans" style="max-width:7em;margin-right: .8em;margin-left: .8em;" autoload onchange="checkSalarySettingValidity();">円
+                  </div>
+                  <div class="form-inline"  style="margin:.5em 0">
+                    定期代<input type="number" class="form-control" id="one_month_fee" style="max-width:7em;margin-right: .8em;margin-left: .8em;" autoload onchange="checkSalarySettingValidity();">円
+                    <small class="text-muted" style="margin-left:.8em;">
+                      1ヶ月の定期代を入力してください。
+                    </small>
+                  </div>
+                  </div>
                 </div>
                 <p class="form-group form-inline" id="forRegular" style="margin:.5em 0">
                   支給月(どちらか一方)
-                  <select data-opt="month" class="form-control" style="margin:0 .8em;" id="fee_provide_month" autoload onchange="checkSalarySettingValidity();"></select>
-                  <input type="number" class="form-control" id="six_month_fee" style="max-width:10em;" autoload onchange="checkSalarySettingValidity();">
+                  <select data-opt="month" class="form-control" style="margin:.5em;" id="fee_provide_month" autoload onchange="checkSalarySettingValidity();"></select>
+                  <input type="number" class="form-control" id="six_month_fee" style="max-width:7em;margin:.5em;"" autoload onchange="checkSalarySettingValidity();">円
                   <small class="text-muted" style="margin-left:.8em;">
                     6ヶ月の定期代を入力してください。
                   </small>
@@ -626,22 +635,22 @@ you cannot:
                 <div class="employmentPattern">
                   <div class="custom-controls-stacked d-block my-1">
                     <label class="custom-control custom-radio">
-                      <input type="radio" value="0" name="employmentPattern" id="regular" class="custom-control-input" autoload onchange="$('#forRegular').fadeIn();checkSalarySettingValidity();"><!--どうやらcheckが入ったときのみonchangeは発火。コレを使う-->
+                      <input type="radio" value="0" name="employmentPattern" id="regular" class="custom-control-input" autoload onchange="$('#forRegular').fadeIn();checkSalarySettingValidity();$('#forNonRegular').fadeOut();checkSalarySettingValidity();"><!--どうやらcheckが入ったときのみonchangeは発火。コレを使う-->
                       <span class="custom-control-indicator"></span>
                       <span class="custom-control-description">Regular</span>
                     </label>
                     <label class="custom-control custom-radio">
-                      <input type="radio" value="1" name="employmentPattern" id="casular" class="custom-control-input" onchange="$('#forRegular').fadeOut();checkSalarySettingValidity();">
+                      <input type="radio" value="1" name="employmentPattern" id="casular" class="custom-control-input" onchange="$('#forRegular').fadeOut();checkSalarySettingValidity();$('#forNonRegular').fadeIn();checkSalarySettingValidity();">
                       <span class="custom-control-indicator"></span>
                       <span class="custom-control-description">Casular</span>
                     </label>
                     <label class="custom-control custom-radio">
-                      <input type="radio" value="2" name="employmentPattern" id="casual" class="custom-control-input" onchange="$('#forRegular').fadeOut();checkSalarySettingValidity();">
+                      <input type="radio" value="2" name="employmentPattern" id="casual" class="custom-control-input" onchange="$('#forRegular').fadeOut();checkSalarySettingValidity();$('#forNonRegular').fadeIn();checkSalarySettingValidity();">
                       <span class="custom-control-indicator"></span>
                       <span class="custom-control-description">Casual</span>
                       </label>
                     <label class="custom-control custom-radio">
-                      <input type="radio" value="3" name="employmentPattern" id="seasonal" class="custom-control-input" onchange="$('#forRegular').fadeOut();checkSalarySettingValidity();">
+                      <input type="radio" value="3" name="employmentPattern" id="seasonal" class="custom-control-input" onchange="$('#forRegular').fadeOut();checkSalarySettingValidity();$('#forNonRegular').fadeIn();checkSalarySettingValidity();">
                       <span class="custom-control-indicator"></span>
                       <span class="custom-control-description">Seasonal</span>
                     </label>
@@ -720,7 +729,7 @@ you cannot:
         <p class="aaa">注意事項</p>
         <p class="bbb">
           この機能は、みなさんの入力したシフトに基づき給与を概算するものであり、みなさんの給与を保証するものではありません。<br>
-          欠勤、遅刻、早退、勤務の一部または全部の解消、残業などを考慮することができません。それゆえに大きな誤差が生まれることもあります。しかし当サイトには勤務時間を自動で変更したり、勤務を追加・削除する機能が備わっています。それを利用して誤差を小さくすることはできます。
+          欠勤、遅刻、早退、勤務の一部または全部の解消、残業などを考慮することができません。それゆえに大きな誤差が生まれることもあります。しかし当サイトには勤務時間を手動で変更したり、勤務を追加・削除する機能が備わっています。それを利用して誤差を小さくすることはできます。
       </div>
       <div class="modal-footer">
         <button type="button" class="btn btn-outline-secondary" data-dismiss="modal">Close</button>
@@ -1006,6 +1015,7 @@ function clearForm(){
 function transDisable(check){
   //document.getElementById('trans').disabled = check.checked;
   $('#trans').prop('disabled', $(check).prop('checked'));
+  $('#one_month_fee').prop('disabled', $(check).prop('checked'));
   //とやってることは一緒だが、それぞれのDOMは別物のオブジェクトとして定義されているため
   //document.getElementById('trans').attr()とか
   //$('#trans').disabledとかはできない

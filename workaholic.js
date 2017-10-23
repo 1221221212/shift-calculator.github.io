@@ -899,6 +899,7 @@ function getWtFromSels(daykey, wrapper) {
 function checkSalarySettingValidity(){
 	var emp = parseInt($("input[name=employmentPattern]:checked").val());
 	var ready = checkNumberInput($('#hourWage'));
+	ready = checkNumberInput($('#one_month_fee')) && ready;
 	//ready = checkNumberInput($('#fee_provide_month')) && ready;
 	if (emp == 0) ready = checkNumberInput($('#six_month_fee')) && ready;
 	ready = checkNumberInput($('#trans')) && ready;
@@ -925,6 +926,8 @@ function launchSalaryModal(btnElem){
 function setSalarySettingModalContent() {
 	if (!$('#regular').prop('checked')) {
 		$('#forRegular').css('display', 'none');
+	}else{
+		$('#forNonRegular').css('display', 'none');
 	}
 }
 
@@ -945,6 +948,7 @@ function setCalcSalaryModalContent(){
     var hourWage = parseInt($('#hourWage').val());//整数
 	var fee_provide_month = parseInt($('#fee_provide_month').val());//整数
 	var six_month_fee = parseInt($('#six_month_fee').val());//整数
+	var one_month_fee = parseInt($('#one_month_fee').val());//整数
 	var isHSStudent = $('#hs_student_checkbox').prop('checked');// true or false
 	var trans = parseInt($('#trans').val());
 	var emp = parseInt($("input[name=employmentPattern]:checked").val());
@@ -1006,14 +1010,16 @@ function setCalcSalaryModalContent(){
 			transPay = six_month_fee;
 		}else if(emp == 0 ){
 			transPay = 0;
-		}else if(emp ==1 || 2 || 3){
-			transPay = trans * days.length;
+		}else if(emp == 1 || 2 || 3){
+			if(days.length < 17){
+				transPay = trans * days.length;
+			}else if(days.length >= 17){
+				transPay = one_month_fee
+			}
 			if(transPay >= 30000){
 				transPay = 30000;
 			}
 		}
-
-
 
 		chgCostume = 200 * days.length;
 
