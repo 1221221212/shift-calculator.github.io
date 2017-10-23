@@ -986,18 +986,21 @@ function setCalcSalaryModalContent(){
     		var actualWorkingHour =  wt.getActualMin()/60;
     		//実働時間. (拘束時間-休憩時間)
     		var baseSalary = actualWorkingHour * hourWage;
-    		//基本給 = 実質労働時間 * 時給
-    		var longBonus = actualWorkingHour > 8 ? (actualWorkingHour - 8) * hourWage * 0.25 : 0;
-    		//時間外手当[円] = 実働時間[h] > 8 なら (実働時間[h] - 8) * 時給 * 0.25 、そうじゃないなら 0;
+				if (actualWorkingHour >= 8){
+					baseSalary = 8 * hourWage;
+				}
+    		//基本給 = 実質労働時間(8時間以下の分) * 時給
+    		var longBonus = actualWorkingHour > 8 ? (actualWorkingHour - 8) * hourWage * 1.25 : 0;
+    		//時間外手当[円] = 実働時間[h] > 8 なら (実働時間[h] - 8) * 時給 * 1.25 、そうじゃないなら 0;
     		var midnightBonus = wt.getMidnightMin()/60 * hourWage * 0.25;
     		//深夜手当[円] = 22時から6時までの労働時間[h] * 時給 * 0.25;
     		wholeGivenYen += baseSalary + longBonus + midnightBonus;
     		//支給額計[円] += ____
     		wholeMidnightBonus += midnightBonus;
-			wholeMidnightHours += wt.getMidnightMin()/60;
+				wholeMidnightHours += wt.getMidnightMin()/60;
     		wholeBaseSalary += baseSalary;
     		wholeLongBonus += longBonus;
-			wholeLongHours += actualWorkingHour > 8 ? (actualWorkingHour - 8) : 0;
+				wholeLongHours += actualWorkingHour > 8 ? (actualWorkingHour - 8) : 0;
     	}//勤務時間オブジェごとの処理はココまで
 
 		var _s = monthkey.split('/');
@@ -1104,6 +1107,11 @@ function setCalcSalaryModalContent(){
 			    }
 			}
 		}
+		if(mainwork == 1 && taxable < 88000 && taxable >= 50000){
+			tax = taxable * 0.03063;
+		}else if(mainwork == 1 && taxable < 50000){
+			tax = 0;
+		}
 		//console.log(taxArray.length) -> 101
 
 		//控除額計
@@ -1125,7 +1133,7 @@ function setCalcSalaryModalContent(){
 			_a.push('<span class="bbb">' + '厚生年金保険: ' + insertComma(pension) + '円');
 		}
 		_a.push('<span class="bbb">' + '課税対象: ' + insertComma(Math.round(taxable)) + '円');
-		_a.push('<span class="bbb">' + '所得税: ' + insertComma(tax) + '円');
+		_a.push('<span class="bbb">' + '所得税: ' + insertComma(Math.round(tax)) + '円');
 		if(emp == 0){
 			_a.push('<span class="bbb">' + '組合費: ' + insertComma(union) + '円');
 		}
