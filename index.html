@@ -1,0 +1,1042 @@
+<!DOCTYPE html>
+<html lang="ja">
+<!--
+made by yudai takegawa & naoki iwasa
+(c) 2017 all rights reserved
+
+you can:
+ - distribute
+ - modify
+you cannot:
+ - commercial use
+-->
+<head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1, user-scalable=no">
+    <title>Workaholic</title>
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0-beta/css/bootstrap.min.css" integrity="sha384-/Y6pD6FV/Vv2HJnA6t+vslU6fwYXjCFtcEpHbNJ0lyAFsXTsjBbfaDjzALeQsN6M" crossorigin="anonymous">
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/flatpickr/dist/flatpickr.min.css">
+	  <link rel="stylesheet" type="text/css" href="https://npmcdn.com/flatpickr/dist/themes/material_red.css">
+    <link href="https://fonts.googleapis.com/css?family=Londrina+Outline" rel="stylesheet">
+	  <link rel="stylesheet" type="text/css" href="material_green_modified.css">
+    <style>
+    * {font-size: 14px;}
+	  button.close span{font-size: 18px !important}
+    .pointer, button, label, .listup, .listcont, .monthData{cursor: pointer;}
+    #container{padding-bottom: 3em}
+    #nextBox,#nextOfNextBox,#shiftTable{display: none;}
+    .btn-primary{background-color: #01917b;border-color: #01917b;}
+    .btn-primary:hover{background-color: #007a67;border-color: #007a67;}
+    .btn-outline-primary{border-color: #01917b;color: #007a67;}
+    .btn-outline-primary:hover{background-color: #01917b;border-color: #01917b;}
+    .btn-primary.disabled,.btn-primary:disabled,.btn-primary.disabled:hover,.btn-primary:disabled:hover{background-color:#7bada6;border-color:#7bada6;cursor: default;}
+	  .btn-primary:focus, .btn-primary.focus, .btn-outline-primary:focus, .btn-vprimary.focus {box-shadow: 0 0 0 3px rgba(1, 145, 123, 0.5);}
+	  .is-valid{background-color: #d4edda}
+	  .is-invalid{background-color: #f8d7da}
+    footer{
+        font-size: .6em;
+        width: 100%;
+        text-align: center;
+        padding-top: 15px;
+        padding-bottom: 10px;
+        background-color: #01917b;
+    }
+    footer small, footer a{color: #fff;}
+    footer a{text-decoration: underline;}
+    iframe{display: none}
+    .b{color: white;}
+    a{color: #01917b;}
+    .form-control-sm{font-size: 1em}
+    .form-inline-input input{margin-bottom: .3em;}
+    #nextBox{border: 1px solid #d5e2db;border-left: 5px solid #01917b;padding: 2em;}
+    #nextBox h3{font-size: 22px}
+    #nextBox p, #nextBox a{font-size: 26px;text-decoration: underline;}
+    #nextOfNextBox {font-size: 1.1em;margin:.8em 0;}
+    #nextOfNextWork, #nextOfNextWork a {font-size: 19px;text-decoration: underline;}
+    #thanks{display:none;position: fixed;bottom: 1em;left: 1em;}
+    .remove{color: #D53B5A;cursor: pointer;}
+    .monthData:hover, .remove:hover, .listup:hover, .listcont:hover{background-color: #eee;transition: background-color 0.3s ease 0s;}
+    .listcont{padding:.8em;display: inline-block;}
+    .buttons button{margin-bottom: 1em}
+    .undo{cursor: pointer;text-decoration: underline;}
+    .modal select[data-opt]{max-width: 100px}
+    .aaa{padding-left: .5rem; font-size: 0.9rem;}
+    .bbb{padding-left: 1rem; font-size: 0.8rem;}
+    .aaa, .bbb{display: block; text-align: left}
+    .monthData small{display: block;}
+    .fpickr-invalid {background-color: #ffe5e5 !important;border-color: #fcb3b3 !important}
+    .fpickr-valid {background-color: #f1ffef !important;border-color: #b6e0b1 !important}
+    .display-4{font-family: 'Londrina Outline', cursive; font-size: 5rem;}
+    .TosBody{text-align: justify;}
+    #ToSModal a{color: rgb(68, 68, 68);}
+    </style>
+    <script>
+      (function(i,s,o,g,r,a,m){i['GoogleAnalyticsObject']=r;i[r]=i[r]||function(){
+      (i[r].q=i[r].q||[]).push(arguments)},i[r].l=1*new Date();a=s.createElement(o),
+      m=s.getElementsByTagName(o)[0];a.async=1;a.src=g;m.parentNode.insertBefore(a,m)
+      })(window,document,'script','https://www.google-analytics.com/analytics.js','ga');
+
+      ga('create', 'UA-105309611-1', 'auto');
+      ga('send', 'pageview');
+    </script>
+</head>
+
+<body onload="init()">
+<!-- container -->
+<div class="container" id="container">
+
+
+
+<h1 class="display-4">Workaholic</h1>
+
+<div id="alert"></div>
+
+<!-- TEXTBOX TO C&P SHIFT TABLE -->
+<textarea id="shiftBox" class="form-control" placeholder="シフト表を全選択してコピー&ペースト..." rows=7 style="margin-bottom: 1em"></textarea>
+
+<div class="form-group form-inline" style="margin-bottom: 2.5em">
+  <select class="form-control" id="yearSel" style="margin-right: .8em;margin-bottom: .5em;max-width:7em;" data-opt="year"></select>
+	<button type="button" class="btn btn-primary" onclick="addWTWithTA()" style="margin-bottom: .5em">シフトを追加/上書き</button>
+</div>
+
+<div style="margin-bottom: 3em;">
+	<div id="nextBox" class="rounded">
+    <h3>次の出勤日:</h3>
+    <p style="margin:0;" id="nextWork"></p>
+  </div>
+	<div id="nextOfNextBox">
+    その次:
+    <span id="nextOfNextWork"></span>
+  </div>
+	<p style="font-size: .8em;">tips: 経路情報を登録しておくと、自動でYahoo路線で経路検索できます。</p>
+</div>
+
+<table class="table" style="margin-bottom:3em;width: 100%;max-width: 700px" id="shiftTable">
+	<thead class="thead-default">
+	    <tr><th>#</th><th>期間</th><th>時間</th><th>日数</th><th>回数</th></tr>
+	</thead>
+	<tbody id="shiftList">
+	</tbody>
+</table>
+
+
+<div class="buttons">
+	<button type="button" class="btn btn-outline-primary" onclick="$('#settingsModal').modal()">設定</button>
+	<button type="button" class="btn btn-outline-primary" onclick="checkAddWtModalValidity();$('#addWTModal').modal()">手動で勤務時間を表に追加</button>
+	<button id="routeSetting" type="button" class="btn btn-outline-primary" onclick="setRouteModalFromLS();checkTransitModalValidity();$('#routeModal').modal();">経路検索の設定</button>
+	<button type="button" class="btn btn-outline-primary" onclick="setSalarySettingModalContent();$('#salarySettingModal').modal()">給与概算設定</button>
+  <button id="salaryLaunchButton" type="button" class="btn btn-outline-primary" onclick="launchSalaryModal(this)">給与概算</button>
+</div>
+
+
+
+<!-- #THANKS -->
+<div class="alert alert-success" role="alert" id="thanks" style="display: none">thank you : )</div>
+
+
+</div>
+<!-- /container -->
+
+
+
+<!-- footer -->
+<footer>
+        <a href="" data-toggle="modal" data-target="#ToSModal">利用規約</a>
+        <div class="modal fade" id="ToSModal" tabindex="-1" role="dialog" aria-labelledby="ToSModalTitle" aria-hidden="true">
+          <div class="modal-dialog" role="document">
+            <div class="modal-content">
+              <div class="modal-header">
+                <h5 class="modal-title" id="ToSModalTitle">利用規約</h5>
+                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                  <span aria-hidden="true">&times;</span>
+                </button>
+              </div>
+              <div class="modal-body">
+                <p class="ToSBody">
+                  &emsp;当サイトの利用者は以下の事項を理解した上で利用していただきます。本規約は,当サイトのの利用に関わる一切の関係に適用されるものとします。<br>
+                  &emsp;当サイトは、特定の人物,団体,企業等と関与を持つものではありません。
+                  当サイトは，利用者に通知することなく，本サービスの内容を変更しまたは本サービスの提供を中止することができるものとし，これによって利用者に生じた損害について一切の責任を負いません。
+                  当サイトは,細心の注意を払って運営しておりますが,この情報の正確性および完全性を保証するものではありません。
+                  当方は、利用者が当サイトに含まれる情報もしくは内容をご利用されたことで直接・間接的に生じた損失に関し一切責任を負うものではありません。<br>
+                  &emsp;当サイトではサイトの利用状況を把握するために,<a href="https://www.google.com/analytics/#?modal_active=none" target="_blank">Google Analytics</a>に登録しています。
+                  このため,Google Analyticsから提供されるトラッキングコードを活用してユーザーのアクセス情報を取得していますが,Googleが収集する情報は匿名のトラフィックデータであり,個人を特定する情報ではありません。
+                  これらの情報について,当サイトではもっぱらサイトの質の向上を図り,より良いサービスを利用者に提供するためにだけに活用していますので,ご了承願います。
+                </p>
+              </div>
+            </div>
+          </div>
+        </div>
+        <span class="b">・</span>
+        <a href="" data-toggle="modal" data-target="#methodModal">仕様</a>
+        <div class="modal fade" id="methodModal" tabindex="-1" role="dialog" aria-labelledby="methodModal" aria-hidden="true">
+          <div class="modal-dialog" role="document">
+            <div class="modal-content">
+              <div class="modal-header">
+                <h5 class="modal-title" id="ToSModalTitle">仕様</h5>
+                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                  <span aria-hidden="true">&times;</span>
+                </button>
+              </div>
+              <div class="modal-body">
+                <div class="MethodBody">
+                <p class="aaa">・使える形式</p>
+                <p class="bbb">
+                  MM/DD(WW)　<br>
+                  HH:MM-HH:MM<br>
+                月、日、曜日、開始時間と終了時間が以上の形式で入っていること。<br>
+                １日に２回以上の勤務があっても使えます。ただし、終了時間と次の勤務の開始時間が同時刻の場合は、一本の勤務として計算します。
+                </p>
+                <p class="aaa">・計算方法</p>
+                <p class="bbb">
+                終了時間から開始時間までの時間差分を拘束時間とします。<br>
+                拘束時間が<br>
+                0時間以上4時間30分未満 →　0分<br>
+                4時間30分以上6時間未満 →　30分<br>
+                6時間以上7時間未満 → 45分<br>
+                7時間以上12時間未満 → 1時間<br>
+                12時間以上 → 2時間<br>
+                の休憩時間を与え、拘束時間から休憩時間を引いたものを実働時間として表示します。<br>
+                みなさんが反映したシフトを元に計算を行っており、みなさんがシフトを反映しない場合や、欠勤、遅刻、早退、勤務の一部または全部の解消、残業など、シフトに反映されない場合は、その値を考慮することができません。<br>
+                より正確な値を得るためには、時間を手動で編集する機能を使い、正確な勤務時間を反映してください。
+                <p class="aaa">・特徴</p>
+                <p class="bbb">
+                  ローカルストレージにデータを保持します。閲覧履歴の削除時などに同時にデータが削除される恐れがあるのでご注意ください。<br>
+                  主にモバイル端末での仕様を想定しています。 PCやタブレットでも使用可能です。<br>
+                </p>
+                <p class="aaa">・動作確認</p>
+                <p class="bbb">
+                  Google Chrome (Windows/iPhone/Mac)<br>
+                  Firefox (Windows/Mac)<br>
+                  Internet Explorer 11<br>
+                </p>
+              </p>
+              <p class="bbb">その他、質問、要望などありましたら、ご気軽に「作者へ」の欄からお申し付けください。</p>
+              </div>
+              </div>
+            </div>
+          </div>
+        </div>
+        <span class="b">・</span>
+        <a href="" data-toggle="modal" data-target="#ChangeLogModal">更新履歴</a>
+        <div class="modal fade" id="ChangeLogModal" tabindex="-1" role="dialog" aria-labelledby="ChangeLogModalTitle" aria-hidden="true">
+          <div class="modal-dialog" role="document">
+            <div class="modal-content">
+              <div class="modal-header">
+                <h5 class="modal-title" id="ChangeLogModalTitle">更新履歴</h5>
+                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                  <span aria-hidden="true">&times;</span>
+                </button>
+              </div>
+              <div class="modal-body">
+                <p>
+                2017.10.22 v.2.0.1<br>
+                大規模アップデート。給与計算を実装。<br>
+                2017.10.12 v.1.1.5<br>
+                給与計算の実装に向けた準備を行いました。<br>
+                2017.10.11 v.1.1.4<br>
+                実働日数、勤務回数を表示しました。<br>
+                2017.9.30  v.1.1.3<br>
+                デザインを向上しました。<br>
+                2017.9.29  v.1.1.2<br>
+                出勤経路検索を改善しました。<br>
+                モバイルへのリンクを設置しました。<br>
+                2017.9.9   v.1.1.1<br>
+                作者へのコンタクトフォームを実装しました。<br>
+                2017.9.7   v.1.0.1<br>
+                更新履歴を開始しました。<br>
+              </p>
+              </div>
+            </div>
+          </div>
+        </div>
+        <span class="b">・</span>
+        <a href="" data-toggle="modal" data-target="#ContactModal" onClick="clearForm()">作者へ</a>
+        <div class="modal fade" id="ContactModal" tabindex="-1" role="dialog" aria-labelledby="ContactModalLabel" aria-hidden="true">
+          <div class="modal-dialog" role="document">
+            <div class="modal-content">
+              <div class="modal-header">
+                <h5 class="modal-title" id="ContactModalLabel">作者へ</h5>
+                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                  <span aria-hidden="true">&times;</span>
+                </button>
+              </div>
+              <div class="modal-body">
+                <form action="https://docs.google.com/forms/d/e/1FAIpQLSeFOneYAejrfWEDs_w3HZ4ZY7yxcbNSXax3rLYxGkb0UgQX0g/formResponse" method="POST" target="iframe_hidden" onSubmit="return check()">
+                  <span class=" glyphicon glyphicon-user">Name ※required</span>
+                  <div class="form-group">
+                    <input type="text" name="entry.1205454870" class="form-control" required>
+                  </div>
+                  <span class="glyphicon glyphicon-envelope">Email</span>
+                  <div class="form-group">
+                    <input type="email" name="entry.1410027005" class="form-control">
+                  </div>
+                  <span class=" glyphicon glyphicon glyphicon-pencil">Message ※required</span>
+                  <div class="form-group">
+                    <textarea name="entry.1685385619" class="form-control" rows="9" required id="Message"></textarea>
+                  </div>
+                  <p class="modalBody">返信が必要な場合はEmailを入力してください。返信できない場合もあります。</p>
+                  <div class="form-group">
+                    <button class="btn btn-primary" id="submit">
+                      Send
+                    </button>
+                  </div>
+                </form>
+                <iframe name="iframe_hidden"></iframe>
+              </div>
+            </div>
+          </div>
+        </div>
+        <span class="b">・</span>
+        <a href="https://crew-pn.usjc.co.jp/cws/mbl/Menu-1" target="_blank">モバイル</a>
+        <br>
+        <small>Copyright &copy; 2017 Naoki Iwasa All Rights Reserved.<br>last updated at 2017.10.12 v.1.1.5<br>special thanks for Yudai Takegawa<br></small>
+</footer>
+<!-- /footer -->
+
+
+<!-- WORKTIME LIST MODAL -->
+<div class="modal fade" id="listWTModal" tabindex="1" role="dialog">
+  <div class="modal-dialog modal-lg" role="document">
+    <div class="modal-content">
+      <div class="modal-header">
+        <h5 class="modal-title">勤務時間リスト</h5>
+        <button type="button" class="close" data-dismiss="modal">
+          <span aria-hidden="true">&times;</span>
+        </button>
+      </div>
+      <div class="modal-body">
+      	<p class="text-secondary" id="wtListModalTitle">{mo}月の勤務時間リストです。</p>
+      	<div id="wtlist">
+      		<div class="pointer" onclick="$('#editWTModal').modal()">
+      			<div><strong>{Y}/{mo}/{d} ({dy})</strong></div>
+      			<div>勤務時間: {s}-{f}</div>
+      			<div>実働時間: {act}h</div>
+      		</div>
+      	</div>
+      </div>
+      <div class="modal-footer">
+        <button type="button" class="btn btn-outline-secondary" data-dismiss="modal">閉じる</button>
+      </div>
+    </div>
+  </div>
+</div>
+<!-- /WORKTIME LIST MODAL -->
+
+
+
+
+<!-- EDIT WORKTIME MODAL -->
+<div class="modal fade" id="editWTModal" tabindex="0" role="dialog">
+  <div class="modal-dialog modal-lg" role="document">
+    <div class="modal-content">
+      <div class="modal-header">
+        <h5 class="modal-title">勤務時間を編集</h5>
+        <button type="button" class="close" data-dismiss="modal">
+          <span aria-hidden="true">&times;</span>
+        </button>
+      </div>
+      <div class="modal-body">
+      	<p class="text-secondary">勤務時間を編集します。</p>
+        <div class="form-group">
+          <input type="text" class="form-control alert" id="editModal_date" readonly="">
+        </div>
+        <div id="editModal_repeat" data-key="1960/5/10">
+          <div>
+            <div class="input-group" style="margin-bottom: .5em" role="start">
+              <div class="input-group-addon">開始時刻</div>
+              <select data-opt="hour" class="form-control"></select>
+              <div class="input-group-addon">時</div>
+              <select data-opt="min" class="form-control"></select>
+              <div class="input-group-addon">分</div>
+            </div>
+            <div class="input-group" role="finish">
+              <div class="input-group-addon">終了時刻</div>
+              <select data-opt="hour" class="form-control"></select>
+              <div class="input-group-addon">時</div>
+              <select data-opt="min" class="form-control"></select>
+              <div class="input-group-addon">分</div>
+            </div>
+          </div>
+          <div id="wt_repetition">
+            <!--2つ以上勤務時間がある場合、上のdivをここにclone -->
+          </div>
+        </div>
+      </div>
+      <div class="modal-footer">
+        <button type="button" class="btn btn-outline-primary" onclick="editWTWithModal()">保存</button>
+        <button type="button" class="btn btn-outline-secondary" data-dismiss="modal" onclick="$('#listWTModal').modal()">キャンセル</button>
+        <button type="button" class="btn btn-outline-danger" onclick="removeWTWithEditModal()">削除</button>
+      </div>
+    </div>
+  </div>
+</div>
+<!-- /EDIT WORKTIME MODAL -->
+
+
+
+
+<!-- ADD WORKTIME MODAL -->
+<div class="modal fade" id="addWTModal" tabindex="-1" role="dialog">
+  <div class="modal-dialog modal-lg" role="document">
+    <div class="modal-content">
+      <div class="modal-header">
+        <h5 class="modal-title">勤務時間を追加</h5>
+        <button type="button" class="close" data-dismiss="modal">
+          <span aria-hidden="true">&times;</span>
+        </button>
+      </div>
+      <div class="modal-body">
+      	<p class="text-secondary">新たに決まった勤務時間を追加します。</p>
+        <div class="form-group">
+          <input type="text" class="form-control flatpickr alert alert-info" id="addModal_date" placeholder="日付を選択" onchange="checkAddWtModalValidity()" style="max-width: 300px;">
+        </div>
+        <div class="input-group" style="margin-bottom: .5em">
+        	<div class="input-group-addon">開始時刻</div>
+          <select data-opt="hour" class="form-control" data-defval="12" id="addModal_sh" onchange="checkAddWtModalValidity()"></select>
+          <div class="input-group-addon">時</div>
+          <select data-opt="min" class="form-control" data-defval="0" id="addModal_sm" onchange="checkAddWtModalValidity()"></select>
+          <div class="input-group-addon">分</div>
+        </div>
+        <div class="input-group">
+        	<div class="input-group-addon">終了時刻</div>
+          <select data-opt="hour" class="form-control" data-defval="12" id="addModal_fh" onchange="checkAddWtModalValidity()"></select>
+          <div class="input-group-addon">時</div>
+          <select data-opt="min" class="form-control" data-defval="0" id="addModal_fm" onchange="checkAddWtModalValidity()"></select>
+          <div class="input-group-addon">分</div>
+        </div>
+      </div>
+      <div class="modal-footer">
+        <button type="button" class="btn btn-primary" onclick="addWTWithModal(this)" id="addModal_submit">追加</button>
+        <button type="button" class="btn btn-secondary" data-dismiss="modal">キャンセル</button>
+      </div>
+    </div>
+  </div>
+</div>
+<!-- /ADD WORKTIME MODAL -->
+
+
+
+
+
+<!-- SETTINGS MODAL -->
+<div class="modal fade" id="settingsModal" tabindex="-1" role="dialog">
+  <div class="modal-dialog" role="document">
+    <div class="modal-content">
+      <div class="modal-header">
+        <h5 class="modal-title">設定</h5>
+        <button type="button" class="close" data-dismiss="modal">
+          <span aria-hidden="true">&times;</span>
+        </button>
+      </div>
+      <div class="modal-body">
+      	<p class="text-secondary">設定は自動的に保存されます。</p>
+        <div>
+			  <label class="custom-control custom-checkbox mb-2 mr-sm-2 mb-sm-0">
+			    <input type="checkbox" class="custom-control-input" id="delete_checkbox" saveonchange autoload>
+			    <span class="custom-control-indicator"></span>
+			    <span class="custom-control-description">勤務時間の削除時に警告を表示しない</span>
+        </label>
+        </div>
+        <div>
+			    <label class="custom-control custom-checkbox mb-2 mr-sm-2 mb-sm-0">
+			     <input type="checkbox" class="custom-control-input" id="override_checkbox" checked saveonchange autoload>
+			     <span class="custom-control-indicator"></span>
+			     <span class="custom-control-description">半月分のデータを入力するときに、前にあったその期間のデータは全て削除する。</span>
+          </label>
+        </div>
+        <div>
+        <label class="custom-control custom-checkbox mb-2 mr-sm-2 mb-sm-0">
+          <input type="checkbox" class="custom-control-input" id="inter_term_checkbox" checked saveonchange autoload>
+          <span class="custom-control-indicator"></span>
+          <span class="custom-control-description">複数期間のデータを入力</span>
+        </label>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+<!-- /SETTINGS MODAL -->
+
+
+
+
+
+<!-- ROUTE SETTING MODAL -->
+<div class="modal fade" id="routeModal" tabindex="-1" role="dialog">
+  <div class="modal-dialog modal-lg" role="document">
+    <div class="modal-content">
+      <div class="modal-header">
+        <h5 class="modal-title">経路設定</h5>
+        <button type="button" class="close" data-dismiss="modal">
+          <span aria-hidden="true">&times;</span>
+        </button>
+      </div>
+      <div class="modal-body" style="padding-top: 0;padding-bottom: 0">
+        <table class="table" style="margin-bottom: 0">
+            <tr>
+                <th style="min-width: 100px;border-top: none;">発着地設定</th>
+                <td style="border-top: none;">
+                    <div class="form-inline form-inline-input">
+                        <p>
+                          <span>勤務時間の</span>
+                          <input type="number" id="yttime" placeholder="" class="form-control form-control-sm" style="max-width: 70px" onkeyup="checkTransitModalValidity()" onchange="checkTransitModalValidity()">
+                          <span>分前に</span>
+                          <input type="text" id="ytfrom" placeholder="例: 学研北生駒" class="form-control form-control-sm" style="min-width: 100px" onkeyup="checkTransitModalValidity()">
+                          <span>から</span>
+                          <input type="text" id="ytto" placeholder="例: 桜島" value="桜島" class="form-control form-control-sm" style="min-width: 100px" onkeyup="checkTransitModalValidity()">
+                          <span>に</span>
+                          <input type="text" id="ytvia" placeholder="例: 谷町四丁目" class="form-control form-control-sm" style="min-width: 100px">
+                          <span>経由で到着する経路を検索</span>
+                        </p>
+                        <p style="margin:0;">
+                          <span style="color: #777;font-size: .8em;">
+                            経由は任意、コンマ','で区切って3つまで複数追加<br>
+                          希望と違う駅が表示される際は県名や路線名を入れて調整して下さい。
+                          </span>
+                        </p>
+                    </div>
+                </td>
+            </tr>
+            <tr>
+                <th>交通手段</th>
+                <td>
+                    <div class="checkbox">
+						<label class="custom-control custom-checkbox mb-2 mr-sm-2 mb-sm-0">
+						    <input type="checkbox" class="custom-control-input" id="al_checkbox">
+						    <span class="custom-control-indicator"></span>
+						    <span class="custom-control-description">空路</span>
+			            </label>
+						<label class="custom-control custom-checkbox mb-2 mr-sm-2 mb-sm-0">
+						    <input type="checkbox" class="custom-control-input" id="shin_checkbox">
+						    <span class="custom-control-indicator"></span>
+						    <span class="custom-control-description">新幹線</span>
+			            </label>
+						<label class="custom-control custom-checkbox mb-2 mr-sm-2 mb-sm-0">
+						    <input type="checkbox" class="custom-control-input" id="ex_checkbox">
+						    <span class="custom-control-indicator"></span>
+						    <span class="custom-control-description">有料特急</span>
+			            </label>
+						<label class="custom-control custom-checkbox mb-2 mr-sm-2 mb-sm-0">
+						    <input type="checkbox" class="custom-control-input" id="hb_checkbox">
+						    <span class="custom-control-indicator"></span>
+						    <span class="custom-control-description">高速バス</span>
+			            </label>
+						<label class="custom-control custom-checkbox mb-2 mr-sm-2 mb-sm-0">
+						    <input type="checkbox" class="custom-control-input" id="lb_checkbox" checked="">
+						    <span class="custom-control-indicator"></span>
+						    <span class="custom-control-description">路線/連絡バス</span>
+			            </label>
+						<label class="custom-control custom-checkbox mb-2 mr-sm-2 mb-sm-0">
+						    <input type="checkbox" class="custom-control-input" id="sr_checkbox">
+						    <span class="custom-control-indicator"></span>
+						    <span class="custom-control-description">フェリー</span>
+			            </label>
+                    </div>
+                </td>
+            </tr>
+            <tr>
+                <th>表示順序</th>
+                <td>
+                    <div class="form-inline">
+                        <select id="display_sel" class="form-control" style="max-width:12em;">
+                            <option value="0">到着が早い順</option>
+                            <option value="2">乗り換え回数順</option>
+                            <option value="1">料金が安い順</option>
+                        </select>
+                    </div>
+                </td>
+            </tr>
+            <tr>
+                <th>歩く速さ</th>
+                <td>
+                    <div class="form-inline">
+                        <select id="ws_sel" class="form-control" style="max-width:12em;">
+							           <option value="1" >急いで</option>
+							           <option value="2" >少し急いで</option>
+							           <option value="3">少しゆっくり</option>
+							           <option value="4" >ゆっくり</option>
+                        </select>
+                    </div>
+                </td>
+            </tr>
+        </table>
+      </div>
+      <div class="modal-footer">
+        <button type="button" class="btn btn-primary" id="editModalSubmit" onclick="routeSettingsWithModal(this)">保存</button>
+        <button type="button" class="btn btn-secondary" data-dismiss="modal">キャンセル</button>
+      </div>
+    </div>
+  </div>
+</div>
+<!-- /ROUTE SETTING MODAL -->
+
+
+
+
+<!-- SALARY SETTING MODAL -->
+<div class="modal fade" id="salarySettingModal" tabindex="-1" role="dialog">
+  <div class="modal-dialog modal-lg" role="document">
+    <div class="modal-content">
+      <div class="modal-header">
+        <h5 class="modal-title">給与概算設定</h5>
+        <button type="button" class="close" data-dismiss="modal">
+          <span aria-hidden="true">&times;</span>
+        </button>
+      </div>
+      <div class="modal-body" style="padding-bottom: 0">
+        <p class="text-secondary">給与概算の設定を行います。</p>
+        <table class="table" style="margin-bottom: 0">
+          <tbody>
+            <!--<tr>
+              <th>期間</th>
+              <td class="form-group">
+                <select id="term" class="form-control" style="max-width: 200px" autoload></select>
+              </td>
+            </tr>-->
+            <tr>
+              <th style="min-width: 100px;">時給</th>
+              <td class="form-group form-inline" style="margin-bottom: 0">
+                <input type="number" class="form-control" id="hourWage" style="max-width:10em;margin-right: .8em" autoload onchange="checkSalarySettingValidity();">円
+              </td>
+            </tr>
+            <tr>
+              <th>交通費</th>
+              <td class="form-group">
+                <div class="form-inline">
+                  <input type="number" class="form-control" id="trans" style="max-width:10em;margin-right: .8em" autoload onchange="checkSalarySettingValidity();">円
+                </div>
+                <p class="form-group form-inline" id="forRegular" style="margin:.5em 0">
+                  支給月(どちらか一方)
+                  <select data-opt="month" class="form-control" style="margin:0 .8em;" id="fee_provide_month" autoload onchange="checkSalarySettingValidity();"></select>
+                  <input type="number" class="form-control" id="six_month_fee" style="max-width:10em;" autoload onchange="checkSalarySettingValidity();">
+                  <small class="text-muted" style="margin-left:.8em;">
+                    6ヶ月の定期代を入力してください。
+                  </small>
+                </p>
+                <label class="custom-control custom-checkbox" style="margin: 0">
+                  <input type="checkbox" class="custom-control-input" onchange="transDisable(this);checkSalarySettingValidity();" autoload id="hs_student_checkbox">
+                  <span class="custom-control-indicator"></span>
+                  <span class="custom-control-description">学校年度年齢18歳以下</span>
+                </label>
+              </td>
+            </tr>
+            <tr>
+              <th>雇用形態</th>
+              <td class="form-group">
+                <div class="employmentPattern">
+                  <div class="custom-controls-stacked d-block my-1">
+                    <label class="custom-control custom-radio">
+                      <input type="radio" value="0" name="employmentPattern" id="regular" class="custom-control-input" autoload onchange="$('#forRegular').fadeIn();checkSalarySettingValidity();"><!--どうやらcheckが入ったときのみonchangeは発火。コレを使う-->
+                      <span class="custom-control-indicator"></span>
+                      <span class="custom-control-description">Regular</span>
+                    </label>
+                    <label class="custom-control custom-radio">
+                      <input type="radio" value="1" name="employmentPattern" id="casular" class="custom-control-input" onchange="$('#forRegular').fadeOut();checkSalarySettingValidity();">
+                      <span class="custom-control-indicator"></span>
+                      <span class="custom-control-description">Casular</span>
+                    </label>
+                    <label class="custom-control custom-radio">
+                      <input type="radio" value="2" name="employmentPattern" id="casual" class="custom-control-input" onchange="$('#forRegular').fadeOut();checkSalarySettingValidity();">
+                      <span class="custom-control-indicator"></span>
+                      <span class="custom-control-description">Casual</span>
+                      </label>
+                    <label class="custom-control custom-radio">
+                      <input type="radio" value="3" name="employmentPattern" id="seasonal" class="custom-control-input" onchange="$('#forRegular').fadeOut();checkSalarySettingValidity();">
+                      <span class="custom-control-indicator"></span>
+                      <span class="custom-control-description">Seasonal</span>
+                    </label>
+                  </div>
+                </div>
+              </td>
+            </tr>
+            <tr>
+              <th></th>
+                <td class="form-group">
+                  <label class="custom-control custom-checkbox" style="margin: 0">
+                    <input type="checkbox" class="custom-control-input"autoload id="main_work_checkbox" checked="checked">
+                    <span class="custom-control-indicator"></span>
+                    <span class="custom-control-description">扶養控除申告書を提出済</span>
+                  </label>
+                </td>
+            </tr>
+          </tbody>
+        </table>
+      </div>
+      <div class="modal-footer">
+        <a href="" class="text-secondary" data-toggle="modal" data-target="#calMethodModal" data-dismiss="modal">計算方法</a>
+        <button type="button" class="btn btn-primary" onclick="saveSalarySettingWithModal(this)" id="salary_submit">保存</button>
+        <button type="button" class="btn btn-secondary" data-dismiss="modal">キャンセル</button>
+      </div>
+    </div>
+  </div>
+</div>
+<!-- /SALARY SETTING MODAL -->
+
+
+
+
+
+<!-- SALARY CALCULATION METHOD MODAL -->
+<div class="modal fade" id="calMethodModal" tabindex="-1" role="dialog">
+  <div class="modal-dialog" role="document">
+    <div class="modal-content">
+      <div class="modal-header">
+        <h5 class="modal-title" id="calMethodModalTitle">給与の計算方法</h5>
+        <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+          <span aria-hidden="true">&times;</span>
+        </button>
+      </div>
+      <div class="modal-body">
+        <p class="aaa">支給面</p>
+        <p class="bbb">
+          ・基本給 = 時給 * 実働時間<br>
+          ・時間外手当 = 時給の25% * 8時間を超えの勤務時間<br>
+          ・深夜早朝手当 = 時給の25% * 22:00~翌06:00の勤務時間<br>
+          ・着替手当 = 250 * 勤務日数<br>
+          ・交通費(学校年度年齢18未満以下は0)<br>
+           &ensp;＜レギュラーの場合＞<br>
+           &ensp;&nbsp;その月が入力した支給月の場合→定期代
+           &ensp;&nbsp;それ以外は0<br>
+           &ensp;＜その他＞<br>
+           &ensp;&nbsp;交通費 * 勤務日数<br>
+           &ensp;&nbsp;30000円を超える場合は30000円。<br>
+           上記のうち交通費と着替手当以外を課税対象支給額とする。
+        </p>
+        <p class="aaa">控除面</p>
+        <p class="bbb">
+          上記の支給額の合計をxxとする。標準報酬額は用いない。<br>40歳未満の扶養家族0人の人を想定する。<br>
+          &ensp;＜レギュラー　カジュラーのみ＞<br>
+          &emsp;・雇用保険 = xx * 0.3%<br>
+          &emsp;・健保基本保険料 = xx * 3.2%<br>
+          &emsp;・健保特定保険料 = xx * 1.865%<br>
+          &emsp;&ensp;（同上）<br>
+          &emsp;・厚生年金保険 = xx * 9.15%<br>
+          &ensp;＜レギュラーのみ＞<br>
+          &emsp;・組合費 = 一律700円<br>
+          &ensp;＜全員＞<br>
+          &emsp;・所得税<br>
+          &ensp;&ensp;給与所得の源泉徴収税額表,月額表を参照。<br>
+        </p>
+        <p class="aaa">注意事項</p>
+        <p class="bbb">
+          この機能は、みなさんの入力したシフトに基づき給与を概算するものであり、みなさんの給与を保証するものではありません。<br>
+          欠勤、遅刻、早退、勤務の一部または全部の解消、残業などを考慮することができません。それゆえに大きな誤差が生まれることもあります。しかし当サイトには勤務時間を自動で変更したり、勤務を追加・削除する機能が備わっています。それを利用して誤差を小さくすることはできます。
+      </div>
+      <div class="modal-footer">
+        <button type="button" class="btn btn-outline-secondary" data-dismiss="modal">Close</button>
+      </div>
+    </div>
+  </div>
+</div>
+<!-- /SALARY CALCULATION METHOD MODAL -->
+
+
+
+
+
+<!-- CALC SARALY MODAL -->
+<div class="modal fade" id="calcSalaryModal" tabindex="1" role="dialog">
+  <div class="modal-dialog modal-lg" role="document">
+    <div class="modal-content">
+      <div class="modal-header">
+        <h5 class="modal-title">給与概算</h5>
+        <button type="button" class="close" data-dismiss="modal">
+          <span aria-hidden="true">&times;</span>
+        </button>
+      </div>
+      <div class="modal-body" style="padding-bottom: 0">
+        <p class="text-secondary">給与の概算の結果を表示します。</p>
+        <p class="text-danger">皆さんの給与を保証するものではありません。</p>
+        <table class="table" style="margin-bottom: 0">
+          <tbody id="calcSalaryTbody">
+            <!--
+            <tr>
+              <td>{Y}年{mo}月</td>
+              <td class="monthData" onclick="toggleSalary(this)">
+                <span style="text-decoration: underline;">差引支給額: 112,595円</span><br>
+                <small>クリックすると詳細を表示。</small>
+                <div style="display: none">ここに1ヶ月の詳細データ</div>
+              </td>
+            </tr>
+          -->
+          </tbody>
+        </table>
+      </div>
+      <div class="modal-footer">
+        <button type="button" class="btn btn-outline-secondary" data-dismiss="modal">閉じる</button>
+      </div>
+    </div>
+  </div>
+</div>
+<!-- /CALC SARALY MODAL -->
+
+
+
+
+<script src="https://code.jquery.com/jquery-3.2.1.min.js"></script>
+<script src="https://cdn.jsdelivr.net/npm/flatpickr"></script>
+<script src="https://npmcdn.com/flatpickr/dist/l10n/ja.js"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.11.0/umd/popper.min.js" integrity="sha384-b/U6ypiBEHpOf/4+1nzFpr53nxSS+GLCkfwBdFNTxtclqqenISfwAzpKaMNFNmj4" crossorigin="anonymous"></script>
+<script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0-beta/js/bootstrap.min.js" integrity="sha384-h0AbiXch4ZDo7tp9hKZ4TsHbi047NrKGLO3SEJAg45jXxnGIfYzk4Si90RDIqNm1" crossorigin="anonymous"></script>
+
+<script type="text/javascript" src="workaholic_util.js"></script>
+<script type="text/javascript" src="worktimelib.js"></script>
+<script type="text/javascript" src="workaholic.js"></script>
+
+<script type="text/javascript">
+//flatpickrカレンダー(datepicker)の初期化
+flatpickr.localize(flatpickr.l10ns.ja);
+$(".flatpickr").flatpickr(FLATPICKR_OPTION_FROMTODAY);
+
+//bodyがloadされたときに発火
+function init() {
+	//localStorageがオフまたは非対応の場合、cookieを用いて擬似的にlocalStorageを作成
+	checkCompatibility();
+
+	//時間(HH:MM-HH:MM)のselectにoptionを追加。この1回のみ実行される。data-opt=hour/minじゃないとなにもしない。
+	//data-defvalを指定すると初期値を決められる。
+	makeTimeOptions();
+
+	//テキストボックスなどの値をLocalStorageから復元
+	initFormData();
+  transDisable(document.getElementById('hs_student_checkbox'));
+  checkSalarySettingValidity();
+
+	//checkboxとselectが前回から復元できるよう、変更時にLocalStorageに保存するようにするハンドラを登録する。
+	//saveonchange属性があるものにのみ適用される
+	//textboxなどは、buttonを押したときに保存すべきなので、buttonクリック時などに
+	// saveTextboxData($(this));
+	//といったふうにする。
+	//自動で読み込む場合別途autoload属性が必要
+	registerAutosave();
+
+	//もし古い形式のデータしかなければ、新しい形式に直してLocalStorageに保存してやる。
+	translate();
+
+	//LocalStorageに保存した勤務時間オブジェクト配列データの解析して、wtArrayに格納。
+	loadWtArrayFromLS();
+
+	//テーブルに反映。init時はフェードインしたくないのでtrue
+	refresh(true);
+}
+
+//テキストエリアから情報を抽出する。
+function addWTWithTA() {
+	//TextAreaから情報を取得 (ミスってたら空の配列が返ってくる)
+	var taWtArray = interpreteTA();
+	if (taWtArray.length == 0) {
+		message('テキストエリアに正しいデータを入力してください。', 'danger');
+		return;
+	}
+	addAllWithTA(taWtArray);
+  var title;
+  if ($('#inter_term_checkbox').prop('checked')){
+    title = taWtArray[0].getDateString('{Y}年{mo}月{half}', true)+'から'+taWtArray[taWtArray.length-1].getDateString('{Y}年{mo}月 {half}', true)+'まで';
+  } else {
+    title = taWtArray[0].getDateString('{Y}年{mo}月{half}', true);
+  }
+  message(title+'の勤務時間を読み込みました。'+UNDO_HTML_TEMPLATE, 'success');
+  refresh();
+}
+
+//開いてるrouteModalからデータをLSに保存。取り出すときは、各要素のidをkeyにしてLSから。
+function routeSettingsWithModal(btnElem){
+  if ($(btnElem).prop('disabled')) return;
+
+  saveTextboxData($('#routeModal input[type=number]'));
+  saveTextboxData($('#routeModal input[type=text]'));
+  saveCheckboxData($('#routeModal input[type=checkbox]'));
+  saveSelectData($('#routeModal select'));
+  message('経路設定を保存しました', 'success');
+  refresh();
+  $('#routeModal').modal('hide');
+}
+
+function addWTWithModal(btnElem){
+  if ($(btnElem).prop('disabled')) return;
+
+  var s_date = new Date($('#addModal_date').val());
+  var f_date = new Date($('#addModal_date').val());
+
+  s_date.setHours(parseInt($('#addModal_sh').val()), parseInt($('#addModal_sm').val()));
+  f_date.setHours(parseInt($('#addModal_fh').val()), parseInt($('#addModal_fm').val()));
+
+  if (addOneWt(new Worktime(s_date, f_date))){
+    message('新しい勤務時間を追加しました。'+UNDO_HTML_TEMPLATE, 'success');
+    refresh();
+  };
+
+  $('#addWTModal').modal('hide');
+
+  $('#addModal_date').removeClass('fpickr-valid');
+  $('#addModal_date').addClass('fpickr-invalid');
+  $('#addModal_date').val('');
+  $('#addModal_sh').val('12');
+  $('#addModal_sm').val('0');
+  $('#addModal_fh').val('12');
+  $('#addModal_fm').val('0');
+}
+
+function editWTWithModal() {
+  var daykey = $('#editModal_date').val();
+  removeWorktimes(daykey, false);
+  $('#editModal_repeat').children().each(function(){
+    var wt = getWtFromSels(daykey, $(this));
+    if (wt != null) {
+      addOneWt(wt, true);
+    }
+  });
+  message(daykey+'のデータを変更しました。'+UNDO_HTML_TEMPLATE, 'success');
+  refresh();
+  $('#editWTModal').modal('hide');
+}
+
+function removeWTWithEditModal() {
+  var daykey = $('#editModal_date').val();
+  if (window.confirm('本当に'+daykey+'のデータを削除してよろしいですか？')){
+    removeWorktimes(daykey);
+    message(daykey+'のデータをクリアしました。'+UNDO_HTML_TEMPLATE, 'success');
+    refresh();
+    $('#editWTModal').modal('hide');
+  }
+  /* #editModal_repeat
+      - copy元div
+      - #wt_repetition
+        - copy先div
+  */
+}
+
+/*
+0. wtArray
+
+	まず、WORKTIME_ARRAYがデータ本体です。
+	load時にはLocalStorageから以前のデータを回復します。
+	wtArrayは　worktimelib.js の Worktimeクラスのインスタンスの配列です。
+	普通のArray同様、iterableなので、forで回すことが出来ます。
+  ソース上では、関係のないworktime配列とデータ本体を区別するため大文字を使用してます。
+
+  //それぞれのworktimeごとの処理
+	for (var i = 0; i < WORKTIME_ARRAY.length; i++) {
+		var wt = WORKTIME_ARRAY[i];
+		//do something...
+	}
+
+	for-ofはIE11が未対応らしいですね！
+
+1. Worktime
+
+	Worktimeオブジェクトはそれの内に start 変数と finish 変数を持ちます。ともにDateオブジェクトで、それぞれ、開始時刻、終了時刻のDateオブジェクトです。
+	コンストラクタで呼び出すときの引数は(dateObj, dateObj)である必要があります。
+
+
+	s_date = new Date(2017, 9-1, 16, 6, 0);	//2017.9.16 6:00
+	f_date = new Date(2017, 9-1, 16, 18, 45);	//2017.9.16 18:45
+
+	var wt = new Worktime(s_date, f_date); 		//6時から18:45まで労働、これ大丈夫か？
+
+
+	また、toStringと対になるfromString関数によっても、Worktimeのインスタンスを生成できます。
+
+	var wt = Worktime.fromString("15081228-15081471") //上のwtと同じオブジェクト
+
+
+2. Worktimeのメソッド
+	Worktimeオブジェクトには利便性を計るため、メソッドが定義されています。
+
+	1. .toString()
+		start, finishを、1970年1月1日からのミリ秒を、100,000で割った値をハイフン'-'で繋いだstringにして返します。
+		(cf. https://developer.mozilla.org/ja/docs/Web/JavaScript/Reference/Global_Objects/Date/now)
+
+		wt.toString() //-> "15043824-15044076"
+
+	2. .toHumanFriendlyString(timeFormat, joinFormat) / .thfs(timeFormat, joinFormat)
+		Worktimeオブジェクトの'時間'(時,分)を読みやすい形にして返します。timeFormat, joinFormatに関しては worktimelib.js の16行目あたりを参照。
+
+		wt.thfs('{h}時{m}分', '{s}～{f}');	//-> "6時00分～18時45分"
+		wt.thfs('{H}:{m}', '{s}-{f}'); 		//-> "06:00-18:45"
+		wt.thfs()							//-> "6:00 - 18:45"
+
+	3. .getDateString(format)
+		Wotrktimeオブジェクトの日付(年,月,日)を読みやすい形で返します。formatに関しては worktimelib.js の90行目あたりを参照。ちなみに、startの日付を参照する。
+
+		wt.getDateString('{Y}/{mo}/{d} ({dy})');	//-> "2017/9/16 (月)"
+		wt.getDateString('{y}.{MO}.{D} {dye}');		//-> "17.09.16 mon"
+		wt.getDateString('{dye}').toUpperCase();	//-> "MON"
+
+	以下略
+
+3. その他便利機能
+
+	1. フォーム(input[type=text,checkbox,radio]、select,textarea)の変更時に自動的にデータをLocalStorageに保存。
+		HTMLで、目的の要素に 'saveonchange' 属性をつけると、自動的に値を読み込んでくれます。ただし、必ずidの設定が必要です。
+
+		<input type=checkbox saveonchnage id=id1/>
+		このチェックボックスの値は変更時に自動的に保存されます。
+
+
+	2. HTMLのロード時、自動的にLocalStorageからデータを取得し、フォーム(input[type=text,checkbox,radio]、select,textarea)に値をセットする。
+		HTMLで、目的の要素に 'autoload' 属性をつけると、自動的に値を読み込んでくれます。ただし、必ずidの設定が必要です。
+
+		<input type=checkbox saveonchnage autoload id=id2/>
+		このチェックボックスの値は変更時に自動的に保存され、HTMLロード時に自動的に読み込まれます。
+
+		textboxなど、ボタンを押したときなどに保存したい場合、つまり自動的には保存/ロードせず関数で保存/ロードする場合は、saveCheckboxData($('#id'))などを用いる。workaholic.js の79行目から223行目までを見てください。ただし、必ずidの設定が必要です。
+
+		<input type=text autoload id=id3/>
+		<button onclick="saveTextboxData($('#id3'))">データを保存</button>
+*/
+
+function check(){
+	if(window.confirm('送信してよろしいですか？')){
+    	$('#ContactModal').modal('hide')
+    	$("#thanks").fadeIn();
+    	setTimeout( closeBox , 5000 );
+		return true;
+	} else {
+		return false;
+	}
+}
+function closeBox() {
+    $('#thanks').fadeOut();
+}
+function clearForm(){
+  	$("#Message").val('');
+}
+
+function transDisable(check){
+  //document.getElementById('trans').disabled = check.checked;
+  $('#trans').prop('disabled', $(check).prop('checked'));
+  //とやってることは一緒だが、それぞれのDOMは別物のオブジェクトとして定義されているため
+  //document.getElementById('trans').attr()とか
+  //$('#trans').disabledとかはできない
+  //高校生なら支給月、6ヶ月の定期代もいらない
+  $('#six_month_fee').prop('disabled', $(check).prop('checked'));
+  $('#fee_provide_month').prop('disabled', $(check).prop('checked'));
+}
+
+//給与概算設定modalの保存ボタンを押したときに呼ばれる
+function saveSalarySettingWithModal(btnElem){
+  //ボタンがdisabledなら処理を終了。
+  if ($(btnElem).prop('disabled')) return;
+  var employmentPattern = $('input[name=employmentPattern]:checked').val();
+  var six_month_fee = $('#six_month_fee').val();
+
+  //LSにcalModal内の全てのラジオボタンの選択を保存。
+  saveRadioButtonData($('#salarySettingModal input[type=radio]:checked'));
+  //checkbox
+  saveCheckboxData($('#salarySettingModal input[type=checkbox]'));
+  //number box
+  saveTextboxData($('#salarySettingModal input[type=number]'));
+  //text box
+  //saveTextboxData($('#salarySettingModal input[type=text]'));//NASA
+  //select
+  saveSelectData($('#salarySettingModal select'));
+  //modalを閉じる
+  $('#salarySettingModal').modal('hide');
+}
+
+$('#calMethodModal').on('shown.bs.modal', function (e) {$('body').addClass('modal-open');})
+
+</script>
+</body>
+</html>
