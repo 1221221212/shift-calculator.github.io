@@ -585,9 +585,7 @@ function setListModalContent(monthkey){
 			click: function(e) {
 				$('#listWTModal').modal('hide');
 				setEditModalContent($(this).attr('data-key'));
-				setTimeout(function () {
-					$('#editWTModal').modal();
-				},100);
+				$('#editWTModal').modal('show');
 			}
 		});
 		//その日の日付
@@ -899,8 +897,8 @@ function getWtFromSels(daykey, wrapper) {
 function checkSalarySettingValidity(){
 	var emp = parseInt($("input[name=employmentPattern]:checked").val());
 	var ready = checkNumberInput($('#hourWage'));
-	//ready = checkNumberInput($('#fee_provide_month')) && ready;
 	if (emp == 0) {
+	ready = checkButtonsInput($('#fee_provide_month input')) && ready;
 	ready = checkNumberInput($('#six_month_fee')) && ready;
 	}else if(emp == 1,2,3){
 		ready = checkNumberInput($('#trans')) && ready;
@@ -949,7 +947,7 @@ function setCalcSalaryModalContent(){
             </tr>*/
   var obj = splitByMonth();//{月:[wt1, wt2...], 月2:[wt1, wt2...]...}
   var hourWage = parseInt($('#hourWage').val());//整数
-	var fee_provide_month = parseInt($('#fee_provide_month').val());//整数
+	var fee_month_array = $('.fee_month:checked').map(function() {return parseInt($(this).val());}).get();
 	var six_month_fee = parseInt($('#six_month_fee').val());//整数
 	var one_month_fee = parseInt($('#one_month_fee').val());//整数
 	var isHSStudent = $('#hs_student_checkbox').prop('checked');// true or false
@@ -1010,12 +1008,12 @@ function setCalcSalaryModalContent(){
 		var full_year = parseInt(_s[0]);//2017
 		var month = parseInt(_s[1]);//9
 
-		if(isHSStudent == true ){
+		if(isHSStudent == true){
 			transPay = 0;
-		}else if(emp == 0 && (month == fee_provide_month || month == fee_provide_month + 6)){
+		}else if(emp == 0 && fee_month_array.indexOf(month) == -1){
+			transPay = 0;
+		}else if(emp == 0){
 			transPay = six_month_fee;
-		}else if(emp == 0 ){
-			transPay = 0;
 		}else if(emp == 1 || 2 || 3){
 			if(days.length < 17){
 				transPay = trans * days.length;
@@ -1028,8 +1026,6 @@ function setCalcSalaryModalContent(){
 		}
 
 		chgCostume = 250 * days.length;
-
-		wholeGivenYen = wholeGivenYen + transPay + chgCostume;
 
  		//控除されるかされないかのArray。されるなら1,されないなら0。雇用保険、健保基本保険、健保特定保険、厚生年金保険、組合費の順番。
 		var deductArray =
@@ -1053,7 +1049,7 @@ function setCalcSalaryModalContent(){
 		var union = Math.round( 700 * deductArray[emp][4] ); //一律700円だよ
 
 		var deduction = empIns + healthInsS + healthInsB + pension + union;
-		var taxable = wholeGivenYen - deduction - transPay - chgCostume;
+		var taxable = wholeGivenYen - deduction;
 
 		var taxArray = [0,88000,89000,90000,91000,92000,93000,94000,95000,96000,99000];
 
@@ -1119,6 +1115,7 @@ function setCalcSalaryModalContent(){
 
 		//控除額計
 		wholeOmittedYen = deduction + tax;
+		wholeGivenYen = wholeGivenYen + transPay + chgCostume;
 
 		var _a = new Array();
     _a.push('<span class="aaa">' + '支給計: ' + insertComma(Math.round(wholeGivenYen)) + '円');
@@ -1173,4 +1170,28 @@ function setCalcSalaryModalContent(){
 	    td.appendTo(tr);
 	    tr.appendTo('#calcSalaryTbody');
     }//月ごとの処理ココまで
+}
+
+//checkbox of buttons!
+function checkButtonsInput(elems) {
+ var flag = false;
+ if (elems.parent().prop('disabled')){
+  return true;
+ } else {
+  elems.each(function(){
+   if ($(this).prop('checked')){
+    flag = true;
+    return false;//breakと同義
+   }
+  });
+  if (flag){
+      elems.parent().removeClass('btn-outline-danger');
+      elems.parent().addClass('btn-outline-secondary');
+      return true;
+  } else {
+      elems.parent().removeClass('btn-outline-secondary');
+      elems.parent().addClass('btn-outline-danger');
+      return false;
+  }
+ }
 }
