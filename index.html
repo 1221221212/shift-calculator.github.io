@@ -854,7 +854,9 @@ $(".flatpickr").flatpickr(FLATPICKR_OPTION_FROMTODAY);
 
 $('#fee_provide_month input').on('change', function(){
    checkSalarySettingValidity();
-})
+});
+
+removeHoverEffectOnMobilePhone();
 
 //bodyがloadされたときに発火
 function init() {
@@ -1096,7 +1098,6 @@ function saveSalarySettingWithModal(btnElem){
   if ($(btnElem).prop('disabled')) return;
   //var employmentPattern = $('input[name=employmentPattern]:checked').val();
   var fee_month_array = $('.fee_month:checked').map(function() {return parseInt($(this).val());}).get();
-  console.log(fee_month_array)
   setLS('fee_month_array', JSON.stringify(fee_month_array));
   //var six_month_fee = $('#six_month_fee').val();
 
@@ -1116,7 +1117,6 @@ function saveSalarySettingWithModal(btnElem){
 }
 
 $('#calMethodModal, #editWTModal').on('shown.bs.modal', function (e) {$('body').addClass('modal-open');});
-
 
 </script>
 </body>
