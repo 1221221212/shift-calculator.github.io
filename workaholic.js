@@ -899,10 +899,13 @@ function getWtFromSels(daykey, wrapper) {
 function checkSalarySettingValidity(){
 	var emp = parseInt($("input[name=employmentPattern]:checked").val());
 	var ready = checkNumberInput($('#hourWage'));
-	ready = checkNumberInput($('#one_month_fee')) && ready;
 	//ready = checkNumberInput($('#fee_provide_month')) && ready;
-	if (emp == 0) ready = checkNumberInput($('#six_month_fee')) && ready;
-	ready = checkNumberInput($('#trans')) && ready;
+	if (emp == 0) {
+	ready = checkNumberInput($('#six_month_fee')) && ready;
+	}else if(emp == 1,2,3){
+		ready = checkNumberInput($('#trans')) && ready;
+		ready = checkNumberInput($('#one_month_fee')) && ready;
+	}
 	if (isNaN(emp)){
 		$("input[name=employmentPattern]").addClass('is-invalid');
 		ready = false;
@@ -944,8 +947,8 @@ function setCalcSalaryModalContent(){
                 <div style="display: none">ここに1ヶ月の詳細データ</div>
               </td>
             </tr>*/
-    var obj = splitByMonth();//{月:[wt1, wt2...], 月2:[wt1, wt2...]...}
-    var hourWage = parseInt($('#hourWage').val());//整数
+  var obj = splitByMonth();//{月:[wt1, wt2...], 月2:[wt1, wt2...]...}
+  var hourWage = parseInt($('#hourWage').val());//整数
 	var fee_provide_month = parseInt($('#fee_provide_month').val());//整数
 	var six_month_fee = parseInt($('#six_month_fee').val());//整数
 	var one_month_fee = parseInt($('#one_month_fee').val());//整数
