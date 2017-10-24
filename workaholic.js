@@ -1027,7 +1027,7 @@ function setCalcSalaryModalContent(){
 			}
 		}
 
-		chgCostume = 200 * days.length;
+		chgCostume = 250 * days.length;
 
 		wholeGivenYen = wholeGivenYen + transPay + chgCostume;
 
