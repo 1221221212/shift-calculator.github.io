@@ -14,7 +14,7 @@ you cannot:
     <meta charset="utf-8">
     <meta name="viewport" content="width=device-width, initial-scale=1, user-scalable=no">
     <title>Workaholic</title>
-    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0-beta/css/bootstrap.min.css" integrity="sha384-/Y6pD6FV/Vv2HJnA6t+vslU6fwYXjCFtcEpHbNJ0lyAFsXTsjBbfaDjzALeQsN6M" crossorigin="anonymous">
+    <link href="css/bootstrap.min.css" rel="stylesheet">
     <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/flatpickr/dist/flatpickr.min.css">
 	  <link rel="stylesheet" type="text/css" href="https://npmcdn.com/flatpickr/dist/themes/material_red.css">
     <link href="https://fonts.googleapis.com/css?family=Londrina+Outline" rel="stylesheet">
@@ -25,14 +25,6 @@ you cannot:
     .pointer, button, label, .listup, .listcont, .monthData{cursor: pointer}
     #container{padding-bottom: 3em}
     #nextBox,#nextOfNextBox,#shiftTable{display: none}
-    .btn-primary{background-color: #01917b !important;border-color: #01917b !important}
-    .btn-primary:hover,.btn-primary:active{background-color: #007a67 !important;border-color: #007a67 !important}
-    .btn-outline-primary,.btn-outline-primary.disaled,.btn-outline-primary:disabled{border-color: #01917b !important;}
-    .btn-outline-primary{color: #007a67 !important}
-    .btn-outline-primary.disaled:hover,.btn-outline-primary:disabled:hover,.btn-outline-primary.disaled.hover,.btn-outline-primary:disabled.hover{color: #fff !important}
-    .btn-outline-primary:hover,.btn-outline-primary.hover,.btn-outline-primary:active,.btn-outline-primary:active{background-color: #01917b !important;border-color: #01917b !important}
-    .btn-primary.disabled,.btn-primary:disabled,.btn-primary.disabled:hover,.btn-primary:disabled:hover{background-color:#7bada6 !important;border-color:#7bada6 !important;cursor: default}
-	  .btn-primary:focus, .btn-primary.focus, .btn-outline-primary:focus, .btn-primary.focus {box-shadow: 0 0 0 3px rgba(1, 145, 123, 0.5) !important}
 	  .is-valid{background-color: #d4edda}
 	  .is-invalid{background-color: #f8d7da}
     footer{
@@ -99,7 +91,7 @@ you cannot:
 <textarea id="shiftBox" class="form-control" placeholder="シフト表を全選択してコピー&ペースト..." rows=7 style="margin-bottom: 1em"></textarea>
 
 <div class="form-group form-inline" style="margin-bottom: 2.5em">
-  <select class="form-control" id="yearSel" style="margin-right: .8em;margin-bottom: .5em;" data-opt="year"></select>
+  <select class="form-control custom-select" id="yearSel" style="margin-right: .8em;margin-bottom: .5em;" data-opt="year"></select>
 	<button type="button" class="btn btn-primary" onclick="addWTWithTA()" style="margin-bottom: .5em">シフトを追加/上書き</button>
 </div>
 
@@ -145,157 +137,187 @@ you cannot:
 
 <!-- footer -->
 <footer>
-        <a href="" data-toggle="modal" data-target="#ToSModal">利用規約</a>
-        <div class="modal fade" id="ToSModal" tabindex="-1" role="dialog" aria-labelledby="ToSModalTitle" aria-hidden="true">
-          <div class="modal-dialog" role="document">
-            <div class="modal-content">
-              <div class="modal-header">
-                <h5 class="modal-title" id="ToSModalTitle">利用規約</h5>
-                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
-                  <span aria-hidden="true">&times;</span>
-                </button>
-              </div>
-              <div class="modal-body">
-                <p class="ToSBody">
-                  &emsp;当サイトの利用者は以下の事項を理解した上で利用していただきます。本規約は当サイトの利用に関わる一切の関係に適用されるものとします。<br>
-                  &emsp;当サイトは、特定の人物,団体,企業等と関与を持つものではありません。
-                  当サイトは利用者に通知することなく本サービスの内容を変更しまたは本サービスの提供を中止することができるものとし、これによって利用者に生じた損害について一切の責任を負いません。
-                  当サイトは細心の注意を払って運営しておりますが、この情報の正確性および完全性を保証するものではありません。
-                  当方は利用者が当サイトに含まれる情報もしくは内容をご利用されたことで直接・間接的に生じた損失に関し一切責任を負うものではありません。<br>
-                  &emsp;当サイトではサイトの利用状況を把握するために<a href="https://www.google.com/analytics/#?modal_active=none" target="_blank">Google Analytics</a>に登録しています。
-                  このため、Google Analyticsから提供されるトラッキングコードを活用してユーザーのアクセス情報を取得していますが、Googleが収集する情報は匿名のトラフィックデータであり個人を特定する情報ではありません。
-                  これらの情報について、当サイトではもっぱらサイトの質の向上を図り、より良いサービスを利用者に提供するためにだけに活用していますのでご了承願います。
-                </p>
-              </div>
-            </div>
-          </div>
-        </div>
-        <span class="b">・</span>
-        <a href="" data-toggle="modal" data-target="#methodModal">仕様</a>
-        <div class="modal fade" id="methodModal" tabindex="-1" role="dialog" aria-labelledby="methodModal" aria-hidden="true">
-          <div class="modal-dialog" role="document">
-            <div class="modal-content">
-              <div class="modal-header">
-                <h5 class="modal-title" id="ToSModalTitle">仕様</h5>
-                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
-                  <span aria-hidden="true">&times;</span>
-                </button>
-              </div>
-              <div class="modal-body">
-                <div class="MethodBody">
-                <p class="aaa">・使える形式</p>
-                <p class="ccc">
-                  MM/DD(WW)　<br>
-                  HH:MM-HH:MM<br>
-                月、日、曜日、開始時間と終了時間が以上の形式で入っていること。<br>
-                １日に２回以上の勤務があっても使えます。ただし、終了時間と次の勤務の開始時間が同時刻の場合は、一本の勤務として計算します。
-                </p>
-                <p class="aaa">・計算方法</p>
-                <p class="ccc">
-                開始時間から終了時間までの時間差分を拘束時間とします。<br>
-                拘束時間が<br>
-                0時間以上4時間30分未満 →　0分<br>
-                4時間30分以上6時間未満 →　30分<br>
-                6時間以上7時間未満 → 45分<br>
-                7時間以上12時間未満 → 1時間<br>
-                12時間以上 → 2時間<br>
-                の休憩時間を与え、拘束時間から休憩時間を引いたものを実働時間として表示します。<br>
-                みなさんが反映したシフトを元に計算を行っており、みなさんがシフトを反映しない場合や、欠勤、遅刻、早退、勤務の一部または全部の解消、残業など、シフトに反映されない場合は、その値を考慮することができません。<br>
-                より正確な値を得るためには、時間を手動で編集する機能を使い、正確な勤務時間を反映してください。
-                <p class="aaa">・特徴</p>
-                <p class="ccc">
-                  ローカルストレージにデータを保持します。閲覧履歴の削除時などに同時にデータが削除される恐れがあるのでご注意ください。<br>
-                  主にモバイル端末での仕様を想定しています。 PCやタブレットでも使用可能です。<br>
-                </p>
-                <p class="aaa">・動作確認</p>
-                <p class="ccc">
-                  Google Chrome (Windows/iPhone/Mac)<br>
-                  Firefox (Windows/Mac)<br>
-                  Internet Explorer 11<br>
-                </p>
-              </p>
-              <p class="bbb">その他、質問、要望などありましたら、ご気軽に「作者へ」の欄からお申し付けください。</p>
-              </div>
-              </div>
-            </div>
-          </div>
-        </div>
-        <span class="b">・</span>
-        <a href="" data-toggle="modal" data-target="#ChangeLogModal">更新履歴</a>
-        <div class="modal fade" id="ChangeLogModal" tabindex="-1" role="dialog" aria-labelledby="ChangeLogModalTitle" aria-hidden="true">
-          <div class="modal-dialog" role="document">
-            <div class="modal-content">
-              <div class="modal-header">
-                <h5 class="modal-title" id="ChangeLogModalTitle">更新履歴</h5>
-                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
-                  <span aria-hidden="true">&times;</span>
-                </button>
-              </div>
-              <div class="modal-body">
-                <p>
-                  2017.10.25 v.2.0.2<br>
-                  デザインの調整を行いました。
-                  2017.10.22 v.2.0.1<br>
-                  大規模アップデート。給与計算を実装。<br>
-                  2017.10.12 v.1.1.5<br>
-                  給与計算の実装に向けた準備を行いました。<br>
-                  2017.10.11 v.1.1.4<br>
-                  実働日数、勤務回数を表示しました。<br>
-                  2017.9.30  v.1.1.3<br>
-                  デザインを向上しました。<br>
-                  2017.9.29  v.1.1.2<br>
-                  出勤経路検索を改善しました。<br>
-                  モバイルへのリンクを設置しました。<br>
-                  2017.9.9   v.1.1.1<br>
-                  作者へのコンタクトフォームを実装しました。<br>
-                  2017.9.7   v.1.0.1<br>
-                  更新履歴を開始しました。<br>
-                </p>
-              </div>
-            </div>
-          </div>
-        </div>
-        <span class="b">・</span>
-        <a href="" data-toggle="modal" data-target="#ContactModal" onClick="clearForm()">作者へ</a>
-        <div class="modal fade" id="ContactModal" tabindex="-1" role="dialog" aria-labelledby="ContactModalLabel" aria-hidden="true">
-          <div class="modal-dialog" role="document">
-            <div class="modal-content">
-              <div class="modal-header">
-                <h5 class="modal-title" id="ContactModalLabel">作者へ</h5>
-                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
-                  <span aria-hidden="true">&times;</span>
-                </button>
-              </div>
-              <div class="modal-body">
-                <form action="https://docs.google.com/forms/d/e/1FAIpQLSeFOneYAejrfWEDs_w3HZ4ZY7yxcbNSXax3rLYxGkb0UgQX0g/formResponse" method="POST" target="iframe_hidden" onSubmit="return check()">
-                  <span class=" glyphicon glyphicon-user">Name ※required</span>
-                  <div class="form-group">
-                    <input type="text" name="entry.1205454870" class="form-control" autoload required id="name_message">
-                  </div>
-                  <span class="glyphicon glyphicon-envelope">Email</span>
-                  <div class="form-group">
-                    <input type="email" name="entry.1410027005" class="form-control" autoload id="email_message">
-                  </div>
-                  <span class=" glyphicon glyphicon glyphicon-pencil">Message ※required</span>
-                  <div class="form-group">
-                    <textarea type="text" name="entry.1685385619" class="form-control" rows="9" required id="Message"></textarea>
-                  </div>
-                  <p class="modalBody">返信が必要な場合はEmailを入力してください。<br>返信できない場合もあります。</p>
-                  <div class="form-group">
-                    <button class="btn btn-primary" id="submit">送信</button>
-                  </div>
-                </form>
-                <iframe name="iframe_hidden"></iframe>
-              </div>
-            </div>
-          </div>
-        </div>
-        <span class="b">・</span>
-        <a href="https://crew-pn.usjc.co.jp/cws/mbl/Menu-1" target="_blank">モバイル</a>
-        <br>
-        <small>Copyright &copy; 2017 Naoki Iwasa All Rights Reserved.<br>last updated at 2017.10.25 v.2.0.2<br>special thanks for Yudai Takegawa<br></small>
+  <a href="" data-toggle="modal" data-target="#ToSModal">利用規約</a>
+  <span class="b">・</span>
+  <a href="" data-toggle="modal" data-target="#methodModal">仕様</a>
+  <span class="b">・</span>
+  <a href="" data-toggle="modal" data-target="#ChangeLogModal">更新履歴</a>
+  <span class="b">・</span>
+  <a href="" data-toggle="modal" data-target="#ContactModal" onClick="clearForm()">作者へ</a>
+  <span class="b">・</span>
+  <a href="https://crew-pn.usjc.co.jp/cws/mbl/Menu-1" target="_blank">モバイル</a>
+  <br>
+  <small>Copyright &copy; 2017 Naoki Iwasa All Rights Reserved.<br>last updated at 2017.10.25 v.2.0.2<br>special thanks for Yudai Takegawa<br></small>
 </footer>
 <!-- /footer -->
+
+
+
+
+
+<!-- TOS MOADAL -->
+<div class="modal fade" id="ToSModal" tabindex="1" role="dialog">
+  <div class="modal-dialog" role="document">
+    <div class="modal-content">
+      <div class="modal-header">
+        <h5 class="modal-title" id="ToSModalTitle">利用規約</h5>
+        <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+          <span aria-hidden="true">&times;</span>
+        </button>
+      </div>
+      <div class="modal-body">
+        <p class="ToSBody">
+          &emsp;当サイトの利用者は以下の事項を理解した上で利用していただきます。本規約は当サイトの利用に関わる一切の関係に適用されるものとします。<br>
+          &emsp;当サイトは、特定の人物,団体,企業等と関与を持つものではありません。
+          当サイトは利用者に通知することなく本サービスの内容を変更しまたは本サービスの提供を中止することができるものとし、これによって利用者に生じた損害について一切の責任を負いません。
+          当サイトは細心の注意を払って運営しておりますが、この情報の正確性および完全性を保証するものではありません。
+          当方は利用者が当サイトに含まれる情報もしくは内容をご利用されたことで直接・間接的に生じた損失に関し一切責任を負うものではありません。<br>
+          &emsp;当サイトではサイトの利用状況を把握するために<a href="https://www.google.com/analytics/#?modal_active=none" target="_blank">Google Analytics</a>に登録しています。
+          このため、Google Analyticsから提供されるトラッキングコードを活用してユーザーのアクセス情報を取得していますが、Googleが収集する情報は匿名のトラフィックデータであり個人を特定する情報ではありません。
+          これらの情報について、当サイトではもっぱらサイトの質の向上を図り、より良いサービスを利用者に提供するためにだけに活用していますのでご了承願います。
+        </p>
+      </div>
+    </div>
+  </div>
+</div>
+<!-- /TOS MOADAL -->
+
+
+
+
+<!-- METHOD MOADL -->
+<div class="modal fade" id="methodModal" tabindex="1" role="dialog">
+  <div class="modal-dialog" role="document">
+    <div class="modal-content">
+      <div class="modal-header">
+        <h5 class="modal-title" id="ToSModalTitle">仕様</h5>
+        <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+          <span aria-hidden="true">&times;</span>
+        </button>
+      </div>
+      <div class="modal-body">
+        <div class="MethodBody">
+        <p class="aaa">・使える形式</p>
+        <p class="ccc">
+          MM/DD(WW)　<br>
+          HH:MM-HH:MM<br>
+        月、日、曜日、開始時間と終了時間が以上の形式で入っていること。<br>
+        １日に２回以上の勤務があっても使えます。ただし、終了時間と次の勤務の開始時間が同時刻の場合は、一本の勤務として計算します。
+        </p>
+        <p class="aaa">・計算方法</p>
+        <p class="ccc">
+        開始時間から終了時間までの時間差分を拘束時間とします。<br>
+        拘束時間が<br>
+        0時間以上4時間30分未満 →　0分<br>
+        4時間30分以上6時間未満 →　30分<br>
+        6時間以上7時間未満 → 45分<br>
+        7時間以上12時間未満 → 1時間<br>
+        12時間以上 → 2時間<br>
+        の休憩時間を与え、拘束時間から休憩時間を引いたものを実働時間として表示します。<br>
+        みなさんが反映したシフトを元に計算を行っており、みなさんがシフトを反映しない場合や、欠勤、遅刻、早退、勤務の一部または全部の解消、残業など、シフトに反映されない場合は、その値を考慮することができません。<br>
+        より正確な値を得るためには、時間を手動で編集する機能を使い、正確な勤務時間を反映してください。
+        <p class="aaa">・特徴</p>
+        <p class="ccc">
+          ローカルストレージにデータを保持します。閲覧履歴の削除時などに同時にデータが削除される恐れがあるのでご注意ください。<br>
+          主にモバイル端末での仕様を想定しています。 PCやタブレットでも使用可能です。<br>
+        </p>
+        <p class="aaa">・動作確認</p>
+        <p class="ccc">
+          Google Chrome (Windows/iPhone/Mac)<br>
+          Firefox (Windows/Mac)<br>
+          Internet Explorer 11<br>
+        </p>
+      </p>
+      <p class="bbb">その他、質問、要望などありましたら、ご気軽に「作者へ」の欄からお申し付けください。</p>
+      </div>
+      </div>
+    </div>
+  </div>
+</div>
+<!-- ?METHOD MOADAL -->
+
+
+
+
+
+<!-- CHANGE LOG MODAL -->
+<div class="modal fade" id="ChangeLogModal" tabindex="1" role="dialog">
+  <div class="modal-dialog" role="document">
+    <div class="modal-content">
+      <div class="modal-header">
+        <h5 class="modal-title" id="ChangeLogModalTitle">更新履歴</h5>
+        <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+          <span aria-hidden="true">&times;</span>
+        </button>
+      </div>
+      <div class="modal-body">
+        <p>
+          2017.10.25 v.2.0.2<br>
+          デザインの調整を行いました。
+          2017.10.22 v.2.0.1<br>
+          大規模アップデート。給与計算を実装。<br>
+          2017.10.12 v.1.1.5<br>
+          給与計算の実装に向けた準備を行いました。<br>
+          2017.10.11 v.1.1.4<br>
+          実働日数、勤務回数を表示しました。<br>
+          2017.9.30  v.1.1.3<br>
+          デザインを向上しました。<br>
+          2017.9.29  v.1.1.2<br>
+          出勤経路検索を改善しました。<br>
+          モバイルへのリンクを設置しました。<br>
+          2017.9.9   v.1.1.1<br>
+          作者へのコンタクトフォームを実装しました。<br>
+          2017.9.7   v.1.0.1<br>
+          更新履歴を開始しました。<br>
+        </p>
+      </div>
+    </div>
+  </div>
+</div>
+<!-- /CHANGE LOG MODAL -->
+
+
+
+
+
+<!-- CONTACT MODAL -->
+<div class="modal fade" id="ContactModal" tabindex="1" role="dialog">
+  <div class="modal-dialog" role="document">
+    <div class="modal-content">
+      <div class="modal-header">
+        <h5 class="modal-title" id="ContactModalLabel">作者へ</h5>
+        <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+          <span aria-hidden="true">&times;</span>
+        </button>
+      </div>
+      <div class="modal-body">
+        <form action="https://docs.google.com/forms/d/e/1FAIpQLSeFOneYAejrfWEDs_w3HZ4ZY7yxcbNSXax3rLYxGkb0UgQX0g/formResponse" method="POST" target="iframe_hidden" onSubmit="return check()">
+          <span class=" glyphicon glyphicon-user">Name ※required</span>
+          <div class="form-group">
+            <input type="text" name="entry.1205454870" class="form-control" autoload required id="name_message">
+          </div>
+          <span class="glyphicon glyphicon-envelope">Email</span>
+          <div class="form-group">
+            <input type="email" name="entry.1410027005" class="form-control" autoload id="email_message">
+          </div>
+          <span class=" glyphicon glyphicon glyphicon-pencil">Message ※required</span>
+          <div class="form-group">
+            <textarea type="text" name="entry.1685385619" class="form-control" rows="9" required id="Message"></textarea>
+          </div>
+          <p class="modalBody">返信が必要な場合はEmailを入力してください。<br>返信できない場合もあります。</p>
+          <div class="form-group">
+            <button class="btn btn-primary" id="submit">送信</button>
+          </div>
+        </form>
+        <iframe name="iframe_hidden"></iframe>
+      </div>
+    </div>
+  </div>
+</div>
+<!-- /CONTACT MODAL -->
+
+
+
 
 
 <!-- WORKTIME LIST MODAL -->
@@ -348,16 +370,16 @@ you cannot:
           <div>
             <div class="input-group" style="margin-bottom: .5em" role="start">
               <div class="input-group-addon">開始時刻</div>
-              <select data-opt="hour" class="form-control"></select>
+              <select data-opt="hour" class="form-control custom-select"></select>
               <div class="input-group-addon">時</div>
-              <select data-opt="min" class="form-control"></select>
+              <select data-opt="min" class="form-control custom-select"></select>
               <div class="input-group-addon">分</div>
             </div>
             <div class="input-group" role="finish">
               <div class="input-group-addon">終了時刻</div>
-              <select data-opt="hour" class="form-control"></select>
+              <select data-opt="hour" class="form-control custom-select"></select>
               <div class="input-group-addon">時</div>
-              <select data-opt="min" class="form-control"></select>
+              <select data-opt="min" class="form-control custom-select"></select>
               <div class="input-group-addon">分</div>
             </div>
           </div>
@@ -396,16 +418,16 @@ you cannot:
         </div>
         <div class="input-group" style="margin-bottom: .5em">
         	<div class="input-group-addon">開始時刻</div>
-          <select data-opt="hour" class="form-control" data-defval="12" id="addModal_sh" onchange="checkAddWtModalValidity()"></select>
+          <select data-opt="hour" class="form-control custom-select" data-defval="12" id="addModal_sh" onchange="checkAddWtModalValidity()"></select>
           <div class="input-group-addon">時</div>
-          <select data-opt="min" class="form-control" data-defval="0" id="addModal_sm" onchange="checkAddWtModalValidity()"></select>
+          <select data-opt="min" class="form-control custom-select" data-defval="0" id="addModal_sm" onchange="checkAddWtModalValidity()"></select>
           <div class="input-group-addon">分</div>
         </div>
         <div class="input-group">
         	<div class="input-group-addon">終了時刻</div>
-          <select data-opt="hour" class="form-control" data-defval="12" id="addModal_fh" onchange="checkAddWtModalValidity()"></select>
+          <select data-opt="hour" class="form-control custom-select" data-defval="12" id="addModal_fh" onchange="checkAddWtModalValidity()"></select>
           <div class="input-group-addon">時</div>
-          <select data-opt="min" class="form-control" data-defval="0" id="addModal_fm" onchange="checkAddWtModalValidity()"></select>
+          <select data-opt="min" class="form-control custom-select" data-defval="0" id="addModal_fm" onchange="checkAddWtModalValidity()"></select>
           <div class="input-group-addon">分</div>
         </div>
       </div>
@@ -542,7 +564,7 @@ you cannot:
                 <th>表示順序</th>
                 <td>
                     <div class="form-inline">
-                        <select id="display_sel" class="form-control" style="max-width:12em;">
+                        <select id="display_sel" class="form-control custom-select" style="max-width:12em;">
                             <option value="0">到着が早い順</option>
                             <option value="2">乗り換え回数順</option>
                             <option value="1">料金が安い順</option>
@@ -554,7 +576,7 @@ you cannot:
                 <th>歩く速さ</th>
                 <td>
                     <div class="form-inline">
-                        <select id="ws_sel" class="form-control" style="max-width:12em;">
+                        <select id="ws_sel" class="form-control custom-select" style="max-width:12em;">
 							           <option value="1" >急いで</option>
 							           <option value="2" >少し急いで</option>
 							           <option value="3">少しゆっくり</option>
@@ -626,46 +648,46 @@ you cannot:
                     支給月(すべて選択)
                     <div id="fee_provide_month">
                       <div class="btn-group" data-toggle="buttons" style="margin: 0.2rem;">
-                        <label class="btn btn-outline-secondary" style="min-width:40px;max-width:40px;">
+                        <label class="btn btn-outline-primary" style="min-width:40px;max-width:40px;">
                           <input type="checkbox" autocomplete="off" class="fee_month" value=1>1
                         </label>
-                        <label class="btn btn-outline-secondary" style="min-width:40px;max-width:40px;">
+                        <label class="btn btn-outline-primary" style="min-width:40px;max-width:40px;">
                           <input type="checkbox" autocomplete="off" class="fee_month" value=2>2
                         </label>
-                        <label class="btn btn-outline-secondary" style="min-width:40px;max-width:40px;">
+                        <label class="btn btn-outline-primary" style="min-width:40px;max-width:40px;">
                           <input type="checkbox" autocomplete="off" class="fee_month" value=3>3
                         </label>
-                        <label class="btn btn-outline-secondary" style="min-width:40px;max-width:40px;">
+                        <label class="btn btn-outline-primary" style="min-width:40px;max-width:40px;">
                           <input type="checkbox" autocomplete="off" class="fee_month" value=4>4
                           </label>
                        </div>
                        <br>
                        <div class="btn-group" data-toggle="buttons" style="margin: 0.2rem;">
-                         <label class="btn btn-outline-secondary" style="min-width:40px;max-width:40px;">
+                         <label class="btn btn-outline-primary" style="min-width:40px;max-width:40px;">
                            <input type="checkbox" autocomplete="off" class="fee_month" value=5>5
                          </label>
-                         <label class="btn btn-outline-secondary" style="min-width:40px;max-width:40px;">
+                         <label class="btn btn-outline-primary" style="min-width:40px;max-width:40px;">
                            <input type="checkbox" autocomplete="off" class="fee_month" value=6>6
                          </label>
-                         <label class="btn btn-outline-secondary" style="min-width:40px;max-width:40px;">
+                         <label class="btn btn-outline-primary" style="min-width:40px;max-width:40px;">
                            <input type="checkbox" autocomplete="off" class="fee_month" value=7>7
                          </label>
-                         <label class="btn btn-outline-secondary" style="min-width:40px;max-width:40px;">
+                         <label class="btn btn-outline-primary" style="min-width:40px;max-width:40px;">
                            <input type="checkbox" autocomplete="off" class="fee_month" value=8>8
                          </label>
                         </div>
                         <br>
                         <div class="btn-group" data-toggle="buttons" style="margin: 0.2rem;">
-                          <label class="btn btn-outline-secondary" style="min-width:40px;max-width:40px;">
+                          <label class="btn btn-outline-primary" style="min-width:40px;max-width:40px;">
                             <input type="checkbox" autocomplete="off" class="fee_month" value=9>9
                           </label>
-                          <label class="btn btn-outline-secondary" style="min-width:40px;max-width:40px;">
+                          <label class="btn btn-outline-primary" style="min-width:40px;max-width:40px;">
                             <input type="checkbox" autocomplete="off" class="fee_month" value=10>10
                           </label>
-                          <label class="btn btn-outline-secondary" style="min-width:40px;max-width:40px;">
+                          <label class="btn btn-outline-primary" style="min-width:40px;max-width:40px;">
                             <input type="checkbox" autocomplete="off" class="fee_month" value=11>11
                           </label>
-                          <label class="btn btn-outline-secondary" style="min-width:40px;max-width:40px;">
+                          <label class="btn btn-outline-primary" style="min-width:40px;max-width:40px;">
                             <input type="checkbox" autocomplete="off" class="fee_month" value=12>12
                           </label>
                       </div>
@@ -844,8 +866,7 @@ you cannot:
 <script src="https://cdn.jsdelivr.net/npm/flatpickr"></script>
 <script src="https://npmcdn.com/flatpickr/dist/l10n/ja.js"></script>
 <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.11.0/umd/popper.min.js" integrity="sha384-b/U6ypiBEHpOf/4+1nzFpr53nxSS+GLCkfwBdFNTxtclqqenISfwAzpKaMNFNmj4" crossorigin="anonymous"></script>
-<script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0-beta/js/bootstrap.min.js" integrity="sha384-h0AbiXch4ZDo7tp9hKZ4TsHbi047NrKGLO3SEJAg45jXxnGIfYzk4Si90RDIqNm1" crossorigin="anonymous"></script>
-
+<script src="js/bootstrap.min.js"></script>
 <script type="text/javascript" src="workaholic_util.js"></script>
 <script type="text/javascript" src="worktimelib.js"></script>
 <script type="text/javascript" src="workaholic.js"></script>

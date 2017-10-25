@@ -1186,10 +1186,10 @@ function checkButtonsInput(elems) {
   });
   if (flag){
       elems.parent().removeClass('btn-outline-danger');
-      elems.parent().addClass('btn-outline-secondary');
+      elems.parent().addClass('btn-outline-primary');
       return true;
   } else {
-      elems.parent().removeClass('btn-outline-secondary');
+      elems.parent().removeClass('btn-outline-primary');
       elems.parent().addClass('btn-outline-danger');
       return false;
   }
