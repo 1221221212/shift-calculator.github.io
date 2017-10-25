@@ -26,10 +26,10 @@ you cannot:
     #container{padding-bottom: 3em}
     #nextBox,#nextOfNextBox,#shiftTable{display: none;}
     .btn-primary{background-color: #01917b;border-color: #01917b;}
-    .btn-primary:hover{background-color: #007a67;border-color: #007a67;}
+    .btn-primary:hover,.btn-primary:active{background-color: #007a67;border-color: #007a67;}
     .btn-outline-primary,.btn-outline-primary.disaled,.btn-outline-primary:disabled{border-color: #01917b;color: #007a67;}
     .btn-outline-primary.disaled:hover,.btn-outline-primary:disabled:hover{color: #fff}
-    .btn-outline-primary:hover{background-color: #01917b;border-color: #01917b;}
+    .btn-outline-primary:hover,.btn-outline-primary:active{background-color: #01917b;border-color: #01917b;}
     .btn-primary.disabled,.btn-primary:disabled,.btn-primary.disabled:hover,.btn-primary:disabled:hover{background-color:#7bada6;border-color:#7bada6;cursor: default;}
 	  .btn-primary:focus, .btn-primary.focus, .btn-outline-primary:focus, .btn-primary.focus {box-shadow: 0 0 0 3px rgba(1, 145, 123, 0.5);}
 	  .is-valid{background-color: #d4edda}
@@ -267,7 +267,7 @@ you cannot:
                 <form action="https://docs.google.com/forms/d/e/1FAIpQLSeFOneYAejrfWEDs_w3HZ4ZY7yxcbNSXax3rLYxGkb0UgQX0g/formResponse" method="POST" target="iframe_hidden" onSubmit="return check()">
                   <span class=" glyphicon glyphicon-user">Name ※required</span>
                   <div class="form-group">
-                    <input type="text" name="entry.1205454870" class="form-control" autoload required onchange="checkMessageModalValidity()" id="name_message">
+                    <input type="text" name="entry.1205454870" class="form-control" autoload required id="name_message">
                   </div>
                   <span class="glyphicon glyphicon-envelope">Email</span>
                   <div class="form-group">
@@ -275,7 +275,7 @@ you cannot:
                   </div>
                   <span class=" glyphicon glyphicon glyphicon-pencil">Message ※required</span>
                   <div class="form-group">
-                    <textarea type="text" name="entry.1685385619" class="form-control" rows="9" required onchange="checkMessageModalValidity()" id="Message"></textarea>
+                    <textarea type="text" name="entry.1685385619" class="form-control" rows="9" required id="Message"></textarea>
                   </div>
                   <p class="modalBody">返信が必要な場合はEmailを入力してください。<br>返信できない場合もあります。</p>
                   <div class="form-group">
@@ -1063,12 +1063,6 @@ function removeWTWithEditModal() {
 		<input type=text autoload id=id3/>
 		<button onclick="saveTextboxData($('#id3'))">データを保存</button>
 */
-
-function checkMessageModalValidity(){
-	var ready = checkTextInput($('#name_message'))
-	ready = checkTextInput($("#Message")) && ready;
-    $('#submit').attr('disabled', !ready);
-}
 
 function check(){
 	if(window.confirm('送信してよろしいですか？')){
