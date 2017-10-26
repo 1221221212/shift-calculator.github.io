@@ -68,7 +68,7 @@ function setLS(key, val){
   try{
     window.localStorage.setItem(key, val);
   }catch(e){
-    message('localStorageが使用できません。Privateモードでは利用できない場合があります。', 'danger');
+    message('LocalStorageが使用できません。Privateモードでは利用できない場合があります。', 'danger');
 }
 
 }
