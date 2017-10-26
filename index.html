@@ -622,28 +622,34 @@ you cannot:
             <tr>
               <th style="min-width: 100px;">時給</th>
               <td class="form-group form-inline" style="margin-bottom: 0">
-                <input type="number" class="form-control" id="hourWage" style="max-width:7em;margin-right: .8em" autoload onchange="checkSalarySettingValidity();">円
+                <div class="input-group">
+                  <input type="number" class="form-control" id="hourWage" style="max-width:7em;" autoload onchange="checkSalarySettingValidity();">
+                  <span class="input-group-addon">円</span>
+                </div>
               </td>
             </tr>
             <tr>
               <th>交通費</th>
               <td class="form-group">
-                <div id="forNonRegular">
-                  <div class="form-inline" style="margin:.5em 0">
-                    交通費<input type="number" class="form-control" id="trans" style="max-width:7em;margin-right: .8em;margin-left: .8em;" autoload onchange="checkSalarySettingValidity();">円
-                    <small class="text-muted" style="margin-left:.8em;">
-                      1日の往復の交通費を入力してください。
-                    </small>
+                <div id="forNonRegular" style="margin-bottom: 1em;">
+                  <div class="input-group">
+                    <span class="input-group-addon">交通費</span>
+                    <input type="number" class="form-control" id="trans" style="max-width:7em;" autoload onchange="checkSalarySettingValidity();">
+                    <span class="input-group-addon">円</span>
                   </div>
-                  <div class="form-inline"  style="margin:.5em 0">
-                    定期代<input type="number" class="form-control" id="one_month_fee" style="max-width:7em;margin-right: .8em;margin-left: .8em;" with="fee_month" autoload onchange="checkSalarySettingValidity();">円
-                    <small class="text-muted" style="margin-left:.8em;">
-                      1ヶ月の定期代を入力してください。
-                    </small>
+                  <small class="text-muted" style="margin-left:.8em;">
+                    1日の往復の交通費を入力してください。
+                  </small>
+                  <div class="input-group">
+                    <span class="input-group-addon">定期代</span>
+                    <input type="number" class="form-control" id="one_month_fee" style="max-width:7em;" autoload onchange="checkSalarySettingValidity();">
+                    <span class="input-group-addon">円</span>
                   </div>
-                  </div>
+                  <small class="text-muted" style="margin-left:.8em;">
+                    1ヶ月の定期代を入力してください。
+                  </small>
                 </div>
-                <div class="form-group" id="forRegular" style="margin:.5em 0">
+                <div class="form-group" id="forRegular" style="margin-bottom: 1em 0">
                   <div class="form">
                     支給月(すべて選択)
                     <div id="fee_provide_month">
@@ -659,47 +665,48 @@ you cannot:
                         </label>
                         <label class="btn btn-outline-primary" style="min-width:40px;max-width:40px;">
                           <input type="checkbox" autocomplete="off" class="fee_month" value=4>4
-                          </label>
-                       </div>
-                       <br>
-                       <div class="btn-group" data-toggle="buttons" style="margin: 0.2rem;">
-                         <label class="btn btn-outline-primary" style="min-width:40px;max-width:40px;">
-                           <input type="checkbox" autocomplete="off" class="fee_month" value=5>5
-                         </label>
-                         <label class="btn btn-outline-primary" style="min-width:40px;max-width:40px;">
-                           <input type="checkbox" autocomplete="off" class="fee_month" value=6>6
-                         </label>
-                         <label class="btn btn-outline-primary" style="min-width:40px;max-width:40px;">
-                           <input type="checkbox" autocomplete="off" class="fee_month" value=7>7
-                         </label>
-                         <label class="btn btn-outline-primary" style="min-width:40px;max-width:40px;">
-                           <input type="checkbox" autocomplete="off" class="fee_month" value=8>8
-                         </label>
-                        </div>
-                        <br>
-                        <div class="btn-group" data-toggle="buttons" style="margin: 0.2rem;">
-                          <label class="btn btn-outline-primary" style="min-width:40px;max-width:40px;">
-                            <input type="checkbox" autocomplete="off" class="fee_month" value=9>9
-                          </label>
-                          <label class="btn btn-outline-primary" style="min-width:40px;max-width:40px;">
-                            <input type="checkbox" autocomplete="off" class="fee_month" value=10>10
-                          </label>
-                          <label class="btn btn-outline-primary" style="min-width:40px;max-width:40px;">
-                            <input type="checkbox" autocomplete="off" class="fee_month" value=11>11
-                          </label>
-                          <label class="btn btn-outline-primary" style="min-width:40px;max-width:40px;">
-                            <input type="checkbox" autocomplete="off" class="fee_month" value=12>12
-                          </label>
+                        </label>
+                      </div>
+                      <br>
+                      <div class="btn-group" data-toggle="buttons" style="margin: 0.2rem;">
+                        <label class="btn btn-outline-primary" style="min-width:40px;max-width:40px;">
+                          <input type="checkbox" autocomplete="off" class="fee_month" value=5>5
+                        </label>
+                        <label class="btn btn-outline-primary" style="min-width:40px;max-width:40px;">
+                          <input type="checkbox" autocomplete="off" class="fee_month" value=6>6
+                        </label>
+                        <label class="btn btn-outline-primary" style="min-width:40px;max-width:40px;">
+                          <input type="checkbox" autocomplete="off" class="fee_month" value=7>7
+                        </label>
+                        <label class="btn btn-outline-primary" style="min-width:40px;max-width:40px;">
+                          <input type="checkbox" autocomplete="off" class="fee_month" value=8>8
+                        </label>
+                      </div>
+                      <br>
+                      <div class="btn-group" data-toggle="buttons" style="margin: 0.2rem;">
+                        <label class="btn btn-outline-primary" style="min-width:40px;max-width:40px;">
+                          <input type="checkbox" autocomplete="off" class="fee_month" value=9>9
+                        </label>
+                        <label class="btn btn-outline-primary" style="min-width:40px;max-width:40px;">
+                          <input type="checkbox" autocomplete="off" class="fee_month" value=10>10
+                        </label>
+                        <label class="btn btn-outline-primary" style="min-width:40px;max-width:40px;">
+                          <input type="checkbox" autocomplete="off" class="fee_month" value=11>11
+                        </label>
+                        <label class="btn btn-outline-primary" style="min-width:40px;max-width:40px;">
+                          <input type="checkbox" autocomplete="off" class="fee_month" value=12>12
+                        </label>
                       </div>
                     </div>
                   </div>
-                  <div class="form-inline">
-                    定期代
-                    <input type="number" class="form-control" id="six_month_fee" style="max-width:7em;margin:.5em;" autoload onchange="checkSalarySettingValidity();">円
-                    <small class="text-muted" style="margin-left:.8em;">
-                      支給される定期代を入力してください。
-                    </small>
+                  <div class="input-group">
+                    <span class="input-group-addon">定期代</span>
+                    <input type="number" class="form-control" id="six_month_fee" style="max-width:7em;" autoload onchange="checkSalarySettingValidity();">
+                    <span class="input-group-addon">円</span>
                   </div>
+                  <small class="text-muted" style="margin-left:.8em;">
+                    支給される定期代を入力してください。
+                  </small>
                 </div>
                 <label class="custom-control custom-checkbox" style="margin: 0">
                   <input type="checkbox" class="custom-control-input" onchange="transDisable(this);checkSalarySettingValidity();" autoload id="hs_student_checkbox">
