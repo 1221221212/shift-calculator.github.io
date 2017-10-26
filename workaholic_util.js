@@ -64,8 +64,13 @@ function refreshStyle() {
 	}
 }
 
-function setLS(key, val) {
-	window.localStorage.setItem(key, val);
+function setLS(key, val){
+  try{
+    window.localStorage.setItem(key, val);
+  }catch(e){
+    message('localStorageが使用できません。Privateモードでは利用できない場合があります。', 'danger');
+}
+
 }
 
 function getLS(key) {
@@ -314,7 +319,7 @@ function checkCompatibility(){
 	     		writable: false,
 	      		configurable: false,
 	      		enumerable: false
-	    	});    
+	    	});
 	    	Object.defineProperty(oStorage, "clear", {
 	      		value: function () {
 	        		if(!aKeys.length) { return; }
@@ -357,10 +362,10 @@ function removeHoverEffectOnMobilePhone(){
 	        for (var si in document.styleSheets) {
 	            var styleSheet = document.styleSheets[si];
 	            if (!styleSheet.rules) continue;
-	 
+
 	            for (var ri = styleSheet.rules.length - 1; ri >= 0; ri--) {
 	                if (!styleSheet.rules[ri].selectorText) continue;
-	 
+
 	                if (styleSheet.rules[ri].selectorText.match(':hover')) {
 	                    styleSheet.deleteRule(ri);
 	                }
