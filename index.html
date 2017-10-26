@@ -505,13 +505,13 @@ you cannot:
                     <div class="form-inline form-inline-input">
                         <p>
                           <span>勤務時間の</span>
-                          <input type="number" id="yttime" placeholder="" class="form-control form-control-sm" style="max-width: 70px" onkeyup="checkTransitModalValidity()" onchange="checkTransitModalValidity()">
+                          <input type="number" id="yttime" placeholder="例: 30" class="form-control form-control-sm" style="max-width: 70px" onkeyup="checkTransitModalValidity()" onchange="checkTransitModalValidity()">
                           <span>分前に</span>
-                          <input type="text" id="ytfrom" placeholder="例: 学研北生駒" class="form-control form-control-sm" style="min-width: 100px" onkeyup="checkTransitModalValidity()">
+                          <input type="text" id="ytfrom" placeholder="例: 郡山" class="form-control form-control-sm" style="min-width: 100px" onkeyup="checkTransitModalValidity()">
                           <span>から</span>
                           <input type="text" id="ytto" placeholder="例: 桜島" value="桜島" class="form-control form-control-sm" style="min-width: 100px" onkeyup="checkTransitModalValidity()">
                           <span>に</span>
-                          <input type="text" id="ytvia" placeholder="例: 谷町四丁目" class="form-control form-control-sm" style="min-width: 100px">
+                          <input type="text" id="ytvia" placeholder="例: 天王寺" class="form-control form-control-sm" style="min-width: 100px">
                           <span>経由で到着する経路を検索</span>
                         </p>
                         <p style="margin:0;">
@@ -637,16 +637,16 @@ you cannot:
                     <input type="number" class="form-control" id="trans" style="max-width:7em;" autoload onchange="checkSalarySettingValidity();">
                     <span class="input-group-addon">円</span>
                   </div>
-                  <small class="text-muted" style="margin-left:.8em;">
-                    1日の往復の交通費を入力してください。
+                  <small class="text-muted">
+                    1日の往復の交通費を入力。
                   </small>
                   <div class="input-group">
                     <span class="input-group-addon">定期代</span>
                     <input type="number" class="form-control" id="one_month_fee" style="max-width:7em;" autoload onchange="checkSalarySettingValidity();">
                     <span class="input-group-addon">円</span>
                   </div>
-                  <small class="text-muted" style="margin-left:.8em;">
-                    1ヶ月の定期代を入力してください。
+                  <small class="text-muted">
+                    1ヶ月の定期代を入力。
                   </small>
                 </div>
                 <div class="form-group" id="forRegular" style="margin-bottom: 1em 0">
@@ -704,8 +704,8 @@ you cannot:
                     <input type="number" class="form-control" id="six_month_fee" style="max-width:7em;" autoload onchange="checkSalarySettingValidity();">
                     <span class="input-group-addon">円</span>
                   </div>
-                  <small class="text-muted" style="margin-left:.8em;">
-                    支給される定期代を入力してください。
+                  <small class="text-muted">
+                    支給される定期代を入力。
                   </small>
                 </div>
                 <label class="custom-control custom-checkbox" style="margin: 0">
