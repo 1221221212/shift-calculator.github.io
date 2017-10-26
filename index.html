@@ -1122,7 +1122,15 @@ function transDisable(check){
   //document.getElementById('trans').attr()とか
   //$('#trans').disabledとかはできない
   //高校生なら支給月、6ヶ月の定期代もいらない
-  $('#six_month_fee').prop('disabled', $(check).prop('checked'));
+  $('#fee_provide_month input').prop('disabled', $(check).prop('checked'));
+   if($(check).prop('checked')){
+     $('#fee_provide_month input').parent().css('opacity','.5');
+   }else{
+     $('#fee_provide_month input').parent().css('opacity','');
+   }
+   
+   $('#six_month_fee').prop('disabled', $(check).prop('checked'));
+
 }
 
 //給与概算設定modalの保存ボタンを押したときに呼ばれる

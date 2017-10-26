@@ -1175,7 +1175,7 @@ function setCalcSalaryModalContent(){
 //checkbox of buttons!
 function checkButtonsInput(elems) {
  var flag = false;
- if (elems.parent().prop('disabled')){
+ if (elems.prop('disabled')){
   return true;
  } else {
   elems.each(function(){
