@@ -1006,7 +1006,13 @@ function setCalcSalaryModalContent(){
 
 		var _s = monthkey.split('/');
 		var full_year = parseInt(_s[0]);//2017
+		var provideYear = full_year;
 		var month = parseInt(_s[1]);//9
+		var provideMonth = month + 1;
+		 if(month == 12){
+			 provideYear = provideYear + 1;
+			 provideMonth = 1;
+		 }
 
 		if(isHSStudent == true){
 			transPay = 0;
@@ -1140,15 +1146,25 @@ function setCalcSalaryModalContent(){
 		_a.push('<span class="aaa">' + '勤怠関連')
     _a.push('<span class="bbb">' + '出勤日数: ' + days.length + '日');
     _a.push('<span class="bbb">' + '休日日数: ' + (monthday(full_year, month) - days.length) + '日');
-		_a.push('<span class="bbb">' + '深夜早朝計: ' + wholeMidnightHours + '時間');
 		_a.push('<span class="bbb">' + '時間外計: ' + wholeLongHours + '時間');
+		_a.push('<span class="bbb">' + '深夜早朝計: ' + wholeMidnightHours + '時間');
 
     	//以降表示
 	    var tr = $('<tr>');
-	    //<td>{Y}年{mo}月</td>
-	    $('<td>', {
-	    	text: full_year + '年' + month + '月'
-	    }).appendTo(tr);
+	    //<td>{Y}年{mo}月 ({Y}年{mo}月支給)</td>
+			var td = $('<td>');
+			$('<span>', {
+				text: full_year + '年' + month + '月'
+			}).appendTo(td);
+			$('<small>', {
+				'class': 'text-muted',
+				text: '(' + provideYear + '年' + provideMonth + '月' + '支給)'
+			}).appendTo(td);
+			$('<div>', {
+				html : _a.join('</span>')
+			}).css('display', 'none').appendTo(td);
+			td.appendTo(tr);
+			tr.appendTo('#calcSalaryTbody');
 	    //<td>その月のデータ...</td>
 	    var td = $('<td>', {
 	    	'class': 'monthData',
