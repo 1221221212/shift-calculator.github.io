@@ -460,13 +460,18 @@ function refreshTable(oninit) {
 	// objは{"2017/8": [wt1, wt2, ...]}といった構造になる。"2017/8"はgetKeyDay()により生成。
 	var obj = splitByMonth();
 	$('#shiftList').html('');
-	for (var _key in obj){
+	var keys = Object.keys(obj);
+	if($('#table_sort_checkbox').prop('checked')){
+		keys.reverse();
+	}
+	for (var i = 0 ; i < keys.length ; i++){
+		var _key = keys[i];
 		var _awt = obj[_key];//array of worktime: その月のworktime全て。おそらくsortされた後なので古い順
 		var actual = 0;//単位はmin: 実働時間の合計
 		var days = [];//働いた日付の配列。日数を得るのに使う
 		var _s = _key.split('/');//["2017", "8"];
-		for (var i = 0; i < _awt.length; i++) {
-			var _wt = _awt[i];
+		for (var j = 0; j < _awt.length; j++) {
+			var _wt = _awt[j];
 			actual += _wt.getActualMin();
 			//もし新しい日付なら追加 -> 日数がわかる
 			var daykey = _wt.getDayKey();
@@ -509,7 +514,7 @@ function refreshTable(oninit) {
 				$('#listWTModal').modal();
 			}
 		}).appendTo(tr);
-		//新しいtd。計実働時間を表示するよ
+		//新しいtd。合計実働時間を表示するよ
 		$('<td>', {
 			text: (actual/60).toFixed(2)
 		}).appendTo(tr);
@@ -517,7 +522,7 @@ function refreshTable(oninit) {
 		$('<td>', {
 			html: days.length + '日 <small>/ ' +  monthday(parseInt(_s[0]), parseInt(_s[1])) + '日</small>'
 		}).appendTo(tr);
-		//新しいtd。働いた階数を表示するよ
+		//新しいtd。働いた回数を表示するよ
 		$('<td>', {
 			text: _awt.length + '回'
 		}).appendTo(tr);

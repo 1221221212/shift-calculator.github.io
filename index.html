@@ -147,7 +147,7 @@ you cannot:
   <span class="b">・</span>
   <a href="https://crew-pn.usjc.co.jp/cws/mbl/Menu-1" target="_blank">モバイル</a>
   <br>
-  <small>Copyright &copy; 2017 Naoki Iwasa All Rights Reserved.<br>last updated at 2017.11.1 v.2.0.3<br>special thanks for Yudai Takegawa<br></small>
+  <small>Copyright &copy; 2017 Naoki Iwasa All Rights Reserved.<br>last updated at 2017.11.13 v.2.0.4<br>special thanks for Yudai Takegawa<br></small>
 </footer>
 <!-- /footer -->
 
@@ -252,6 +252,8 @@ you cannot:
       </div>
       <div class="modal-body">
         <p>
+          2017.11.13 v2.0.4<br>
+          新しい月を上に表示する設定を追加しました。<br>
           2017.11.1 v2.0.3<br>
           給与概算の欄に支給月を表示しました。<br>
           2017.10.25 v.2.0.2<br>
@@ -469,7 +471,7 @@ you cannot:
 			    <label class="custom-control custom-checkbox mb-2 mr-sm-2 mb-sm-0">
 			     <input type="checkbox" class="custom-control-input" id="override_checkbox" checked saveonchange autoload>
 			     <span class="custom-control-indicator"></span>
-			     <span class="custom-control-description">半月分のデータを入力するときに、前にあったその期間のデータは全て削除する</span>
+			     <span class="custom-control-description">上書き時に既存のデータを削除する</span>
           </label>
         </div>
         <div>
@@ -477,6 +479,13 @@ you cannot:
           <input type="checkbox" class="custom-control-input" id="inter_term_checkbox" checked saveonchange autoload>
           <span class="custom-control-indicator"></span>
           <span class="custom-control-description">複数期間のデータを入力</span>
+        </label>
+        </div>
+        <div>
+        <label class="custom-control custom-checkbox mb-2 mr-sm-2 mb-sm-0">
+          <input type="checkbox" class="custom-control-input" id="table_sort_checkbox" saveonchange autoload>
+          <span class="custom-control-indicator"></span>
+          <span class="custom-control-description">新しい月を上に表示(要リロード)</span>
         </label>
         </div>
       </div>
@@ -750,7 +759,7 @@ you cannot:
               <th></th>
                 <td class="form-group">
                   <label class="custom-control custom-checkbox" style="margin: 0">
-                    <input type="checkbox" class="custom-control-input" autoload id="main_work_checkbox" checked="checked">
+                    <input type="checkbox" class="custom-control-input" checked autoload id="main_work_checkbox">
                     <span class="custom-control-indicator"></span>
                     <span class="custom-control-description">扶養控除申告書を提出済</span>
                   </label>
