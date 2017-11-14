@@ -371,10 +371,10 @@ function monthday(year, month){
 //	'2017/9': [wt1, wt2, ...]
 //}
 //と言った風に変形
-function splitByMonth() {
+function splitByMonth(workobj){
 	var obj = {};
-	for (var i = 0; i < WORKTIME_ARRAY.length; i++) {
-		var WORKTIME = WORKTIME_ARRAY[i];
+	for (var i = 0; i < workobj.length; i++) {
+		var WORKTIME = workobj[i];
 		var key = WORKTIME.getMonthKey();
 		if (!obj.hasOwnProperty(key)){
 			obj[key] = [];
@@ -458,7 +458,7 @@ function refreshTable(oninit) {
 	}
 	//<tr><td class="remove">&times;</td><td onclick="$('#listWTModal').modal()" class="listup" data-key="2017/8">2017年8月</td><td>10.00h</td><td>4日 <small>/ 30日</small></td><td>4回</td></tr>
 	// objは{"2017/8": [wt1, wt2, ...]}といった構造になる。"2017/8"はgetKeyDay()により生成。
-	var obj = splitByMonth();
+	var obj = splitByMonth(WORKTIME_ARRAY);
 	$('#shiftList').html('');
 	var keys = Object.keys(obj);
 	if($('#table_sort_checkbox').prop('checked')){
@@ -950,7 +950,14 @@ function setCalcSalaryModalContent(){
                 <div style="display: none">ここに1ヶ月の詳細データ</div>
               </td>
             </tr>*/
-  var obj = splitByMonth();//{月:[wt1, wt2...], 月2:[wt1, wt2...]...}
+
+	var obj = splitByMonth(WORKTIME_ARRAY);//{月:[wt1, wt2...], 月2:[wt1, wt2...]...}
+	if($('#table_sort_checkbox').prop('checked')){
+		var copied = $.extend(true, [], WORKTIME_ARRAY);
+		copied.reverse();
+		obj = splitByMonth(copied);
+	}
+	console.log(obj);
   var hourWage = parseInt($('#hourWage').val());//整数
 	var fee_month_array = $('.fee_month:checked').map(function() {return parseInt($(this).val());}).get();
 	var six_month_fee = parseInt($('#six_month_fee').val());//整数
@@ -960,36 +967,38 @@ function setCalcSalaryModalContent(){
 	var emp = parseInt($("input[name=employmentPattern]:checked").val());
 
     //月ごとの処理
-    for (var monthkey in obj){
+		for (var monthkey in obj){
     	//その月の勤務時間オブジェクトの配列
     	var wt_array = obj[monthkey];
     	//合計などの変数はココ
+			var wholeActualWorkingHour = 0;
+			// 実働時間
     	var wholeGivenYen = 0;
-    	//var 支給額計[円] = 0
+    	// 支給額計
     	var wholeOmittedYen = 0;
-    	//var 控除合計[円] = 0
+    	// 控除合計
     	var wholeMidnightBonus = 0;
-    	//深夜手当合計
+    	// 深夜手当合計
 			var wholeMidnightHours = 0;
-			//深夜時間合計
+			// 深夜時間合計
     	var wholeBaseSalary = 0;
-    	//基本給合計
+    	// 基本給合計
     	var wholeLongBonus = 0;
-    	//時間外手当合計
+    	// 時間外手当合計
 			var wholeLongHours = 0;
-			//時間外計
+			// 時間外計
 			var transPay = 0;
-			//交通費
+			// 交通費
 			var chgCostume = 0;
-			//着替手当
+			// 着替手当
     	var days = new Array();
-    	//出勤日配列
-    	//その月の、それぞれの勤務時間で処理
-    	for (var i = 0; i < wt_array.length; i++) {
-    		var wt = wt_array[i];
+    	// 出勤日配列
+    	// その月の、それぞれの勤務時間で処理
+    	for (var j = 0; j < wt_array.length; j++) {
+    		var wt = wt_array[j];
     		var daykey = wt.getDayKey();//'2017/9/10'みたいなString
     		if (days.indexOf(daykey) == -1) days.push(daykey);//違う日なら追加
-    		var actualWorkingHour =  wt.getActualMin()/60;
+    		actualWorkingHour =  wt.getActualMin()/60;
     		//実働時間. (拘束時間-休憩時間)
     		var baseSalary = actualWorkingHour * hourWage;
 				if (actualWorkingHour >= 8){
@@ -1002,6 +1011,7 @@ function setCalcSalaryModalContent(){
     		//深夜手当[円] = 22時から6時までの労働時間[h] * 時給 * 0.25;
     		wholeGivenYen += baseSalary + longBonus + midnightBonus;
     		//支給額計[円] += ____
+				wholeActualWorkingHour += actualWorkingHour;
     		wholeMidnightBonus += midnightBonus;
 				wholeMidnightHours += wt.getMidnightMin()/60;
     		wholeBaseSalary += baseSalary;
@@ -1149,6 +1159,7 @@ function setCalcSalaryModalContent(){
 			_a.push('<span class="bbb">' + '組合費: ' + insertComma(union) + '円');
 		}
 		_a.push('<span class="aaa">' + '勤怠関連')
+		_a.push('<span class="bbb">' + '実働時間: ' + wholeActualWorkingHour + '時間');
     _a.push('<span class="bbb">' + '出勤日数: ' + days.length + '日');
     _a.push('<span class="bbb">' + '休日日数: ' + (monthday(full_year, month) - days.length) + '日');
 		_a.push('<span class="bbb">' + '時間外計: ' + wholeLongHours + '時間');
