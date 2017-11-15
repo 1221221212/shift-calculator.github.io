@@ -957,7 +957,6 @@ function setCalcSalaryModalContent(){
 		copied.reverse();
 		obj = splitByMonth(copied);
 	}
-	console.log(obj);
   var hourWage = parseInt($('#hourWage').val());//整数
 	var fee_month_array = $('.fee_month:checked').map(function() {return parseInt($(this).val());}).get();
 	var six_month_fee = parseInt($('#six_month_fee').val());//整数
