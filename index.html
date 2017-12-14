@@ -122,6 +122,7 @@ you cannot:
 	<button id="routeSetting" type="button" class="btn btn-outline-primary" onclick="setRouteModalFromLS();checkTransitModalValidity();$('#routeModal').modal();">経路検索の設定</button>
 	<button type="button" class="btn btn-outline-primary" onclick="setSalarySettingModalContent();$('#salarySettingModal').modal()">給与概算設定</button>
   <button id="salaryLaunchButton" type="button" class="btn btn-outline-primary" onclick="launchSalaryModal(this)">給与概算</button>
+  <button type="button" class="btn btn-outline-primary" onclick="checkPSModalValidity();$('#pastShiftModal').modal()">シフト一覧</button>
 </div>
 
 
@@ -147,7 +148,7 @@ you cannot:
   <span class="b">・</span>
   <a href="https://crew-pn.usjc.co.jp/cws/mbl/Menu-1" target="_blank">モバイル</a>
   <br>
-  <small>Copyright &copy; 2017 Naoki Iwasa All Rights Reserved.<br>last updated at 2017.12.05 v.2.0.5<br>special thanks for Yudai Takegawa<br></small>
+  <small>Copyright &copy; 2017 Naoki Iwasa All Rights Reserved.<br>last updated at 2017.12.15 v.2.0.6<br>special thanks for Yudai Takegawa<br></small>
 </footer>
 <!-- /footer -->
 
@@ -252,6 +253,8 @@ you cannot:
       </div>
       <div class="modal-body">
         <p>
+          2017.12.15 v2.0.6<br>
+          一定期間のシフトを表示する機能を追加。<br>
           2017.12.5 v2.0.5<br>
           翌07時まで対応。年越し頑張りましょう。<br>
           2017.11.13 v2.0.4<br>
@@ -854,8 +857,9 @@ you cannot:
         </button>
       </div>
       <div class="modal-body" style="padding-bottom: 0">
-        <p class="text-secondary">給与の概算の結果を表示します。</p>
-        <p class="text-danger">皆さんの給与を保証するものではありません。</p>
+        <p class="text-secondary">
+          給与の概算の結果を表示します。<font color="#dc3545">皆さんの給与を保証するものではありません。</font>
+        </p>
         <table class="table" style="margin-bottom: 0">
           <tbody id="calcSalaryTbody">
             <!--
@@ -882,6 +886,38 @@ you cannot:
 
 
 
+
+<!-- PAST SHFT MODAL -->
+<div class="modal fade" id="pastShiftModal" tabindex="-1" role="dialog">
+  <div class="modal-dialog" role="document">
+    <div class="modal-content">
+      <div class="modal-header">
+        <h5 class="modal-title">シフト一覧</h5>
+        <button type="button" class="close" data-dismiss="modal">
+          <span aria-hidden="true">&times;</span>
+        </button>
+      </div>
+      <div class="modal-body">
+      	<p class="text-secondary">
+          選択した期間のモバイルシフトを表示します。<a href="https://crew-pn.usjc.co.jp/cws/mbl/Menu-1" target="_blank" style="color:#868e96">モバイルサイト</a>に遷移します。<font color="#dc3545">あらかじめモバイルにログインした状態で使ってください。</font>
+        </p>
+        <div class="form-group" style="margin:.5rem;">
+          <input type="text" class="form-control flatpickr alert alert-info" id="PSstart" placeholder="開始日を選択" style="max-width: 300px;" onchange="checkPSModalValidity()">
+        </div>
+        <div class="form-group" style="margin:.5rem;">
+          <input type="text" class="form-control flatpickr alert alert-info" id="PSfinish" placeholder="終了日を選択" style="max-width: 300px;" onchange="checkPSModalValidity()">
+        </div>
+      </div>
+      <div class="modal-footer">
+        <button type="button" class="btn btn-primary" id="PS_submit" onclick="pastShift()">開く</button>
+        <button type="button" class="btn btn-secondary" data-dismiss="modal">キャンセル</button>
+      </div>
+
+  </div>
+</div>
+<!-- /PAST SHIFT MODAL -->
+
+
 <script src="https://code.jquery.com/jquery-3.2.1.min.js"></script>
 <script src="https://cdn.jsdelivr.net/npm/flatpickr"></script>
 <script src="https://npmcdn.com/flatpickr/dist/l10n/ja.js"></script>
@@ -894,7 +930,7 @@ you cannot:
 <script type="text/javascript">
 //flatpickrカレンダー(datepicker)の初期化
 flatpickr.localize(flatpickr.l10ns.ja);
-$(".flatpickr").flatpickr(FLATPICKR_OPTION_FROMTODAY);
+$(".flatpickr").flatpickr(FLATPICKR_OPTION);
 
 $('#fee_provide_month input').on('change', function(){
    checkSalarySettingValidity();

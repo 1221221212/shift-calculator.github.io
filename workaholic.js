@@ -1226,3 +1226,35 @@ function checkButtonsInput(elems) {
   }
  }
 }
+
+function checkPSModalValidity(){
+	var ready = true;
+	var s_date = new Date($('#PSstart').val());
+	var sd = s_date.getTime();
+	var f_date = new Date($('#PSfinish').val());
+	var fd = f_date.getTime();
+    if ($('#PSstart').val() == ''){
+    	ready = false;
+    } else if ($('#PSfinish').val() == ''){
+			ready = false;
+		}else if (sd > fd){
+			ready = false;
+		}
+		$('#PS_submit').attr('disabled', !ready);
+}
+
+function pastShift(){
+	var s_date = $('#PSstart').val();
+	var sd = s_date.replace(/\//g,"-");
+	var f_date = $('#PSfinish').val();
+	var fd = f_date.replace(/\//g,"-");
+	var period = sd + '_' + fd;
+	var u = new Array();
+	u.push('https://crew-pn.usjc.co.jp/cws/mbl/SftReqSftConfirmShowConfirmFormAction@shift_confirm_show_target_term=');
+	u.push(period);
+	u.push('@shift_confirm_real_target_term=');
+	u.push(period);
+	u.push('@target_org=2150217800');
+	var url = u.join('');
+	open(url,"_blank");
+}
