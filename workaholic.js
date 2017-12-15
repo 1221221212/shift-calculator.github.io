@@ -599,11 +599,11 @@ function setListModalContent(monthkey){
 		}).appendTo(div);
 		//その日の勤務時間
 		$('<div>', {
-			text: '勤務時間: '+(actual/60).toFixed(2)+'h'
+			text: '実働時間: '+(actual/60).toFixed(2)+'h'
 		}).appendTo(div);
 		//その日の実働時間
 		$('<div>', {
-			text: '実働時間: '+wtstring.join(', ')
+			text: '勤務時間: '+wtstring.join(', ')
 		}).appendTo(div);
 		//もろとも突っ込め
 		div.appendTo('#wtlist');
