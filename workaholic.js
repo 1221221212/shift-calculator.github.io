@@ -1249,12 +1249,6 @@ function pastShift(){
 	var f_date = $('#PSfinish').val();
 	var fd = f_date.replace(/\//g,"-");
 	var period = sd + '_' + fd;
-	var u = new Array();
-	u.push('https://crew-pn.usjc.co.jp/cws/mbl/SftReqSftConfirmShowConfirmFormAction@shift_confirm_show_target_term=');
-	u.push(period);
-	u.push('@shift_confirm_real_target_term=');
-	u.push(period);
-	u.push('@target_org=2150217800');
-	var url = u.join('');
+	var url = 'https://crew-pn.usjc.co.jp/cws/mbl/SftReqSftConfirmShowConfirmFormAction@shift_confirm_show_target_term=' + period + '@shift_confirm_real_target_term=' + period + '@target_org=2150217800' ;
 	open(url,"_blank");
 }
