@@ -403,6 +403,35 @@ function splitByDay() {
 	return obj;
 }
 
+//WORKTIME_ARRAYを
+//{
+//	'2017/8':{
+//		'2017/8/8': [wt1, wt2],
+//		'2017/8/16': [wt1]
+//	},
+//	'2017/9':{
+//		'2017/9/8': [wt1, wt2],
+//		'2017/9/16': [wt1]
+//	},
+//}
+//と言った風に変形したcopyを返す
+function splitByMonthAndDay(){
+	var obj = {};
+	for (var i = 0; i < WORKTIME_ARRAY.length; i++) {
+		var WORKTIME = WORKTIME_ARRAY[i];
+		var key_m = WORKTIME.getMonthKey();
+		if (!obj.hasOwnProperty(key_m)){
+			obj[key_m] = {};
+		}
+		var key_d = WORKTIME.getDayKey();
+		if (!obj[key_m].hasOwnProperty(key_d)){
+			obj[key_m][key_d] = [];
+		}
+		obj[key_m][key_d].push(WORKTIME);
+	}
+	return obj;
+}
+
 //WORKTIME_ARRAY、keyMonth('2017/8'など...)から
 //{
 //	'2017/8/1': [wt1, wt2],
@@ -905,7 +934,7 @@ function checkSalarySettingValidity(){
 	if (emp == 0) {
 	ready = checkButtonsInput($('#fee_provide_month input')) && ready;
 	ready = checkNumberInput($('#six_month_fee')) && ready;
-	}else if(emp == 1,2,3){
+	} else if(emp == 1,2,3){
 		ready = checkNumberInput($('#trans')) && ready;
 		ready = checkNumberInput($('#one_month_fee')) && ready;
 	}
@@ -932,7 +961,7 @@ function launchSalaryModal(btnElem){
 function setSalarySettingModalContent() {
 	if (!$('#regular').prop('checked')) {
 		$('#forRegular').css('display', 'none');
-	}else{
+	} else {
 		$('#forNonRegular').css('display', 'none');
 	}
 }
@@ -951,13 +980,8 @@ function setCalcSalaryModalContent(){
               </td>
             </tr>*/
 
-	var obj = splitByMonth(WORKTIME_ARRAY);//{月:[wt1, wt2...], 月2:[wt1, wt2...]...}
-	if($('#table_sort_checkbox').prop('checked')){
-		var copied = $.extend(true, [], WORKTIME_ARRAY);
-		copied.reverse();
-		obj = splitByMonth(copied);
-	}
-  var hourWage = parseInt($('#hourWage').val());//整数
+	var obj = splitByMonthAndDay(WORKTIME_ARRAY);
+  	var hourWage = parseInt($('#hourWage').val());//整数
 	var fee_month_array = $('.fee_month:checked').map(function() {return parseInt($(this).val());}).get();
 	var six_month_fee = parseInt($('#six_month_fee').val());//整数
 	var one_month_fee = parseInt($('#one_month_fee').val());//整数
@@ -966,9 +990,14 @@ function setCalcSalaryModalContent(){
 	var emp = parseInt($("input[name=employmentPattern]:checked").val());
 
     //月ごとの処理
-		for (var monthkey in obj){
-    	//その月の勤務時間オブジェクトの配列
-    	var wt_array = obj[monthkey];
+    var mkeys = Object.keys(obj);
+	if($('#table_sort_checkbox').prop('checked')){
+		mkeys.reverse();
+	}
+	for (var k = 0; k < mkeys.length; k++) {
+		var monthkey = mkeys[k];
+    	//その月の勤務時間オブジェクト
+    	var wt_ms = obj[monthkey];
     	//合計などの変数はココ
 			var wholeActualWorkingHour = 0;
 			// 実働時間
@@ -990,33 +1019,33 @@ function setCalcSalaryModalContent(){
 			// 交通費
 			var chgCostume = 0;
 			// 着替手当
-    	var days = new Array();
-    	// 出勤日配列
-    	// その月の、それぞれの勤務時間で処理
-    	for (var j = 0; j < wt_array.length; j++) {
-    		var wt = wt_array[j];
-    		var daykey = wt.getDayKey();//'2017/9/10'みたいなString
-    		if (days.indexOf(daykey) == -1) days.push(daykey);//違う日なら追加
-    		actualWorkingHour =  wt.getActualMin()/60;
-    		//実働時間. (拘束時間-休憩時間)
-    		var baseSalary = actualWorkingHour * hourWage;
-				if (actualWorkingHour >= 8){
-					baseSalary = 8 * hourWage;
-				}
-    		//基本給 = 実質労働時間(8時間以下の分) * 時給
-    		var longBonus = actualWorkingHour > 8 ? (actualWorkingHour - 8) * hourWage * 1.25 : 0;
-    		//時間外手当[円] = 実働時間[h] > 8 なら (実働時間[h] - 8) * 時給 * 1.25 、そうじゃないなら 0;
-    		var midnightBonus = wt.getMidnightMin()/60 * hourWage * 0.25;
-    		//深夜手当[円] = 22時から6時までの労働時間[h] * 時給 * 0.25;
-    		wholeGivenYen += baseSalary + longBonus + midnightBonus;
-    		//支給額計[円] += ____
-				wholeActualWorkingHour += actualWorkingHour;
-    		wholeMidnightBonus += midnightBonus;
-				wholeMidnightHours += wt.getMidnightMin()/60;
-    		wholeBaseSalary += baseSalary;
-    		wholeLongBonus += longBonus;
-				wholeLongHours += actualWorkingHour > 8 ? (actualWorkingHour - 8) : 0;
-    	}//勤務時間オブジェごとの処理はココまで
+    	var days = Object.keys(obj[monthkey]);
+    	// 出勤日配列 ["2017/8/8", "2017/8/16"...]
+    	// その月の、それぞれの日時で処理
+    	for (var key_d in wt_ms){
+    		var wt_array = obj[monthkey][key_d];
+	    	var actualWorkingHour = 0;
+	    	var midnightHours = 0;
+	    	for (var j = 0; j < wt_array.length; j++) {
+	    		var wt = wt_array[j];
+	    		actualWorkingHour += wt.getActualMin()/60;
+	    		//実働時間. (拘束時間-休憩時間)
+	    		midnightHours += wt.getMidnightMin()/60;
+	    	}
+	    	var baseSalary = actualWorkingHour >= 8 ? baseSalary = 8 * hourWage : actualWorkingHour * hourWage;
+	    	//基本給 = 実質労働時間(8時間以下の分) * 時給
+	    	var longBonus = actualWorkingHour > 8 ? (actualWorkingHour - 8) * hourWage * 1.25 : 0;
+	    	//時間外手当[円] = 実働時間[h] > 8 なら (実働時間[h] - 8) * 時給 * 1.25 、そうじゃないなら 0;
+	    	var midnightBonus = midnightHours * hourWage * 0.25;
+	    	//深夜手当[円] = 22時から5時までの労働時間[h] * 時給[yen/h] * 0.25;
+	    	wholeGivenYen += baseSalary + longBonus + midnightBonus;
+			  wholeActualWorkingHour += actualWorkingHour;
+	    	wholeMidnightBonus += midnightBonus;
+			  wholeMidnightHours += midnightHours;
+	    	wholeBaseSalary += baseSalary;
+	    	wholeLongBonus += longBonus;
+			  wholeLongHours += actualWorkingHour > 8 ? (actualWorkingHour - 8) : 0;
+	    }//日ごとの処理はココまで
 
 		var _s = monthkey.split('/');
 		var full_year = parseInt(_s[0]);//2017
@@ -1030,14 +1059,14 @@ function setCalcSalaryModalContent(){
 
 		if(isHSStudent == true){
 			transPay = 0;
-		}else if(emp == 0 && fee_month_array.indexOf(month) == -1){
+		} else if(emp == 0 && fee_month_array.indexOf(month) == -1){
 			transPay = 0;
-		}else if(emp == 0){
+		} else if(emp == 0){
 			transPay = six_month_fee;
-		}else if(emp == 1 || 2 || 3){
+		} else if(emp == 1 || 2 || 3){
 			if(days.length < 17){
 				transPay = trans * days.length;
-			}else if(days.length >= 17){
+			} else if(days.length >= 17){
 				transPay = one_month_fee
 			}
 			if(transPay >= 30000){
@@ -1088,7 +1117,7 @@ function setCalcSalaryModalContent(){
 		//扶養控除申告書を提出済なら0,でなければ1
 		if($('#main_work_checkbox').prop('checked')){
 			mainwork = 0;
-		}else{
+		} else {
 			mainwork = 1;
 		}
 
@@ -1118,7 +1147,7 @@ function setCalcSalaryModalContent(){
 		//最後の項よりも大きい額を稼いでいる
 		if(taxable >= taxArray[taxArray.length -1]){
 			tax = taxList[mainwork][taxArray.length -1];
-		}else{
+		} else {
 			for(i=taxArray.length-1;i>0;i--){
 			    if(taxable >= taxArray[i-1] && taxable < taxArray[i]){
 			      	tax = taxList[mainwork][i-1];
@@ -1128,7 +1157,7 @@ function setCalcSalaryModalContent(){
 		}
 		if(mainwork == 1 && taxable < 88000 && taxable >= 50000){
 			tax = taxable * 0.03063;
-		}else if(mainwork == 1 && taxable < 50000){
+		} else if(mainwork == 1 && taxable < 50000){
 			tax = 0;
 		}
 		//console.log(taxArray.length) -> 101
@@ -1237,7 +1266,7 @@ function checkPSModalValidity(){
     	ready = false;
     } else if ($('#PSfinish').val() == ''){
 			ready = false;
-		}else if (sd > fd){
+		} else if (sd > fd){
 			ready = false;
 		}
 		$('#PS_submit').attr('disabled', !ready);

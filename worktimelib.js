@@ -145,38 +145,40 @@ p.getHalfMonthKey = function(){
     return this.getMonthKey() + '/' + halfIdentifier;
 }
 
-//22時から翌6時まで
+//22時から翌5時まで
 p.getMidnightMin = function(){
-    var copy6 = new Date(this.start.getTime());
-    copy6.setHours(6);
+    var copy5 = new Date(this.start.getTime());
+    copy5.setHours(5);
+    copy5.setMinutes(0);
     var copy22 = new Date(this.start.getTime());
     copy22.setHours(22);
+    copy22.setMinutes(0);
     if (copy22.getTime() <= this.start.getTime()){
         //22 <= start
-        copy6.setHours(30);
-        if (this.finish.getTime() <= copy6.getTime()){
-            //22 <= start < finish <= 6
+        copy5.setHours(30);
+        if (this.finish.getTime() <= copy5.getTime()){
+            //22 <= start < finish <= 5
             return this.getBondedMin()
         } else {
-            //22 <= start < 6 < finish
-            return (copy6.getTime() - this.start.getTime())/(1000*60);
+            //22 <= start < 5 < finish
+            return (copy5.getTime() - this.start.getTime())/(1000*60);
         }
-    } else if (copy6.getTime() < this.start.getTime()){
-        //6 < start < 22
+    } else if (copy5.getTime() < this.start.getTime()){
+        //5 < start < 22
         if (copy22.getTime() < this.finish.getTime()){
-            //6 < start < 22 < finish
+            //5 < start < 22 < finish
             return (this.finish.getTime() - copy22.getTime())/(1000*60);
         } else {
-            //6 < start < finish <= 22
+            //5 < start < finish <= 22
             return 0;
         }
     } else {
-        //start <= 6
-        if (copy6.getTime() < this.finish.getTime()){
-            //start <= 6 < finish
-            return (copy6.getTime() - this.start.getTime())/(1000*60);
+        //start <= 5
+        if (copy5.getTime() < this.finish.getTime()){
+            //start <= 5 < finish
+            return (copy5.getTime() - this.start.getTime())/(1000*60);
         } else {
-            //start < finish <= 6
+            //start < finish <= 5
             return this.getBondedMin();
         }
     }
