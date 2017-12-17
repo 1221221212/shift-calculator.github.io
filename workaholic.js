@@ -1091,23 +1091,15 @@ function setCalcSalaryModalContent(){
 		];
 
 		//各控除額。雇用形態によって適用されないなら、0がかかるから0になるはず。。。小数点以下第1位を四捨五入。正確にはwholeGivenYen.50ならば切り捨てだがどう考えても誤差。支給額があまりに少ないと保険の対象となりませんが、それぐらいは稼いでください。
-		var empIns = Math.round( wholeGivenYen * 0.003 * deductArray[emp][0] ); // 雇用保険料,料率は0.9%,うち0.3%を自己負担。
-		var healthInsB = Math.round( wholeGivenYen * 0.032 * deductArray[emp][1] ); // 健保基本,料率は6.40%で自己負担はその半分。大阪府の協会けんぽ(平成29年4月から適用)を参照。
-		var healthInsS = Math.round( wholeGivenYen * 0.01865 * deductArray[emp][2] ); // 健保特定,料率は3.73%で自己負担はその半分。以下同上。
-		var pension = Math.round( wholeGivenYen * 0.0915 * deductArray[emp][3] ); // 厚生年金保険料率は18.30%で自己負担はその半分。
-		var union = Math.round( 700 * deductArray[emp][4] ); //一律700円だよ
+		var empIns = Math.floor( wholeGivenYen * 0.003 * deductArray[emp][0] ); // 雇用保険料,料率は0.9%,うち0.3%を自己負担。
+		var healthInsB = Math.floor( wholeGivenYen * 0.032 * deductArray[emp][1] ); // 健保基本,料率は6.40%で自己負担はその半分。大阪府の協会けんぽ(平成29年4月から適用)を参照。
+		var healthInsS = Math.floor( wholeGivenYen * 0.01865 * deductArray[emp][2] ); // 健保特定,料率は3.73%で自己負担はその半分。以下同上。
+		var pension = Math.floor( wholeGivenYen * 0.0915 * deductArray[emp][3] ); // 厚生年金保険料率は18.30%で自己負担はその半分。
+		var union = Math.floor( 700 * deductArray[emp][4] ); //一律700円だよ
 
 		var deduction = empIns + healthInsS + healthInsB + pension + union;
 		var taxable = wholeGivenYen - deduction;
 
-		var taxArray = [0,88000,89000,90000,91000,92000,93000,94000,95000,96000,99000];
-
-		for(i=99000;i<=221000;i+=2000){
-			taxArray.push(i);
-		}
-		for(j=221000;j<=302000;j+=3000){
-			taxArray.push(j);
-		}
 
 		//所得税を求めましょう。40歳未満の扶養家族がいない人を想定しています。
 		//財務省の告示する給与所得の源泉徴収月額表の扶養家族0人を参照。
@@ -1116,22 +1108,35 @@ function setCalcSalaryModalContent(){
 
 		//扶養控除申告書を提出済なら0,でなければ1
 		if($('#main_work_checkbox').prop('checked')){
-			mainwork = 0;
-		} else {
-			mainwork = 1;
-		}
+			taxArrayA = [135417,150000,300000];
+			var A = 0;
+			if(taxable<taxArrayA[0]){
+				A = 85834;
+			} else if(taxable>=taxArrayA[0] && taxable<taxArrayA[1]){
+				A = taxable　*　0.4 + 31667;
+			} else if(taxable>=taxArrayA[1] && taxable<taxArrayA[2]){
+				A = taxable　*　0.3 + 46667;
+			}
 
-		var taxList =
-		[
-			[ //扶養控除申告書あり
-				0,130,180,230,290,340,390,440,490,540,590,640,720,830,930,
-				1030,1130,1240,1340,1440,1540,1640,1750,1850,1950,2050,2150,2260,2360,2460,
-				2550,2610,2680,2740,2800,2860,2920,2980,3050,3120,3200,3270,3340,3410,3480,
-				3550,3620,3700,3770,3840,3910,3980,4050,4120,4200,4270,4340,4410,4480,4550,
-				4630,4700,4770,4840,4910,4980,5050,5130,5200,5270,5340,5410,5480,5560,5680,
-				5780,5890,5990,6110,6210,6320,6420,6530,6640,6750,6850,6960,7070,7180,7280,
-				7390,7490,7610,7710,7820,7920,8040,8140,8250,8420,8670
-			],
+			var TAXABLE = taxable - A;
+			if(TAXABLE<=0){TAXABLE=0;}
+
+			var tax = 0;
+			if(TAXABLE<=162500){
+				tax = TAXABLE * 0.05;
+			} else if(TAXABLE<=275000) {
+				tax = TAXABLE * 0,1 - 8125;
+			}
+		} else {
+			var taxArray = [0,88000,89000,90000,91000,92000,93000,94000,95000,96000,99000];
+			for(i=99000;i<=221000;i+=2000){
+				taxArray.push(i);
+			}
+			for(j=221000;j<=302000;j+=3000){
+				taxArray.push(j);
+			}
+
+			var taxList =
 			[ //扶養家族申告書なし
 				0,3200,3200,3200,3200,3300,3300,3300,3400,3400,3500,3500,3600,3600,3700,
 				3800,3800,3900,4000,4100,4100,4200,4300,4500,4800,5100,5400,5700,6000,6300,
@@ -1140,26 +1145,25 @@ function setCalcSalaryModalContent(){
 				19500,20200,20900,21500,22200,22700,23300,23900,24400,25000,25500,26100,26800,27400,28400,
 				29300,30300,31300,32400,33400,34400,35400,36400,37500,38500,39400,40400,41500,42500,43500,
 				44500,45500,46600,47600,48600,49500,50500,51600,52300,52900,53500
-			]
-		];
+			];
 
-		var tax;
-		//最後の項よりも大きい額を稼いでいる
-		if(taxable >= taxArray[taxArray.length -1]){
-			tax = taxList[mainwork][taxArray.length -1];
-		} else {
-			for(i=taxArray.length-1;i>0;i--){
-			    if(taxable >= taxArray[i-1] && taxable < taxArray[i]){
-			      	tax = taxList[mainwork][i-1];
-			      	break;
-			    }
+			var tax = 0;
+			//最後の項よりも大きい額を稼いでいる
+			if(taxable>=taxArray[taxArray.length-1]){
+				tax = taxList[taxArray.length -1];
+			} else {
+				for(i=taxArray.length-1;i>0;i--){
+						if(taxable>=taxArray[i-1] && taxable<taxArray[i]){
+								tax = taxList[i-1];
+								break;
+						}
+				}
+			}
+			if(taxable<taxArray[1]){
+				tax =  taxable * 0.0363;
 			}
 		}
-		if(mainwork == 1 && taxable < 88000 && taxable >= 50000){
-			tax = taxable * 0.03063;
-		} else if(mainwork == 1 && taxable < 50000){
-			tax = 0;
-		}
+
 		//console.log(taxArray.length) -> 101
 
 		//控除額計
@@ -1167,13 +1171,13 @@ function setCalcSalaryModalContent(){
 		wholeGivenYen = wholeGivenYen + transPay + chgCostume;
 
 		var _a = new Array();
-    _a.push('<span class="aaa">' + '支給計: ' + insertComma(Math.round(wholeGivenYen)) + '円');
-		_a.push('<span class="bbb">' + '基本給: ' + insertComma(Math.round(wholeBaseSalary)) + '円');
-		_a.push('<span class="bbb">' + '深夜早朝手当: ' + insertComma(Math.round(wholeMidnightBonus)) + '円');
-		_a.push('<span class="bbb">' + '時間外手当: ' + insertComma(Math.round(wholeLongBonus)) + '円');
+    _a.push('<span class="aaa">' + '支給計: ' + insertComma(Math.ceil(wholeGivenYen)) + '円');
+		_a.push('<span class="bbb">' + '基本給: ' + insertComma(Math.ceil(wholeBaseSalary)) + '円');
+		_a.push('<span class="bbb">' + '深夜早朝手当: ' + insertComma(Math.ceil(wholeMidnightBonus)) + '円');
+		_a.push('<span class="bbb">' + '時間外手当: ' + insertComma(Math.ceil(wholeLongBonus)) + '円');
 		_a.push('<span class="bbb">' + '着替手当: ' + insertComma(chgCostume) + '円');
 		_a.push('<span class="bbb">' + '交通費: ' + insertComma(transPay) + '円');
-		_a.push('<span class="aaa">' + '控除合計: ' + insertComma(Math.round(wholeOmittedYen)) + '円');
+		_a.push('<span class="aaa">' + '控除合計: ' + insertComma(Math.floor(wholeOmittedYen)) + '円');
 
 		if(emp == 0 || emp == 1){
 			_a.push('<span class="bbb">' + '雇用保険: ' + insertComma(empIns) + '円');
@@ -1182,7 +1186,7 @@ function setCalcSalaryModalContent(){
 			_a.push('<span class="bbb">' + '厚生年金保険: ' + insertComma(pension) + '円');
 		}
 		_a.push('<span class="bbb">' + '課税対象: ' + insertComma(Math.round(taxable)) + '円');
-		_a.push('<span class="bbb">' + '所得税: ' + insertComma(Math.round(tax)) + '円');
+		_a.push('<span class="bbb">' + '所得税: ' + insertComma(Math.floor(tax)) + '円');
 		if(emp == 0){
 			_a.push('<span class="bbb">' + '組合費: ' + insertComma(union) + '円');
 		}
