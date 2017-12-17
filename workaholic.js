@@ -1091,15 +1091,23 @@ function setCalcSalaryModalContent(){
 		];
 
 		//各控除額。雇用形態によって適用されないなら、0がかかるから0になるはず。。。小数点以下第1位を四捨五入。正確にはwholeGivenYen.50ならば切り捨てだがどう考えても誤差。支給額があまりに少ないと保険の対象となりませんが、それぐらいは稼いでください。
-		var empIns = Math.floor( wholeGivenYen * 0.003 * deductArray[emp][0] ); // 雇用保険料,料率は0.9%,うち0.3%を自己負担。
-		var healthInsB = Math.floor( wholeGivenYen * 0.032 * deductArray[emp][1] ); // 健保基本,料率は6.40%で自己負担はその半分。大阪府の協会けんぽ(平成29年4月から適用)を参照。
-		var healthInsS = Math.floor( wholeGivenYen * 0.01865 * deductArray[emp][2] ); // 健保特定,料率は3.73%で自己負担はその半分。以下同上。
-		var pension = Math.floor( wholeGivenYen * 0.0915 * deductArray[emp][3] ); // 厚生年金保険料率は18.30%で自己負担はその半分。
-		var union = Math.floor( 700 * deductArray[emp][4] ); //一律700円だよ
+		var empIns = Math.round( wholeGivenYen * 0.003 * deductArray[emp][0] ); // 雇用保険料,料率は0.9%,うち0.3%を自己負担。
+		var healthInsB = Math.round( wholeGivenYen * 0.032 * deductArray[emp][1] ); // 健保基本,料率は6.40%で自己負担はその半分。大阪府の協会けんぽ(平成29年4月から適用)を参照。
+		var healthInsS = Math.round( wholeGivenYen * 0.01865 * deductArray[emp][2] ); // 健保特定,料率は3.73%で自己負担はその半分。以下同上。
+		var pension = Math.round( wholeGivenYen * 0.0915 * deductArray[emp][3] ); // 厚生年金保険料率は18.30%で自己負担はその半分。
+		var union = Math.round( 700 * deductArray[emp][4] ); //一律700円だよ
 
 		var deduction = empIns + healthInsS + healthInsB + pension + union;
 		var taxable = wholeGivenYen - deduction;
 
+		var taxArray = [0,88000,89000,90000,91000,92000,93000,94000,95000,96000,99000];
+
+		for(i=99000;i<=221000;i+=2000){
+			taxArray.push(i);
+		}
+		for(j=221000;j<=302000;j+=3000){
+			taxArray.push(j);
+		}
 
 		//所得税を求めましょう。40歳未満の扶養家族がいない人を想定しています。
 		//財務省の告示する給与所得の源泉徴収月額表の扶養家族0人を参照。
@@ -1164,20 +1172,18 @@ function setCalcSalaryModalContent(){
 			}
 		}
 
-		//console.log(taxArray.length) -> 101
-
 		//控除額計
 		wholeOmittedYen = deduction + tax;
 		wholeGivenYen = wholeGivenYen + transPay + chgCostume;
 
 		var _a = new Array();
-    _a.push('<span class="aaa">' + '支給計: ' + insertComma(Math.ceil(wholeGivenYen)) + '円');
-		_a.push('<span class="bbb">' + '基本給: ' + insertComma(Math.ceil(wholeBaseSalary)) + '円');
-		_a.push('<span class="bbb">' + '深夜早朝手当: ' + insertComma(Math.ceil(wholeMidnightBonus)) + '円');
-		_a.push('<span class="bbb">' + '時間外手当: ' + insertComma(Math.ceil(wholeLongBonus)) + '円');
+    _a.push('<span class="aaa">' + '支給計: ' + insertComma(Math.round(wholeGivenYen)) + '円');
+		_a.push('<span class="bbb">' + '基本給: ' + insertComma(Math.round(wholeBaseSalary)) + '円');
+		_a.push('<span class="bbb">' + '深夜早朝手当: ' + insertComma(Math.round(wholeMidnightBonus)) + '円');
+		_a.push('<span class="bbb">' + '時間外手当: ' + insertComma(Math.round(wholeLongBonus)) + '円');
 		_a.push('<span class="bbb">' + '着替手当: ' + insertComma(chgCostume) + '円');
 		_a.push('<span class="bbb">' + '交通費: ' + insertComma(transPay) + '円');
-		_a.push('<span class="aaa">' + '控除合計: ' + insertComma(Math.floor(wholeOmittedYen)) + '円');
+		_a.push('<span class="aaa">' + '控除合計: ' + insertComma(Math.round(wholeOmittedYen)) + '円');
 
 		if(emp == 0 || emp == 1){
 			_a.push('<span class="bbb">' + '雇用保険: ' + insertComma(empIns) + '円');
@@ -1186,7 +1192,7 @@ function setCalcSalaryModalContent(){
 			_a.push('<span class="bbb">' + '厚生年金保険: ' + insertComma(pension) + '円');
 		}
 		_a.push('<span class="bbb">' + '課税対象: ' + insertComma(Math.round(taxable)) + '円');
-		_a.push('<span class="bbb">' + '所得税: ' + insertComma(Math.floor(tax)) + '円');
+		_a.push('<span class="bbb">' + '所得税: ' + insertComma(Math.round(tax)) + '円');
 		if(emp == 0){
 			_a.push('<span class="bbb">' + '組合費: ' + insertComma(union) + '円');
 		}
