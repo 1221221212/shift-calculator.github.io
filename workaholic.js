@@ -1140,9 +1140,6 @@ function setCalcSalaryModalContent(){
 			for(i=99000;i<=221000;i+=2000){
 				taxArray.push(i);
 			}
-			for(j=221000;j<=302000;j+=3000){
-				taxArray.push(j);
-			}
 
 			var taxList =
 			[ //扶養家族申告書なし
