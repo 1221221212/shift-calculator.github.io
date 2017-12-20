@@ -371,10 +371,10 @@ function monthday(year, month){
 //	'2017/9': [wt1, wt2, ...]
 //}
 //と言った風に変形
-function splitByMonth(workobj){
+function splitByMonth(){
 	var obj = {};
-	for (var i = 0; i < workobj.length; i++) {
-		var WORKTIME = workobj[i];
+	for (var i = 0; i < WORKTIME_ARRAY.length; i++) {
+		var WORKTIME = WORKTIME_ARRAY[i];
 		var key = WORKTIME.getMonthKey();
 		if (!obj.hasOwnProperty(key)){
 			obj[key] = [];
@@ -487,7 +487,7 @@ function refreshTable(oninit) {
 	}
 	//<tr><td class="remove">&times;</td><td onclick="$('#listWTModal').modal()" class="listup" data-key="2017/8">2017年8月</td><td>10.00h</td><td>4日 <small>/ 30日</small></td><td>4回</td></tr>
 	// objは{"2017/8": [wt1, wt2, ...]}といった構造になる。"2017/8"はgetKeyDay()により生成。
-	var obj = splitByMonth(WORKTIME_ARRAY);
+	var obj = splitByMonth();
 	$('#shiftList').html('');
 	var keys = Object.keys(obj);
 	if($('#table_sort_checkbox').prop('checked')){
@@ -980,8 +980,8 @@ function setCalcSalaryModalContent(){
               </td>
             </tr>*/
 
-	var obj = splitByMonthAndDay(WORKTIME_ARRAY);
-  	var hourWage = parseInt($('#hourWage').val());//整数
+	var obj = splitByMonthAndDay();
+  var hourWage = parseInt($('#hourWage').val());//整数
 	var fee_month_array = $('.fee_month:checked').map(function() {return parseInt($(this).val());}).get();
 	var six_month_fee = parseInt($('#six_month_fee').val());//整数
 	var one_month_fee = parseInt($('#one_month_fee').val());//整数
@@ -989,13 +989,13 @@ function setCalcSalaryModalContent(){
 	var trans = parseInt($('#trans').val());
 	var emp = parseInt($("input[name=employmentPattern]:checked").val());
 
-    //月ごとの処理
-    var mkeys = Object.keys(obj);
+  //月ごとの処理
+  var mkeys = Object.keys(obj);
 	if($('#table_sort_checkbox').prop('checked')){
 		mkeys.reverse();
 	}
 	for (var k = 0; k < mkeys.length; k++) {
-		var monthkey = mkeys[k];
+		  var monthkey = mkeys[k];
     	//その月の勤務時間オブジェクト
     	var wt_ms = obj[monthkey];
     	//合計などの変数はココ
@@ -1099,75 +1099,7 @@ function setCalcSalaryModalContent(){
 
 		var deduction = empIns + healthInsS + healthInsB + pension + union;
 		var taxable = wholeGivenYen - deduction;
-
-		var taxArray = [0,88000,89000,90000,91000,92000,93000,94000,95000,96000,99000];
-
-		for(i=99000;i<=221000;i+=2000){
-			taxArray.push(i);
-		}
-		for(j=221000;j<=302000;j+=3000){
-			taxArray.push(j);
-		}
-
-		//所得税を求めましょう。40歳未満の扶養家族がいない人を想定しています。
-		//財務省の告示する給与所得の源泉徴収月額表の扶養家族0人を参照。
-		//（平成24年3月31日財務省告示第115号別表第一（平成28年３月31日財務省告示第105号改正））
-		//実際は3,550,000円まで延々続いていますが、302,000円で止めてます。多分そんなに稼げない。
-
-		//扶養控除申告書を提出済なら0,でなければ1
-		if($('#main_work_checkbox').prop('checked')){
-			taxArrayA = [135417,150000,300000];
-			var A = 0;
-			if(taxable<taxArrayA[0]){
-				A = 85834;
-			} else if(taxable>=taxArrayA[0] && taxable<taxArrayA[1]){
-				A = taxable　*　0.4 + 31667;
-			} else if(taxable>=taxArrayA[1] && taxable<taxArrayA[2]){
-				A = taxable　*　0.3 + 46667;
-			}
-
-			var TAXABLE = taxable - A;
-			if(TAXABLE<=0){TAXABLE=0;}
-
-			var tax = 0;
-			if(TAXABLE<=162500){
-				tax = TAXABLE * 0.05;
-			} else if(TAXABLE<=275000) {
-				tax = TAXABLE * 0,1 - 8125;
-			}
-		} else {
-			var taxArray = [0,88000,89000,90000,91000,92000,93000,94000,95000,96000,99000];
-			for(i=99000;i<=221000;i+=2000){
-				taxArray.push(i);
-			}
-
-			var taxList =
-			[ //扶養家族申告書なし
-				0,3200,3200,3200,3200,3300,3300,3300,3400,3400,3500,3500,3600,3600,3700,
-				3800,3800,3900,4000,4100,4100,4200,4300,4500,4800,5100,5400,5700,6000,6300,
-				6600,6800,7100,7500,7800,8100,8400,8700,9000,9300,9600,9900,10200,10500,10800,
-				11100,11400,11700,12000,12400,12700,13200,13900,14600,15300,16000,16700,17500,18100,18800,
-				19500,20200,20900,21500,22200,22700,23300,23900,24400,25000,25500,26100,26800,27400,28400,
-				29300,30300,31300,32400,33400,34400,35400,36400,37500,38500,39400,40400,41500,42500,43500,
-				44500,45500,46600,47600,48600,49500,50500,51600,52300,52900,53500
-			];
-
-			var tax = 0;
-			//最後の項よりも大きい額を稼いでいる
-			if(taxable>=taxArray[taxArray.length-1]){
-				tax = taxList[taxArray.length -1];
-			} else {
-				for(i=taxArray.length-1;i>0;i--){
-						if(taxable>=taxArray[i-1] && taxable<taxArray[i]){
-								tax = taxList[i-1];
-								break;
-						}
-				}
-			}
-			if(taxable<taxArray[1]){
-				tax =  taxable * 0.0363;
-			}
-		}
+		var tax = calcTax(taxable);
 
 		//控除額計
 		wholeOmittedYen = deduction + tax;
@@ -1237,6 +1169,72 @@ function setCalcSalaryModalContent(){
 	    td.appendTo(tr);
 	    tr.appendTo('#calcSalaryTbody');
     }//月ごとの処理ココまで
+}
+
+function calcTax(taxable){
+	var taxArray = [88000,89000,90000,91000,92000,93000,94000,95000,96000,97000,98000];
+	for(i=99000;i<=221000;i+=2000){
+		taxArray.push(i);
+	}
+	for(j=221000;j<=302000;j+=3000){
+		taxArray.push(j);
+	}
+	// console.log(taxArray.length); == 101
+
+	var tax = 0;
+
+	//所得税を求めましょう。40歳未満の扶養家族がいない人を想定しています。
+	//財務省の告示する給与所得の源泉徴収月額表の扶養家族0人を参照。
+	//（平成24年3月31日財務省告示第115号別表第一（平成28年３月31日財務省告示第105号改正））
+	//実際は3,550,000円まで延々続いていますが、302,000円で止めてます。多分そんなに稼げない。
+
+	if($('#main_work_checkbox').prop('checked')){
+		taxArrayA = [135417,150000,300000];
+		var A = 0;
+		if(taxable<taxArrayA[0]){
+			A = 85834;
+		} else if(taxable>=taxArrayA[0] && taxable<taxArrayA[1]){
+			A = taxable　*　0.4 + 31667;
+		} else if(taxable>=taxArrayA[1] && taxable<taxArrayA[2]){
+			A = taxable　*　0.3 + 46667;
+		}
+
+		var TAXABLE = taxable - A;
+		if(TAXABLE<=0){TAXABLE=0;}
+
+		var tax = 0;
+		if(TAXABLE<=162500){
+			tax = TAXABLE * 0.05;
+		} else if(TAXABLE<=275000) {
+			tax = TAXABLE * 0.1 - 8125;
+		}
+	} else {
+		var taxList =
+		[ //扶養家族申告書なし
+			0,3200,3200,3200,3200,3300,3300,3300,3400,3400,3500,3500,3600,3600,3700,
+			3800,3800,3900,4000,4100,4100,4200,4300,4500,4800,5100,5400,5700,6000,6300,
+			6600,6800,7100,7500,7800,8100,8400,8700,9000,9300,9600,9900,10200,10500,10800,
+			11100,11400,11700,12000,12400,12700,13200,13900,14600,15300,16000,16700,17500,18100,18800,
+			19500,20200,20900,21500,22200,22700,23300,23900,24400,25000,25500,26100,26800,27400,28400,
+			29300,30300,31300,32400,33400,34400,35400,36400,37500,38500,39400,40400,41500,42500,43500,
+			44500,45500,46600,47600,48600,49500,50500,51600,52300,52900
+		];
+		// console.log(taxList.length); == 100
+		//88000円以下
+		if(taxable<taxArray[0]){
+			tax =  taxable * 0.0363;
+			//88000円以上
+		} else {
+			for(i=0;taxArray.length-1;i++){
+				if(taxable >= taxArray[i] && taxable < taxArray[i+1]){
+					tax = taxList[i];
+					break;
+				}
+			}
+		}
+	}
+	tax = parseInt(tax);
+	return tax;
 }
 
 //checkbox of buttons!
