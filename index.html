@@ -441,6 +441,11 @@ you cannot:
           <select data-opt="min" class="form-control custom-select" data-defval="0" id="addModal_fm" onchange="checkAddWtModalValidity()"></select>
           <div class="input-group-addon">分</div>
         </div>
+        <label class="custom-control custom-checkbox">
+          <input type="checkbox" class="custom-control-input"  id="paid_holiday_checkbox" onchange="holidayDisable(this);checkAddWtModalValidity();">
+          <span class="custom-control-indicator"></span>
+          <span class="custom-control-description">有給休暇として追加</span>
+        </label>
       </div>
       <div class="modal-footer">
         <button type="button" class="btn btn-primary" onclick="addWTWithModal(this)" id="addModal_submit">追加</button>
@@ -772,6 +777,19 @@ you cannot:
                   </label>
                 </td>
             </tr>
+            <tr>
+              <th>有給休暇</th>
+              <td class="form-group">
+                <div class="input-group">
+                  <span class="input-group-addon">所定労働時間</span>
+                  <input type="number" class="form-control" id="prescribed_hour" style="max-width:7em;" onchange="checkSalarySettingValidity();" autoload>
+                  <span class="input-group-addon">時間</span>
+                </div>
+                <small class="text-muted">
+                   契約書に記載された所定労働時間を記載。
+                </small>
+              </td>
+            </tr>
           </tbody>
         </table>
       </div>
@@ -1017,11 +1035,23 @@ function routeSettingsWithModal(btnElem){
 function addWTWithModal(btnElem){
   if ($(btnElem).prop('disabled')) return;
 
+  var daykey = $('#addModal_date').val();
   var s_date = new Date($('#addModal_date').val());
   var f_date = new Date($('#addModal_date').val());
 
-  s_date.setHours(parseInt($('#addModal_sh').val()), parseInt($('#addModal_sm').val()));
-  f_date.setHours(parseInt($('#addModal_fh').val()), parseInt($('#addModal_fm').val()));
+  if(!$('#paid_holiday_checkbox').prop('checked')){
+    s_date.setHours(parseInt($('#addModal_sh').val()), parseInt($('#addModal_sm').val()));
+    f_date.setHours(parseInt($('#addModal_fh').val()), parseInt($('#addModal_fm').val()));
+  }else{
+    s_date.setHours(0,0);
+    f_date.setHours(0,0);
+    if(window.confirm('有給休暇を追加するとその日の他の勤務は削除されます。')){
+      removeWorktimes(daykey);
+      refresh();
+    }else{
+      return false;
+    }
+  }
 
   if (addOneWt(new Worktime(s_date, f_date))){
     message('新しい勤務時間を追加しました。'+UNDO_HTML_TEMPLATE, 'success');
@@ -1184,6 +1214,13 @@ function transDisable(check){
 
    $('#six_month_fee').prop('disabled', $(check).prop('checked'));
 
+}
+
+function holidayDisable(check){
+  $('#addModal_sh').prop('disabled', $(check).prop('checked'));
+  $('#addModal_sm').prop('disabled', $(check).prop('checked'));
+  $('#addModal_fh').prop('disabled', $(check).prop('checked'));
+  $('#addModal_fm').prop('disabled', $(check).prop('checked'));
 }
 
 //給与概算設定modalの保存ボタンを押したときに呼ばれる

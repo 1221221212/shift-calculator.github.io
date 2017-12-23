@@ -497,11 +497,15 @@ function refreshTable(oninit) {
 		var _key = keys[i];
 		var _awt = obj[_key];//array of worktime: その月のworktime全て。おそらくsortされた後なので古い順
 		var actual = 0;//単位はmin: 実働時間の合計
+		var holiday = 0;
 		var days = [];//働いた日付の配列。日数を得るのに使う
 		var _s = _key.split('/');//["2017", "8"];
 		for (var j = 0; j < _awt.length; j++) {
 			var _wt = _awt[j];
 			actual += _wt.getActualMin();
+			if(_wt.getActualMin()==0){
+				holiday++;
+			}
 			//もし新しい日付なら追加 -> 日数がわかる
 			var daykey = _wt.getDayKey();
 			if (days.indexOf(daykey) == -1){
@@ -549,11 +553,11 @@ function refreshTable(oninit) {
 		}).appendTo(tr);
 		//新しいtd。働いた日数を表示するよ
 		$('<td>', {
-			html: days.length + '日 <small>/ ' +  monthday(parseInt(_s[0]), parseInt(_s[1])) + '日</small>'
+			html: (days.length-holiday) + '日 <small>/ ' +  monthday(parseInt(_s[0]), parseInt(_s[1])) + '日</small>'
 		}).appendTo(tr);
 		//新しいtd。働いた回数を表示するよ
 		$('<td>', {
-			text: _awt.length + '回'
+			text: (_awt.length-holiday) + '回'
 		}).appendTo(tr);
 		//trをtdもろともtbodyに突っ込むよ
 		tr.appendTo('#shiftList');
@@ -610,7 +614,12 @@ function setListModalContent(monthkey){
 		for (var i = 0; i < wta.length; i++) {
 			var wt = wta[i];
 			actual += wt.getActualMin();
-			wtstring.push(wt.thfs(null, '{s}-{f}'));
+			if(actual!=0){
+				wtstring.push(wt.thfs(null, '{s}-{f}'));
+			} else if(actual==0){
+				actual = 0;
+				wtstring.push('有給休暇')
+			}
 		}
 		//ラッパー
 		var div = $('<div>', {
@@ -776,16 +785,16 @@ function checkAddWtModalValidity(){
 	var ready = true;
     if ($('#addModal_date').val() == ''){
     	ready = false;
-    } else {
-		var sh = parseInt($('#addModal_sh').val());
-		var sm = parseInt($('#addModal_sm').val());
-		var fh = parseInt($('#addModal_fh').val());
-		var fm = parseInt($('#addModal_fm').val());
-		if (sh > fh){
-			ready = false;
-		} else if (sh == fh){
-			ready = sm < fm;
-		}
+    }else if(!$('#paid_holiday_checkbox').prop('checked')){
+			var sh = parseInt($('#addModal_sh').val());
+			var sm = parseInt($('#addModal_sm').val());
+			var fh = parseInt($('#addModal_fh').val());
+			var fm = parseInt($('#addModal_fm').val());
+			if (sh > fh){
+				ready = false;
+			} else if (sh == fh){
+				ready = sm < fm;
+			}
     }
     $('#addModal_submit').attr('disabled', !ready);
 }
@@ -828,7 +837,8 @@ function refreshNextWork() {
 	//つまり、必ずsortの後に呼ばれる必要がある。
 	for (var i = 0; i < WORKTIME_ARRAY.length; i++) {
 		var WORKTIME = WORKTIME_ARRAY[i];
-		if (today.getTime() < WORKTIME.start.getTime()){
+		var actual = WORKTIME.getActualMin();
+		if (today.getTime() < WORKTIME.start.getTime() && actual != 0){
 			var daykey = WORKTIME.getDateString('{mo}/{d} ({dy})', true);
 			if (nearest_daykey == ''){
 				nearest_daykey = daykey;
@@ -931,6 +941,7 @@ function getWtFromSels(daykey, wrapper) {
 function checkSalarySettingValidity(){
 	var emp = parseInt($("input[name=employmentPattern]:checked").val());
 	var ready = checkNumberInput($('#hourWage'));
+	ready = checkNumberInput($(' #prescribed_hour')) && ready;
 	if (emp == 0) {
 	ready = checkButtonsInput($('#fee_provide_month input')) && ready;
 	ready = checkNumberInput($('#six_month_fee')) && ready;
@@ -988,6 +999,7 @@ function setCalcSalaryModalContent(){
 	var isHSStudent = $('#hs_student_checkbox').prop('checked');// true or false
 	var trans = parseInt($('#trans').val());
 	var emp = parseInt($("input[name=employmentPattern]:checked").val());
+	var prescribed_hours = parseInt($('#prescribed_hour').val());
 
   //月ごとの処理
   var mkeys = Object.keys(obj);
@@ -1021,6 +1033,8 @@ function setCalcSalaryModalContent(){
 			// 着替手当
     	var days = Object.keys(obj[monthkey]);
     	// 出勤日配列 ["2017/8/8", "2017/8/16"...]
+			var holiday = 0;
+			//有給休暇日数
     	// その月の、それぞれの日時で処理
     	for (var key_d in wt_ms){
     		var wt_array = obj[monthkey][key_d];
@@ -1031,6 +1045,9 @@ function setCalcSalaryModalContent(){
 	    		actualWorkingHour += wt.getActualMin()/60;
 	    		//実働時間. (拘束時間-休憩時間)
 	    		midnightHours += wt.getMidnightMin()/60;
+					if(actualWorkingHour==0){
+						holiday++;
+					}
 	    	}
 	    	var baseSalary = actualWorkingHour >= 8 ? baseSalary = 8 * hourWage : actualWorkingHour * hourWage;
 	    	//基本給 = 実質労働時間(8時間以下の分) * 時給
@@ -1038,6 +1055,7 @@ function setCalcSalaryModalContent(){
 	    	//時間外手当[円] = 実働時間[h] > 8 なら (実働時間[h] - 8) * 時給 * 1.25 、そうじゃないなら 0;
 	    	var midnightBonus = midnightHours * hourWage * 0.25;
 	    	//深夜手当[円] = 22時から5時までの労働時間[h] * 時給[yen/h] * 0.25;
+				var holiday_pay = holiday * prescribed_hours * hourWage;
 	    	wholeGivenYen += baseSalary + longBonus + midnightBonus;
 			  wholeActualWorkingHour += actualWorkingHour;
 	    	wholeMidnightBonus += midnightBonus;
@@ -1064,9 +1082,9 @@ function setCalcSalaryModalContent(){
 		} else if(emp == 0){
 			transPay = six_month_fee;
 		} else if(emp == 1 || 2 || 3){
-			if(days.length < 17){
-				transPay = trans * days.length;
-			} else if(days.length >= 17){
+			if((days.length-holiday) < 17){
+				transPay = trans * (days.length-holiday);
+			} else if((days.length-holiday) >= 17){
 				transPay = one_month_fee
 			}
 			if(transPay >= 30000){
@@ -1074,7 +1092,9 @@ function setCalcSalaryModalContent(){
 			}
 		}
 
-		chgCostume = 250 * days.length;
+		chgCostume = 250 * (days.length-holiday);
+
+		wholeGivenYen = wholeGivenYen + holiday_pay;
 
  		//控除されるかされないかのArray。されるなら1,されないなら0。雇用保険、健保基本保険、健保特定保険、厚生年金保険、組合費の順番。
 		var deductArray =
@@ -1112,6 +1132,9 @@ function setCalcSalaryModalContent(){
 		_a.push('<span class="bbb">' + '時間外手当: ' + insertComma(Math.round(wholeLongBonus)) + '円');
 		_a.push('<span class="bbb">' + '着替手当: ' + insertComma(chgCostume) + '円');
 		_a.push('<span class="bbb">' + '交通費: ' + insertComma(transPay) + '円');
+		if(holiday!=0){
+			_a.push('<span class="bbb">' + '有給手当: ' + insertComma(holiday_pay) + '円');
+		}
 		_a.push('<span class="aaa">' + '控除合計: ' + insertComma(Math.round(wholeOmittedYen)) + '円');
 
 		if(emp == 0 || emp == 1){
@@ -1127,8 +1150,11 @@ function setCalcSalaryModalContent(){
 		}
 		_a.push('<span class="aaa">' + '勤怠関連')
 		_a.push('<span class="bbb">' + '実働時間: ' + wholeActualWorkingHour + '時間');
-    _a.push('<span class="bbb">' + '出勤日数: ' + days.length + '日');
-    _a.push('<span class="bbb">' + '休日日数: ' + (monthday(full_year, month) - days.length) + '日');
+    _a.push('<span class="bbb">' + '出勤日数: ' + (days.length-holiday) + '日');
+    _a.push('<span class="bbb">' + '休日日数: ' + (monthday(full_year, month) - (days.length-holiday)) + '日');
+		if(holiday!=0){
+			_a.push('<span class="bbb">' + '有給休暇日数: ' + holiday + '日');
+		}
 		_a.push('<span class="bbb">' + '時間外計: ' + wholeLongHours + '時間');
 		_a.push('<span class="bbb">' + '深夜早朝計: ' + wholeMidnightHours + '時間');
 
