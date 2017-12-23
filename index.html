@@ -851,6 +851,12 @@ you cannot:
           &emsp;・所得税<br>
           &ensp;&ensp;給与所得の源泉徴収税額表,月額表を参照。<br>
         </p>
+        <p class="aaa">有給休暇について</p>
+        <p class="bbb">
+          拘束時間が0の勤務を有給休暇として認識。<br>
+          有給手当 = 時給 * 所定労働時間<br>
+          所定労働時間はレギュラーは7.5時間,カジュアルの方はCに続く数字です。<br>
+        </p>
         <p class="aaa">注意事項</p>
         <p class="bbb">
           この機能は、みなさんの入力したシフトに基づき給与を概算するもので、みなさんの給与を保証するものではありません。<br>
@@ -1240,6 +1246,7 @@ function saveSalarySettingWithModal(btnElem){
   saveCheckboxData($('#salarySettingModal input[id][type=checkbox]'));
   //number box
   saveTextboxData($('#salarySettingModal input[type=number]'));
+  saveTextboxData($('#prescribed_hour input[type=number]'));
   //text box
   //saveTextboxData($('#salarySettingModal input[type=text]'));//NASA
   //select
