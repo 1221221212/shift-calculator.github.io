@@ -1130,11 +1130,11 @@ function setCalcSalaryModalContent(){
 		_a.push('<span class="bbb">' + '基本給: ' + insertComma(Math.round(wholeBaseSalary)) + '円');
 		_a.push('<span class="bbb">' + '深夜早朝手当: ' + insertComma(Math.round(wholeMidnightBonus)) + '円');
 		_a.push('<span class="bbb">' + '時間外手当: ' + insertComma(Math.round(wholeLongBonus)) + '円');
-		_a.push('<span class="bbb">' + '着替手当: ' + insertComma(chgCostume) + '円');
-		_a.push('<span class="bbb">' + '交通費: ' + insertComma(transPay) + '円');
 		if(holiday!=0){
 			_a.push('<span class="bbb">' + '有給手当: ' + insertComma(holiday_pay) + '円');
 		}
+		_a.push('<span class="bbb">' + '着替手当: ' + insertComma(chgCostume) + '円');
+		_a.push('<span class="bbb">' + '交通費: ' + insertComma(transPay) + '円');
 		_a.push('<span class="aaa">' + '控除合計: ' + insertComma(Math.round(wholeOmittedYen)) + '円');
 
 		if(emp == 0 || emp == 1){
