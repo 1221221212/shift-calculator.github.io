@@ -504,6 +504,7 @@ function refreshTable(oninit) {
 			var _wt = _awt[j];
 			actual += _wt.getActualMin();
 			if(_wt.getActualMin()==0){
+				actual += $('#prescribed_hour').val() * 60;
 				holiday++;
 			}
 			//もし新しい日付なら追加 -> 日数がわかる
@@ -617,7 +618,7 @@ function setListModalContent(monthkey){
 			if(actual!=0){
 				wtstring.push(wt.thfs(null, '{s}-{f}'));
 			} else if(actual==0){
-				actual = 0;
+				actual = $('#prescribed_hour').val() * 60;
 				wtstring.push('有給休暇')
 			}
 		}
@@ -1094,7 +1095,7 @@ function setCalcSalaryModalContent(){
 
 		chgCostume = 250 * (days.length-holiday);
 
-		wholeGivenYen = wholeGivenYen + holiday_pay;
+		wholeGivenYen += holiday_pay;
 
  		//控除されるかされないかのArray。されるなら1,されないなら0。雇用保険、健保基本保険、健保特定保険、厚生年金保険、組合費の順番。
 		var deductArray =
@@ -1123,7 +1124,8 @@ function setCalcSalaryModalContent(){
 
 		//控除額計
 		wholeOmittedYen = deduction + tax;
-		wholeGivenYen = wholeGivenYen + transPay + chgCostume;
+		wholeGivenYen += transPay + chgCostume;
+		wholeActualWorkingHour += prescribed_hours * holiday;
 
 		var _a = new Array();
     _a.push('<span class="aaa">' + '支給計: ' + insertComma(Math.round(wholeGivenYen)) + '円');

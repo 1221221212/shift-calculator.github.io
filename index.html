@@ -148,7 +148,7 @@ you cannot:
   <span class="b">・</span>
   <a href="https://crew-pn.usjc.co.jp/cws/mbl/Menu-1" target="_blank">モバイル</a>
   <br>
-  <small>Copyright &copy; 2017 Naoki Iwasa All Rights Reserved.<br>last updated at 2017.12.23 v.2.0.8<br>special thanks for Yudai Takegawa<br></small>
+  <small>Copyright &copy; 2017 Naoki Iwasa All Rights Reserved.<br>last updated at 2017.12.27 v.2.0.9<br>special thanks for Yudai Takegawa<br></small>
 </footer>
 <!-- /footer -->
 
@@ -253,6 +253,8 @@ you cannot:
       </div>
       <div class="modal-body">
         <p>
+          2017.12.27 v2.0.9<br>
+          有給追加機能の修正を行いました。<br>
           2017.12.23 v2.0.8<br>
           手動追加の欄から有給休暇が追加できるようになりました。<br>
           2017.12.16 v2.0.7<br>
@@ -1043,7 +1045,6 @@ function routeSettingsWithModal(btnElem){
 function addWTWithModal(btnElem){
   if ($(btnElem).prop('disabled')) return;
 
-  var daykey = $('#addModal_date').val();
   var s_date = new Date($('#addModal_date').val());
   var f_date = new Date($('#addModal_date').val());
 
@@ -1053,12 +1054,6 @@ function addWTWithModal(btnElem){
   }else{
     s_date.setHours(0,0);
     f_date.setHours(0,0);
-    if(window.confirm('有給休暇を追加するとその日の他の勤務は削除されます。')){
-      removeWorktimes(daykey);
-      refresh();
-    }else{
-      return false;
-    }
   }
 
   if (addOneWt(new Worktime(s_date, f_date))){
