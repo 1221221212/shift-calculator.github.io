@@ -504,7 +504,7 @@ function refreshTable(oninit) {
 			var _wt = _awt[j];
 			actual += _wt.getActualMin();
 			if(_wt.getActualMin()==0){
-				actual += $('#prescribed_hour').val() * 60;
+				actual += $('#prescribed').val() * 60;
 				holiday++;
 			}
 			//もし新しい日付なら追加 -> 日数がわかる
@@ -618,7 +618,7 @@ function setListModalContent(monthkey){
 			if(actual!=0){
 				wtstring.push(wt.thfs(null, '{s}-{f}'));
 			} else if(actual==0){
-				actual = $('#prescribed_hour').val() * 60;
+				actual = $('#prescribed').val() * 60;
 				wtstring.push('有給休暇')
 			}
 		}
@@ -796,7 +796,9 @@ function checkAddWtModalValidity(){
 			} else if (sh == fh){
 				ready = sm < fm;
 			}
-    }
+    } else {
+			ready = checkNumberInput($('#prescribed')) && ready;
+		}
     $('#addModal_submit').attr('disabled', !ready);
 }
 

@@ -438,13 +438,22 @@ you cannot:
           <select data-opt="min" class="form-control custom-select" data-defval="0" id="addModal_sm" onchange="checkAddWtModalValidity()"></select>
           <div class="input-group-addon">分</div>
         </div>
-        <div class="input-group">
+        <div class="input-group" style="margin-bottom: .5em">
         	<div class="input-group-addon">終了時刻</div>
           <select data-opt="hour" class="form-control custom-select" data-defval="12" id="addModal_fh" onchange="checkAddWtModalValidity()"></select>
           <div class="input-group-addon">時</div>
           <select data-opt="min" class="form-control custom-select" data-defval="0" id="addModal_fm" onchange="checkAddWtModalValidity()"></select>
           <div class="input-group-addon">分</div>
         </div>
+        <div class="input-group">
+          <span class="input-group-addon">所定労働時間</span>
+          <input type="number" class="form-control" id="prescribed" style="max-width:7em;" onchange="checkAddWtModalValidity()" autoload disabled>
+          <span class="input-group-addon">時間</span>
+        </div>
+        　<small class="text-muted">
+           契約書に記載の所定労働時間を記入。
+        　</small>
+        <br>
         <label class="custom-control custom-checkbox" style="margin-top: .5rem">
           <input type="checkbox" class="custom-control-input"  id="paid_holiday_checkbox" onchange="holidayDisable(this);checkAddWtModalValidity();">
           <span class="custom-control-indicator"></span>
@@ -604,10 +613,10 @@ you cannot:
                 <td>
                     <div class="form-inline">
                         <select id="ws_sel" class="form-control custom-select" style="max-width:12em;">
-							           <option value="1" >急いで</option>
-							           <option value="2" >少し急いで</option>
+							           <option value="1">急いで</option>
+							           <option value="2">少し急いで</option>
 							           <option value="3">少しゆっくり</option>
-							           <option value="4" >ゆっくり</option>
+							           <option value="4">ゆっくり</option>
                         </select>
                     </div>
                 </td>
@@ -1224,6 +1233,7 @@ function holidayDisable(check){
   $('#addModal_sm').prop('disabled', $(check).prop('checked'));
   $('#addModal_fh').prop('disabled', $(check).prop('checked'));
   $('#addModal_fm').prop('disabled', $(check).prop('checked'));
+  $('#prescribed').prop('disabled', !$(check).prop('checked'));
 }
 
 //給与概算設定modalの保存ボタンを押したときに呼ばれる
