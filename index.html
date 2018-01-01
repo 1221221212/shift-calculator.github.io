@@ -48,7 +48,6 @@ you cannot:
     #nextOfNextBox {font-size: 1.1em;margin:.8em 0}
     #nextOfNextWork, #nextOfNextWork a {font-size: 19px;text-decoration: underline}
     #thanks{display:none;position: fixed;bottom: 1em;left: 1em}
-    #happynewyear{display:none;position: fixed;bottom: 1em;left: 1em}
     .remove{color: #D53B5A;cursor: pointer}
     .monthData:hover, .remove:hover, .listup:hover, .listcont:hover{background-color: #eee;transition: background-color 0.3s ease 0s}
     .listcont{padding:.8em;display: inline-block}
@@ -130,8 +129,6 @@ you cannot:
 
 <!-- #THANKS -->
 <div class="alert alert-success" role="alert" id="thanks" style="display: none">thank you : )</div>
-<!-- #HAPPY NEW YEAR!-->
-<div class="alert alert-success" role="alert" id="happynewyear" style="display: none">happy new year !!!</div>
 
 
 
@@ -1021,17 +1018,8 @@ function init() {
 
 	//テーブルに反映。init時はフェードインしたくないのでtrue
 	refresh(true);
-
-  var newyear = new Date(2018,0,1,0,0,0,0);
-  if(newyear.getTime() <= today.getTime()){
-    $("#happynewyear").fadeIn();
-    setTimeout( closeNewYear , 5000 );
-  }
 }
 
-function closeNewYear(){
-  $('#happynewyear').fadeOut();
-}
 
 //テキストエリアから情報を抽出する。
 function addWTWithTA() {
