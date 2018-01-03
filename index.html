@@ -87,6 +87,8 @@ you cannot:
 
 <div id="alert"></div>
 
+<div style="display:none">
+
 <!-- TEXTBOX TO C&P SHIFT TABLE -->
 <textarea id="shiftBox" class="form-control" placeholder="シフト表を全選択してコピー&ペースト..." rows=7 style="margin-bottom: 1em"></textarea>
 
@@ -125,6 +127,7 @@ you cannot:
   <button type="button" class="btn btn-outline-primary" onclick="checkPSModalValidity();$('#pastShiftModal').modal()">シフト一覧</button>
 </div>
 
+</div>
 
 
 <!-- #THANKS -->
@@ -982,6 +985,7 @@ removeHoverEffectOnMobilePhone();
 
 //bodyがloadされたときに発火
 function init() {
+  message('現在メンテナンスのためご利用いただけません。', 'danger');
 	//localStorageがオフまたは非対応の場合、cookieを用いて擬似的にlocalStorageを作成
 	checkCompatibility();
 
