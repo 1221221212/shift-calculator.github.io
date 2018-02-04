@@ -83,14 +83,9 @@ you cannot:
 <!-- container -->
 <div class="container" id="container">
 
-
-
 <h1 class="display-4">Workaholic</h1>
 
 <div id="alert"></div>
-
-<div style="display:none">
-
 
 <!-- TEXTBOX TO C&P SHIFT TABLE -->
 <textarea id="shiftBox" class="form-control" placeholder="シフト表を全選択してコピー&ペースト..." rows=7 style="margin-bottom: 1em"></textarea>
@@ -131,9 +126,6 @@ you cannot:
 </div>
 
 </div>
-
-</div>
-
 
 <!-- #THANKS -->
 <div class="alert alert-success" role="alert" id="thanks" style="display: none">thank you : )</div>
@@ -990,8 +982,6 @@ removeHoverEffectOnMobilePhone();
 
 //bodyがloadされたときに発火
 function init() {
-
-  message('現在一部機能がご利用いただけません。', 'danger');
 
 	//localStorageがオフまたは非対応の場合、cookieを用いて擬似的にlocalStorageを作成
 	checkCompatibility();
