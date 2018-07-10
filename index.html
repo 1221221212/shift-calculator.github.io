@@ -123,6 +123,7 @@ you cannot:
 	<button type="button" class="btn btn-outline-primary" onclick="setSalarySettingModalContent();$('#salarySettingModal').modal()">給与概算設定</button>
   <button id="salaryLaunchButton" type="button" class="btn btn-outline-primary" onclick="launchSalaryModal(this)">給与概算</button>
   <button type="button" class="btn btn-outline-primary" onclick="checkPSModalValidity();$('#pastShiftModal').modal()">シフト一覧</button>
+  <button type="button" class="btn btn-outline-primary" onclick="$('#shiftSubmitModal').modal()">シフト提出アラート</button>
 </div>
 
 </div>
@@ -149,7 +150,7 @@ you cannot:
   <span class="b">・</span>
   <a href="https://crew-pn.usjc.co.jp/cws/mbl/Menu-1" target="_blank">モバイル</a>
   <br>
-  <small>Copyright &copy; 2017 Naoki Iwasa All Rights Reserved.<br>last updated at 2017.12.27 v.2.0.9<br>special thanks for Yudai Takegawa<br></small>
+  <small>Copyright &copy; 2017 Naoki Iwasa All Rights Reserved.<br>last updated at 2018.6.10 v.2.1.0<br>special thanks for Yudai Takegawa<br></small>
 </footer>
 <!-- /footer -->
 
@@ -254,6 +255,8 @@ you cannot:
       </div>
       <div class="modal-body">
         <p>
+          2018.6.10  v2.1.0<br>
+          シフト提出アラート機能を実装しました。<br>
           2017.12.27 v2.0.9<br>
           有給追加機能の修正を行いました。<br>
           2017.12.23 v2.0.8<br>
@@ -960,6 +963,48 @@ you cannot:
 <!-- /PAST SHIFT MODAL -->
 
 
+
+
+
+<!-- SHIFT　SUBMIT MODAL -->
+<div class="modal fade" id="shiftSubmitModal" tabindex="1" role="dialog">
+  <div class="modal-dialog modal-lg" role="document">
+    <div class="modal-content">
+      <div class="modal-header">
+        <h5 class="modal-title">シフト提出アラート</h5>
+        <button type="button" class="close" data-dismiss="modal">
+          <span aria-hidden="true">&times;</span>
+        </button>
+      </div>
+      <div class="modal-body" style="padding-bottom: 0">
+        <p class="text-secondary">
+          シフト提出日が近づくとおしらせします。
+        </p>
+        <div class="form-inline form-inline-input">
+          <span style="margin-bottom: .3rem">シフト提出日</span>
+          <input type="text" id="submitDay" placeholder="例: 15,31" value="15,31" class="form-control form-control-sm" style="max-width:70px" onkeyup="checkShiftSubmitModalValidity()" autoload>
+          <span style="margin-bottom: .3rem">日に提出。</span>
+          <input type="number" id="alertDay" value="3" class="form-control form-control-sm" style="max-width:50px" onkeyup="checkShiftSubmitModalValidity()" autoload>
+          <span style="margin-bottom: .3rem">日前からおしらせ</span>
+        </div>
+        <p style="margin:0;">
+          <span style="color: #777;font-size: .8em;margin-left: .5rem;">
+            Tips:コンマ','で区切って複数追加可.半角で入力<br>
+                 "31"と入力された場合は、月末にシフト提出があるものとします
+          </span>
+        </p>
+      </div>
+      <div class="modal-footer">
+        <button type="button" class="btn btn-primary" id="ShiftSubimitModalSubmit" onclick="saveShiftSubmitSettings(this)">保存</button>
+        <button type="button" class="btn btn-secondary" data-dismiss="modal">キャンセル</button>
+      </div>
+    </div>
+  </div>
+</div>
+<!-- /SHTFT SUBMIT　MODAL -->
+
+
+
 <script src="https://code.jquery.com/jquery-3.2.1.min.js"></script>
 <script src="https://cdn.jsdelivr.net/npm/flatpickr"></script>
 <script src="https://npmcdn.com/flatpickr/dist/l10n/ja.js"></script>
@@ -1015,6 +1060,12 @@ function init() {
 
 	//LocalStorageに保存した勤務時間オブジェクト配列データの解析して、wtArrayに格納。
 	loadWtArrayFromLS();
+
+  //ShiftSubmitAlert
+  shiftSubmitAlert();
+
+  message('シフト提出アラート機能を実装しました！設定して活用してください。','success');
+
 
 
 	//テーブルに反映。init時はフェードインしたくないのでtrue
@@ -1264,6 +1315,19 @@ function saveSalarySettingWithModal(btnElem){
   //modalを閉じる
   $('#salarySettingModal').modal('hide');
 }
+
+function saveShiftSubmitSettings(btnElem){
+  //ボタンがdisabledなら処理を終了。
+  if ($(btnElem).prop('disabled')) return;
+  //number box
+  saveTextboxData($('#shiftSubmitModal input[type=number]'));
+  //text box
+  saveTextboxData($('#shiftSubmitModal input[type=text]'));
+  message('シフト提出アラート設定を保存しました','success');
+  //modalを閉じる
+  $('#shiftSubmitModal').modal('hide');
+}
+
 
 $('#calMethodModal, #editWTModal').on('shown.bs.modal', function (e) {$('body').addClass('modal-open');});
 

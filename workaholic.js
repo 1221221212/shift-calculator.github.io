@@ -732,6 +732,11 @@ function checkTransitModalValidity(){
     $('#editModalSubmit').attr('disabled', !ready);
 }
 
+function checkShiftSubmitModalValidity(){
+	var ready = checkNumberInput($('#alertDay'))
+	ready = checkTextInput($("#submitDay")) && ready;
+	$('#ShiftSubimitModalSubmit').attr('disabled', !ready);
+}
 
 function makeYahooTransitURL(worktime){
 	//めんどくさいので一旦LSからリセットしてから、データをform本体から直接get
@@ -1315,4 +1320,30 @@ function pastShift(){
 	var period = sd + '_' + fd;
 	var url = 'https://crew-pn.usjc.co.jp/cws/mbl/SftReqSftConfirmShowConfirmFormAction@shift_confirm_show_target_term=' + period + '@shift_confirm_real_target_term=' + period + '@target_org=2150217800' ;
 	open(url,"_blank");
+}
+
+function shiftSubmitAlert(){
+	var y = today.getFullYear();
+	var m = today.getMonth()+1;
+	var d = today.getDate();
+	var l = monthday(y,m);
+	var s = $("#submitDay").val().split(',');
+	var a = parseInt($('#alertDay').val());//整数
+	for(var i in s) {
+		if(s[i]==31){
+			s[i] = l;
+		}
+		var x = s[i] - a;
+		var z = s[i] - d;
+		if(z<0){
+			z = z + l;
+		}
+		if(x<=d){
+			if(z==0){
+				message('シフト提出日です。シフトを提出しましょう。', 'danger');
+			}else{
+				message('シフト提出'+z+'日前です。シフトを提出しましょう。', 'success');
+			}
+		}
+　}
 }
