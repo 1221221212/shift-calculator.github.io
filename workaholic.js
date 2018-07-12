@@ -964,17 +964,7 @@ function checkSalarySettingValidity(){
 		$("input[name=employmentPattern]").removeClass('is-invalid');
 	}
 	$('#salary_submit').attr('disabled', !ready);
-	$('#salaryLaunchButton').attr('disabled', !ready);
 }
-
-function launchSalaryModal(btnElem){
-  if ($(btnElem).prop('disabled')) return;
-	setCalcSalaryModalContent();
-	$('#calcSalaryModal').modal();
-}
-
-/////////////////////
-
 
 //給与概算設定modalを開いたときに呼び出される。
 function setSalarySettingModalContent() {
@@ -1347,3 +1337,18 @@ function shiftSubmitAlert(){
 		}
 　}
 }
+
+$(".navbar-toggler").on("click", function() {
+	$(".title").toggle();
+	$(".menu").toggle();
+});
+
+$(".settingsmenu").on("click", function() {
+	$(".settings").toggle();
+	$(".updown").toggle();
+});
+
+$(".others").on("click", function() {
+	$(".other").toggle();
+	$(".updown2").toggle();
+});
