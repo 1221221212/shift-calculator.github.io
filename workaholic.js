@@ -1328,7 +1328,7 @@ function shiftSubmitAlert(){
 		if(z<0){
 			z = z + l;
 		}
-		if(x<=d){
+		if(x<=d && z<=a){
 			if(z==0){
 				message('シフト提出日です。シフトを提出しましょう。', 'danger');
 			}else{
