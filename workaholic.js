@@ -1352,3 +1352,8 @@ $(".others").on("click", function() {
 	$(".other").toggle();
 	$(".updown2").toggle();
 });
+
+$(".xxx").on("click", function() {
+	$(".title").toggle();
+	$(".menu").toggle();
+});

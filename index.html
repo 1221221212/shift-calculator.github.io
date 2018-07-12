@@ -54,7 +54,7 @@ you cannot:
     #ToSModal a{color: rgb(68, 68, 68); font-size: 0.8rem}
     .ToSBody{font-size: 0.8rem; text-align: justify}
     .form-control[disabled]{border:1px solid #ccc !important}
-    .khand{font-family: 'Khand', sans-serif; color: #fff}
+    .khand{font-family: 'Khand', sans-serif; color: #fff;}
     .octicon{
       fill: #fff;
       vertical-align: middle;
@@ -88,20 +88,20 @@ you cannot:
               Settings
             </span>
           <ul class="list-group settings" style="display: none">
-            <li class="list-group-item bg-dark" onclick="$('#settingsModal').modal()">Geneal Settings</li>
-            <li class="list-group-item bg-dark" onclick="setRouteModalFromLS();checkTransitModalValidity();$('#routeModal').modal();">Route Settings</li>
-            <li class="list-group-item bg-dark" onclick="setSalarySettingModalContent();$('#salarySettingModal').modal()">Salary Settings</li>
-            <li class="list-group-item bg-dark" onclick="$('#shiftSubmitModal').modal()">Submittion　Settings</li>
+            <li class="list-group-item bg-dark xxx" data-toggle="collapse" data-target="#navbarToggleExternalContent" onclick="$('#settingsModal').modal()">Geneal Settings<br>設定</li>
+            <li class="list-group-item bg-dark xxx" data-toggle="collapse" data-target="#navbarToggleExternalContent" onclick="setRouteModalFromLS();checkTransitModalValidity();$('#routeModal').modal();">Route Settings<br>通勤路設定</li>
+            <li class="list-group-item bg-dark xxx" data-toggle="collapse" data-target="#navbarToggleExternalContent" onclick="setSalarySettingModalContent();$('#salarySettingModal').modal()">Salary Settings<br>給与設定</li>
+            <li class="list-group-item bg-dark xxx" data-toggle="collapse" data-target="#navbarToggleExternalContent" onclick="$('#shiftSubmitModal').modal()">Submittion　Settings<br>シフト提出日設定</li>
           </ul>
         </li>
-        <li class="list-group-item bg-dark khand" onclick="setCalcSalaryModalContent();$('#calcSalaryModal').modal();">
-          <span>Salary Calculation</span>
+        <li class="list-group-item bg-dark khand xxx" data-toggle="collapse" data-target="#navbarToggleExternalContent" onclick="setCalcSalaryModalContent();$('#calcSalaryModal').modal();">
+          Salary Calculation<br>給与概算
         </li>
-        <li class="list-group-item bg-dark khand" onclick="checkAddWtModalValidity();$('#addWTModal').modal()">
-          <span>Manually Addition</span>
+        <li class="list-group-item bg-dark khand xxx" data-toggle="collapse" data-target="#navbarToggleExternalContent" onclick="checkAddWtModalValidity();$('#addWTModal').modal()">
+          Manually Addition<br>勤務手動追加
         </li>
-        <li class="list-group-item bg-dark khand" onclick="checkPSModalValidity();$('#pastShiftModal').modal()">
-          <span>Shift Lists</span>
+        <li class="list-group-item bg-dark khand xxx" data-toggle="collapse" data-target="#navbarToggleExternalContent" onclick="checkPSModalValidity();$('#pastShiftModal').modal()">
+          Shift Lists<br>シフト一覧表示
         </li>
         <li class="list-group-item bg-dark khand">
             <span class="others">
@@ -110,10 +110,10 @@ you cannot:
               Others
             </span>
           <ul class="list-group other" style="display: none">
-            <li class="list-group-item bg-dark" onclick="$('#ToSModal').modal()">Term of Service</li>
-            <li class="list-group-item bg-dark" onclick="$('#methodModal').modal();">Specification</li>
-            <li class="list-group-item bg-dark" onclick="$('#ContactModal').modal();clearForm()">Contact Us</li>
-            <li class="list-group-item bg-dark" onclick="$('#ChangeLogModal').modal()">Change Logs</li>
+            <li class="list-group-item bg-dark xxx" data-toggle="collapse" data-target="#navbarToggleExternalContent" onclick="$('#ToSModal').modal()">Term of Service<br>利用規約</li>
+            <li class="list-group-item bg-dark xxx" data-toggle="collapse" data-target="#navbarToggleExternalContent" onclick="$('#methodModal').modal();">Specification<br>仕様</li>
+            <li class="list-group-item bg-dark xxx" data-toggle="collapse" data-target="#navbarToggleExternalContent" onclick="$('#ContactModal').modal();clearForm()">Contact Us<br>問い合わせ</li>
+            <li class="list-group-item bg-dark xxx" data-toggle="collapse" data-target="#navbarToggleExternalContent" onclick="$('#ChangeLogModal').modal()">Change Logs<br>更新履歴</li>
           </ul>
         </li>
       </ul>
