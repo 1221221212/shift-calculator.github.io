@@ -964,6 +964,13 @@ function checkSalarySettingValidity(){
 		$("input[name=employmentPattern]").removeClass('is-invalid');
 	}
 	$('#salary_submit').attr('disabled', !ready);
+	if(ready){
+		console.log("a");
+		$('#salaryCalc').css('display','block');
+	}else if(!ready){
+		$('#salaryCalc').css('display','none');
+		console.log("b");
+	}
 }
 
 //給与概算設定modalを開いたときに呼び出される。
