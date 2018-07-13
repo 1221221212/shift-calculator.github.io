@@ -965,11 +965,9 @@ function checkSalarySettingValidity(){
 	}
 	$('#salary_submit').attr('disabled', !ready);
 	if(ready){
-		console.log("a");
 		$('#salaryCalc').css('display','block');
 	}else if(!ready){
 		$('#salaryCalc').css('display','none');
-		console.log("b");
 	}
 }
 
