@@ -1335,6 +1335,7 @@ function shiftSubmitAlert(){
 		}
 		if(x<=d && z<=a){
 			if(z==0){
+				alert('今日はシフト提出日です。')
 				message('シフト提出日です。シフトを提出しましょう。', 'danger');
 			}else{
 				message('シフト提出'+z+'日前です。シフトを提出しましょう。', 'success');

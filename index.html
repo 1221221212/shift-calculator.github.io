@@ -51,7 +51,7 @@ you cannot:
     .fpickr-invalid {background-color: #ffe5e5 !important;border-color: #fcb3b3 !important}
     .fpickr-valid {background-color: #f1ffef !important;border-color: #b6e0b1 !important}
     #ToSModal a{color: rgb(68, 68, 68); font-size: 0.8rem}
-    .ToSBody{font-size: 0.8rem; text-align: justify}
+    .ToSBody, .ShiftChangeBody, .AboutSitebody{font-size: 0.8rem; text-align: justify}
     .form-control[disabled]{border:1px solid #ccc !important}
     .khand{font-family: 'Khand', sans-serif; color: #fff;}
     .octicon{
@@ -127,10 +127,12 @@ you cannot:
               Others<br>その他
             </span>
           <ul class="list-group other" style="display: none">
+            <li class="list-group-item bg-dark xxx" data-toggle="collapse" data-target="#navbarToggleExternalContent" onclick="$('#AboutSiteModal').modal()">About this Website<br>当サイトについて</li>
             <li class="list-group-item bg-dark xxx" data-toggle="collapse" data-target="#navbarToggleExternalContent" onclick="$('#ToSModal').modal()">Term of Service<br>利用規約</li>
             <li class="list-group-item bg-dark xxx" data-toggle="collapse" data-target="#navbarToggleExternalContent" onclick="$('#methodModal').modal();">Specification<br>仕様</li>
             <li class="list-group-item bg-dark xxx" data-toggle="collapse" data-target="#navbarToggleExternalContent" onclick="$('#ContactModal').modal();clearForm()">Contact Us<br>問い合わせ</li>
             <li class="list-group-item bg-dark xxx" data-toggle="collapse" data-target="#navbarToggleExternalContent" onclick="$('#ChangeLogModal').modal()">Change Logs<br>更新履歴</li>
+            <li class="list-group-item bg-dark xxx" data-toggle="collapse" data-target="#navbarToggleExternalContent" onclick="$('#ShiftChangeModal').modal()">About Shift Change<br>シフトチェンジについて</li>
           </ul>
         </li>
       </ul>
@@ -190,6 +192,35 @@ you cannot:
 
 
 
+<!-- AboutSite MOADAL -->
+<div class="modal fade" id="AboutSiteModal" tabindex="1" role="dialog">
+  <div class="modal-dialog" role="document">
+    <div class="modal-content">
+      <div class="modal-header">
+        <h5 class="modal-title" id="AboutSiteModalTitle">当サイトについて</h5>
+        <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+          <span aria-hidden="true">&times;</span>
+        </button>
+      </div>
+      <div class="modal-body">
+        <p class="AboutSiteBody">
+          &emsp;Workaholicをご利用いただき、ありがとうございます。当サイトは、利用者が円滑に勤務できるよう手助けするものです。当サイトは、モバイルシフト及び利用者が手動で追加した勤務に基づきいくつかの機能を提供します。<br>
+          &emsp;・実働時間の計算<br>
+          &emsp;・次回出勤日の表示<br>
+          &emsp;・次回出勤の最適な通勤経路の検索<br>
+          &emsp;・給与の概算<br>
+          &emsp;・シフト提出日接近の通知<br>
+          &emsp;以上の機能は、いずれも完全なものではありません。ご利用は自己責任でお願いいたします。<br>
+        </p>
+      </div>
+    </div>
+  </div>
+</div>
+<!-- /AboutSite MOADAL -->
+
+
+
+
 <!-- TOS MOADAL -->
 <div class="modal fade" id="ToSModal" tabindex="1" role="dialog">
   <div class="modal-dialog" role="document">
@@ -225,7 +256,7 @@ you cannot:
   <div class="modal-dialog" role="document">
     <div class="modal-content">
       <div class="modal-header">
-        <h5 class="modal-title" id="ToSModalTitle">仕様</h5>
+        <h5 class="modal-title" id="methodModalTitle">仕様</h5>
         <button type="button" class="close" data-dismiss="modal" aria-label="Close">
           <span aria-hidden="true">&times;</span>
         </button>
@@ -368,6 +399,33 @@ you cannot:
   </div>
 </div>
 <!-- /CONTACT MODAL -->
+
+
+
+
+
+<!-- ShiftChange MOADAL -->
+<div class="modal fade" id="ShiftChangeModal" tabindex="1" role="dialog">
+  <div class="modal-dialog" role="document">
+    <div class="modal-content">
+      <div class="modal-header">
+        <h5 class="modal-title" id="ShiftChangeTitle">シフトチェンジについて</h5>
+        <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+          <span aria-hidden="true">&times;</span>
+        </button>
+      </div>
+      <div class="modal-body">
+        <p class="ShiftChangeBody">
+          &emsp;シフトテェンジは、会社から与えられている勤務を交代するための救済手段です。シフトは様々な要素を考慮して作成されているため、極力シフトチェンジは避けてください。<br>
+          &emsp;シフトチェンジは、シフト提出後に生じた事情によって止むを得ず行う場合を除いて認められません。勤務リクエストは、自身の勤務可能な日を申告するもので、シフトチェンジを前提とした勤務可能日の申請はやめてください。止むを得ずシフトチェンジを行う場合も、ルールを守りましょう。<br>
+          &emsp;当サイトは、利用者が円滑に勤務につけるよう手助けするもので、シフトチェンジを促進するものではありません。今後、当サイトがシフトチェンジを促進する一因となっていると認められれば、当サイトの公開を中止、中断する場合があります。
+        </p>
+      </div>
+    </div>
+  </div>
+</div>
+<!-- /ShiftChange MOADAL -->
+
 
 
 
@@ -1098,9 +1156,7 @@ function init() {
   //ShiftSubmitAlert
   shiftSubmitAlert();
 
-  message('Workaholicのロゴを募集します。ご協力いただける方は、問い合わせフォームよりメールアドレス記載の上ご連絡ください。','success');
-
-
+  message('<a href="" data-toggle="modal" data-target="#ShiftChangeModal">シフトチェンジについての注意事項</a>'+'を公開しました','success')
 
 	//テーブルに反映。init時はフェードインしたくないのでtrue
 	refresh(true);
