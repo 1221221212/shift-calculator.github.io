@@ -1344,6 +1344,16 @@ function shiftSubmitAlert(){
 　}
 }
 
+function miffy(){
+	if(!$('#miffynoshow').prop('checked')){
+		$('#miffyModal').modal();
+	}
+}
+
+function miffyopen(){
+	$('#miffyModal').modal();
+}
+
 $(".navbar-toggler").on("click", function() {
 	$(".title").toggle();
 	$(".menu").toggle();
