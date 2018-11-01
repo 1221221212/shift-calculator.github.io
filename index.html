@@ -1100,44 +1100,6 @@ you cannot:
 
 
 
-<!-- MIFFY MOADL -->
-<div class="modal fade" id="miffyModal" tabindex="1" role="dialog">
-  <div class="modal-dialog" role="document">
-    <div class="modal-content">
-      <div class="modal-header">
-        <h5 class="modal-title" id="methodModalTitle">Workaholicの今後の運営について</h5>
-      </div>
-      <div class="modal-body">
-        <p style="text-align:justify">
-          日頃よりWorkaholicをご愛用いただきありがとうございます。今後の運営についてご質問をいくつかいただきましたので、回答させていただきます。<br>
-          私事ですが、10月末での退職が決定し、それと同時に当サイトは封鎖をする予定でした。しかしながら、存続を望む声を皆様より多数いただき、運営を継続をすることを決定いたしました。<br>
-          今後も皆様が勤務に尽力されるうえで、当サイトが一助となりましたら幸いです。<br>
-          これからもWorkaholicをよろしくお願いします。<br>
-        </p>
-        <p class="text-right" style="font-size:0.8rem;">
-          岩佐 尚樹<br>
-          IWASA Naoki
-        </p>
-      </div>
-      <div class="modal-footer flex-column">
-        <label class="custom-control custom-checkbox" style="margin: 0">
-          <input type="checkbox" class="custom-control-input mx-auto" saveonchange autoload id="miffynoshow">
-          <span class="custom-control-indicator"></span>
-          <span class="custom-control-description">次回以降表示しない</span>
-        </label>
-        <button type="button" class="close mx-auto" data-dismiss="modal" aria-label="Close">
-          <span aria-hidden="true">・×・</span>
-        </button>
-      </div>
-    </div>
-  </div>
-</div>
-<!-- MIFFY MOADAL -->
-
-
-
-
-
 <script src="https://code.jquery.com/jquery-3.2.1.min.js"></script>
 <script src="https://cdn.jsdelivr.net/npm/flatpickr"></script>
 <script src="https://npmcdn.com/flatpickr/dist/l10n/ja.js"></script>
@@ -1196,10 +1158,6 @@ function init() {
 
   //ShiftSubmitAlert
   shiftSubmitAlert();
-
-  //今後のWorkaholiの運営についてのお知らせ
-  miffy();
-  message('<a onclick="miffyopen()" style="text-decoration: underline;">Workaholicからのお知らせ</a>', 'success');
 
 	//テーブルに反映。init時はフェードインしたくないのでtrue
 	refresh(true);
