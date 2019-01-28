@@ -64,13 +64,14 @@ function setCalender(y,l){
     var trC = '</tr>';
 
     for(i=0; i<myTblLine; i++){	// 表の「行」のループ
+      var thisMonth = parseInt(myMonth) + 1;
         source += tr;
         for (var j = 0; j < 7; j++) {
             var mydat = myTable[j+(i*7)];
             if(todayMyMonth === myMonth && mydat === myToday){
-                source += '<td class="today">' + mydat + tdC;
+                source += '<td class="' + myYear + '/'  + thisMonth　+ '/' + mydat + '" id="today">' + mydat + tdC;
             }else{
-                source += td + mydat + tdC;
+                source += '<td class="' + myYear + '/'  + thisMonth  + '/' + mydat + '">' + mydat + tdC;
             }
         }
         source += trC;
