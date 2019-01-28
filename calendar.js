@@ -92,6 +92,3 @@ function setCalender(y,l){
     $calendarbody.append(tableSource);
     $monthyear.append(mandy);
 }
-addEvent(){
-
-}
