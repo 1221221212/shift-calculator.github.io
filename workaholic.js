@@ -1307,16 +1307,6 @@ function checkPSModalValidity(){
 		$('#PS_submit').attr('disabled', !ready);
 }
 
-function pastShift(){
-	var s_date = $('#PSstart').val();
-	var sd = s_date.replace(/\//g,"-");
-	var f_date = $('#PSfinish').val();
-	var fd = f_date.replace(/\//g,"-");
-	var period = sd + '_' + fd;
-	var url = 'https://crew-pn.usjc.co.jp/cws/mbl/SftReqSftConfirmShowConfirmFormAction@shift_confirm_show_target_term=' + period + '@shift_confirm_real_target_term=' + period + '@target_org=2150217800' ;
-	open(url,"_blank");
-}
-
 function shiftSubmitAlert(){
 	var y = today.getFullYear();
 	var m = today.getMonth()+1;

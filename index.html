@@ -61,6 +61,10 @@ you cannot:
     .list-group-item{border-style: none}
     .salaryHidden{display: none}
     .salaryShown{display: block}
+    #calendar .today{color: #01917b}
+    #calendar .sat {color: blue}
+    #calendar .sun {color: red}
+
     </style>
     <script>
       (function(i,s,o,g,r,a,m){i['GoogleAnalyticsObject']=r;i[r]=i[r]||function(){
@@ -117,9 +121,6 @@ you cannot:
         <li class="list-group-item bg-dark khand xxx" data-toggle="collapse" data-target="#navbarToggleExternalContent" onclick="checkAddWtModalValidity();$('#addWTModal').modal()">
           Manually Addition<br>勤務手動追加
         </li>
-        <li class="list-group-item bg-dark khand xxx" data-toggle="collapse" data-target="#navbarToggleExternalContent" onclick="checkPSModalValidity();$('#pastShiftModal').modal()">
-          Shift Lists<br>シフト一覧表示
-        </li>
         <li class="list-group-item bg-dark khand">
             <span class="others">
               <svg height="16" class="octicon octicon-chevron-down updown2" viewBox="0 0 10 16" version="1.1" width="20" aria-hidden="true"><path fill-rule="evenodd" d="M5 11L0 6l1.5-1.5L5 8.25 8.5 4.5 10 6l-5 5z"/></svg>
@@ -152,6 +153,19 @@ you cannot:
 <div class="container" id="container">
 
 <div id="alert"></div>
+<div id="calendar">
+  <table class="table" style="table-layout: fixed;">
+   <thead>
+     <tr>
+       <td><button class="btn btn-outline-primary buck" type="button">＜</button></td>
+       <td colspan="5"><div class="text-center" id="monthyear"></div></td>
+       <td><button class="btn btn-outline-primary next" type="button">＞</button></td>
+     </tr>
+   </thead>
+   <tbody id="calendarbody">
+   </tbody>
+  </table>
+</div>
 
 <!-- TEXTBOX TO C&P SHIFT TABLE -->
 <textarea id="shiftBox" class="form-control" placeholder="シフト表を全選択してコピー&ペースト..." rows=7 style="margin-bottom: 1em"></textarea>
@@ -1023,42 +1037,6 @@ you cannot:
 
 
 
-<!-- PAST SHFT MODAL -->
-<div class="modal fade" id="pastShiftModal" tabindex="-1" role="dialog">
-  <div class="modal-dialog" role="document">
-    <div class="modal-content">
-      <div class="modal-header">
-        <h5 class="modal-title">シフト一覧</h5>
-        <button type="button" class="close" data-dismiss="modal">
-          <span aria-hidden="true">&times;</span>
-        </button>
-      </div>
-      <div class="modal-body">
-      	<p class="text-secondary">
-          選択した期間のモバイルシフトを表示します。<a href="https://crew-pn.usjc.co.jp/cws/mbl/Menu-1" target="_blank" style="color:#868e96">モバイルサイト</a>に遷移します。<font color="#dc3545">あらかじめモバイルにログインした状態で使ってください。</font>
-        </p>
-        <div class="form-group" style="margin:.5rem;">
-          <p>開始日</p>
-          <input type="text" class="form-control flatpickr alert alert-info" id="PSstart" style="max-width: 300px;" onchange="checkPSModalValidity()">
-        </div>
-        <div class="form-group" style="margin:.5rem;">
-          <p>終了日</p>
-          <input type="text" class="form-control flatpickr alert alert-info" id="PSfinish" style="max-width: 300px;" onchange="checkPSModalValidity()">
-        </div>
-      </div>
-      <div class="modal-footer">
-        <button type="button" class="btn btn-outline-primary" id="PS_submit" onclick="pastShift()">開く</button>
-        <button type="button" class="btn btn-outline-secondary" data-dismiss="modal">キャンセル</button>
-      </div>
-    </div>
-  </div>
-</div>
-<!-- /PAST SHIFT MODAL -->
-
-
-
-
-
 <!-- SHIFT　SUBMIT MODAL -->
 <div class="modal fade" id="shiftSubmitModal" tabindex="1" role="dialog">
   <div class="modal-dialog modal-lg" role="document">
@@ -1108,6 +1086,8 @@ you cannot:
 <script type="text/javascript" src="workaholic_util.js"></script>
 <script type="text/javascript" src="worktimelib.js"></script>
 <script type="text/javascript" src="workaholic.js"></script>
+<script type="text/javascript" src="calendar.js"></script>
+
 
 <script type="text/javascript">
 //flatpickrカレンダー(datepicker)の初期化
@@ -1161,6 +1141,8 @@ function init() {
 
 	//テーブルに反映。init時はフェードインしたくないのでtrue
 	refresh(true);
+  message('カレンダーに勤務日を表示する準備をしています。', 'success');
+
 }
 
 
