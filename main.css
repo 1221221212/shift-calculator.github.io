@@ -2,6 +2,7 @@ body{font-family:"游ゴシック",YuGothic,"ヒラギノ角ゴ Pro W3","Hiragin
 * {font-size: 14px}
 button.close span{font-size: 18px !important}
 .btn.btn-outline-primary {box-shadow: none}
+.navbar button{outline:none}
 .pointer, button, label, .listup, .listcont, .monthData{cursor: pointer}
 #container{padding-bottom: 3em; padding-top: 3em;}
 #nextBox,#nextOfNextBox,#shiftTable{display: none}
