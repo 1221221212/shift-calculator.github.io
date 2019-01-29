@@ -40,5 +40,5 @@ iframe{display: none}
 .salaryHidden{display: none}
 .salaryShown{display: block}
 #calendar #today{color: #01917b}
-#calendar .sat {color: blue}
-#calendar .sun {color: red}
+#calendar .sat{color: blue}
+#calendar .sun{color: red}
