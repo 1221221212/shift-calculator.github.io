@@ -287,6 +287,8 @@ you cannot:
       </div>
       <div class="modal-body">
         <p>
+          2019.7.13  v.2.3.0<br>
+          icsファイルを用いた、カレンダーに勤務を追加する機能を追加。<br>
           2019.1.30  v.2.2.0<br>
           カレンダーの追加<br>
           バグの修正<br>
@@ -1098,6 +1100,7 @@ function init() {
 
   //ShiftSubmitAlert
   shiftSubmitAlert();
+  message('勤務リストの右端の、カレンダーマークを押すと、スマホのカレンダーに勤務のスケジュールを追加できます。', 'success');
 
 	//テーブルに反映。init時はフェードインしたくないのでtrue
 	refresh(true);
