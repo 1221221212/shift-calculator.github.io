@@ -201,3 +201,13 @@ Worktime.fromString = function(str){
 Worktime.fromDate = function(s_date, f_date){
     return new Worktime(s_date, f_date);
 }
+
+function isostring(t){
+  var yyyy = t.getUTCFullYear();
+  var MM = ('0' + (t.getUTCMonth() + 1)).slice(-2);
+  var dd = ('0' + t.getUTCDate()).slice(-2);
+  var hh = ('0' + (t.getUTCHours())).slice(-2);
+  var mm = ('0' + t.getUTCMinutes()).slice(-2);
+  var ss = ('0' + t.getUTCSeconds()).slice(-2);
+  return yyyy + MM + dd + 'T' + hh + mm + ss + "Z";
+}
