@@ -3,7 +3,7 @@ var ics_month;
 
 $(function(){
 
-  $(".ics").on('click', function(){
+  $(".getics").on('click', function(){
     var _key = $(this).parents('tr').attr('class');
     var _s = _key.split('/');
     ics_year = parseInt(_s[0]);
