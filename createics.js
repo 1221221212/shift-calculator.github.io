@@ -1,17 +1,6 @@
 var ics_year;
 var ics_month;
 
-$(function(){
-
-  $(".getics").on('click', function(){
-    var _key = $(this).parents('tr').attr('class');
-    var _s = _key.split('/');
-    ics_year = parseInt(_s[0]);
-    ics_month = parseInt(_s[1]);
-    makeIcs(ics_year,ics_month);
-  });
-});
-
 function makeIcs(y,l){
 
   var cal = ics(y,l);
