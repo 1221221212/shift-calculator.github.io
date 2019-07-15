@@ -34,7 +34,7 @@ iframe{display: none}
 .ToSBody, .ShiftChangeBody, .AboutSiteBody{font-size: 0.8rem; text-align: justify}
 .form-control[disabled]{border:1px solid #ccc !important}
 .khand{font-family: 'Khand', sans-serif; color: #fff;}
-.octicon-three-bars, .octicon-chevron-down, .octicon-x{
+.octicon-three-bars, .octicon-chevron-down, .octicon-chevron-up, .octicon-x{
   fill: #fff;
   vertical-align: middle;
 }
