@@ -16,7 +16,6 @@ function makeIcs(y,l){
             var begin = isostring(WORKTIME.start);
             var end = isostring(WORKTIME.finish);
             cal.addEvent("勤務",begin,end);
-
         }
     }
   javascript:cal.download(y+'年'+l+'月の勤務カレンダー');
@@ -133,7 +132,9 @@ var ics = function(y,l) {
         bb.append(calendar);
         blob = bb.getBlob('text/x-vCalendar;charset=' + document.characterSet);
       }
-      saveAs(blob, filename + ext);
+      var blob_url = window.URL.createObjectURL(blob);
+      location.href = blob_url;
+      console.log(blob_url);
       return calendar;
     },
 
