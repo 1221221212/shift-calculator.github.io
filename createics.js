@@ -132,9 +132,7 @@ var ics = function(y,l) {
         bb.append(calendar);
         blob = bb.getBlob('text/x-vCalendar;charset=' + document.characterSet);
       }
-      var blob_url = window.URL.createObjectURL(blob);
-      location.href = blob_url;
-      console.log(blob_url);
+      location.href = window.URL.createObjectURL(blob);
       return calendar;
     },
 
