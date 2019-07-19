@@ -9,7 +9,6 @@ flock($fp, LOCK_EX);
 fwrite($fp,$ics_content);
 flock($fp, LOCK_UN);
 fclose($fp);
-die('OK');
 }
 }
 
