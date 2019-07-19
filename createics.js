@@ -40,7 +40,6 @@ var ics = function(y,l) {
     'VERSION:2.0'
   ].join(SEPARATOR);
   var calendarEnd = SEPARATOR + 'END:VCALENDAR';
-  var BYDAY_VALUES = ['SU', 'MO', 'TU', 'WE', 'TH', 'FR', 'SA'];
 
   return {
     /**
@@ -132,7 +131,13 @@ var ics = function(y,l) {
         bb.append(calendar);
         blob = bb.getBlob('text/x-vCalendar;charset=' + document.characterSet);
       }
-      saveAs(blob, filename + ext);
+      $.ajax({
+        type: 'POST',
+        url: 'index.php',
+        data: "name1=calendar",
+        success: function(data) {
+        }
+      });
       return calendar;
     },
 
@@ -145,6 +150,7 @@ var ics = function(y,l) {
       }
 
       var calendar = calendarStart + SEPARATOR + calendarEvents.join(SEPARATOR) + calendarEnd;
+
       return calendar;
     }
   };
