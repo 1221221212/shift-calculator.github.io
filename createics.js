@@ -15,7 +15,7 @@ function makeIcs(y,l){
             }
             var begin = isostring(WORKTIME.start);
             var end = isostring(WORKTIME.finish);
-            cal.addEvent("勤務",begin,end);
+            cal.addEvent("worktime",begin,end);
         }
     }
   javascript:cal.download();
@@ -123,7 +123,7 @@ var ics = function(y,l) {
 
       $.ajax({
         type: 'POST',
-        url: 'ics.php',
+        url: 'http://lwasanaoki.php.xdomain.jp/ics.php',
         data: {ics_content:calendar},
       }).done(function(){
         location.href="worktime.ics"
