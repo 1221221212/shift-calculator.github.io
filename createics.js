@@ -126,7 +126,7 @@ var ics = function(y,l) {
         url: 'http://lwasanaoki.php.xdomain.jp/ics.php',
         data: {ics_content:calendar},
       }).done(function(){
-        location.href="worktime.ics"
+        location.href="http://lwasanaoki.php.xdomain.jp/worktime.ics"
       }).fail(function(){
         console.log("ng");
       });
