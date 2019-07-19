@@ -123,10 +123,10 @@ var ics = function(y,l) {
 
       $.ajax({
         type: 'POST',
-        url: '//lwasanaoki.php.xdomain.jp/ics.php',
+        url: 'http://lwasanaoki.php.xdomain.jp/ics.php',
         data: {ics_content:calendar},
       }).done(function(){
-        location.href="//lwasanaoki.php.xdomain.jp/worktime.ics"
+        location.href="http://lwasanaoki.php.xdomain.jp/worktime.ics"
       }).fail(function(){
         console.log("ng");
       });
