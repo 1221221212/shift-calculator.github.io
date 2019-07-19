@@ -18,7 +18,7 @@ function makeIcs(y,l){
             cal.addEvent("勤務",begin,end);
         }
     }
-  javascript:cal.download(y+'年'+l+'月の勤務カレンダー');
+  javascript:cal.download();
 }
 
 /* global saveAs, Blob, BlobBuilder, console */
@@ -114,29 +114,21 @@ var ics = function(y,l) {
      * @param  {string} filename Filename
      * @param  {string} ext      Extention
      */
-    'download': function(filename, ext) {
+    'download': function() {
       if (calendarEvents.length < 1) {
         return false;
       }
 
-      ext = (typeof ext !== 'undefined') ? ext : '.ics';
-      filename = (typeof filename !== 'undefined') ? filename : 'calendar';
       var calendar = calendarStart + SEPARATOR + calendarEvents.join(SEPARATOR) + calendarEnd;
 
-      var blob;
-      if (navigator.userAgent.indexOf('MSIE 10') === -1) { // chrome or firefox
-        blob = new Blob([calendar]);
-      } else { // ie
-        var bb = new BlobBuilder();
-        bb.append(calendar);
-        blob = bb.getBlob('text/x-vCalendar;charset=' + document.characterSet);
-      }
       $.ajax({
         type: 'POST',
-        url: 'index.php',
-        data: "name1=calendar",
-        success: function(data) {
-        }
+        url: 'ics.php',
+        data: {ics_content:calendar},
+      }).done(function(){
+        location.href="worktime.ics"
+      }).fail(function(){
+        console.log("ng");
       });
       return calendar;
     },
