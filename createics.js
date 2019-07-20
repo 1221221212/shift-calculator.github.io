@@ -120,16 +120,19 @@ var ics = function(y,l) {
       }
 
       var calendar = calendarStart + SEPARATOR + calendarEvents.join(SEPARATOR) + calendarEnd;
+      var blob;
+      if (navigator.userAgent.indexOf('MSIE 10') === -1) { // chrome or firefox
+        blob = new Blob([calendar]);
+      } else { // ie
+        blob = new Blob([calendar],{type:'text/calendar;'});
+      }
 
-      $.ajax({
-        type: 'POST',
-        url: 'http://lwasanaoki.php.xdomain.jp/ics.php',
-        data: {ics_content:calendar},
-      }).done(function(){
-        location.href="http://lwasanaoki.php.xdomain.jp/worktime.ics"
-      }).fail(function(){
-        console.log("ng");
-      });
+      var a = document.createElement('a');
+      var url = URL.createObjectURL(blob);
+      a.href = url;
+      document.body.appendChild(a);
+      a.click();
+
       return calendar;
     },
 
