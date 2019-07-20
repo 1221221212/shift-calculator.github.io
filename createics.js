@@ -130,6 +130,7 @@ var ics = function(y,l) {
       var a = document.createElement('a');
       var url = URL.createObjectURL(blob);
       a.href = url;
+      a.download = "worktime.ics"
       document.body.appendChild(a);
       a.click();
 
