@@ -123,11 +123,10 @@ var ics = function(y,l) {
 
       $.ajax({
         type: 'POST',
-        url: 'https://workaholic1221221212.000webhostapp.com/createics',
+        url: 'https://workaholic1221221212.000webhostapp.com/createics.php',
         data: {ics_contents:calendar},
       }).done(function(){
         console.log("ok");
-        location.href = 'https://workaholic1221221212.000webhostapp.com/worktime.ics';
       }).fail(function(){
         console.log("ng");
       });
