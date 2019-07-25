@@ -130,8 +130,9 @@ var ics = function(y,l) {
       }).fail(function(){
         console.log("ng");
       });
-
-      location.href = "https://workaholic1221221212.000webhostapp.com/worktime.ics";
+      setTimeout(function(){
+        location.href = "https://workaholic1221221212.000webhostapp.com/worktime.ics";
+    },5000);
       return calendar;
     },
 
