@@ -120,20 +120,19 @@ var ics = function(y,l) {
       }
 
       var calendar = calendarStart + SEPARATOR + calendarEvents.join(SEPARATOR) + calendarEnd;
-      var blob;
-      if (navigator.userAgent.indexOf('MSIE 10') === -1) { // chrome or firefox
-        blob = new Blob([calendar]);
-      } else { // ie
-        blob = new Blob([calendar],{type:'text/calendar;'});
-      }
 
-      var a = document.createElement('a');
-      var url = URL.createObjectURL(blob);
-      a.href = url;
-      a.download = "worktime.ics"
-      document.body.appendChild(a);
-      a.click();
+      $.ajax({
+        type: 'POST',
+        url: 'https://workaholic1221221212.000webhostapp.com/createics',
+        data: {ics_contents:calendar},
+      }).done(function(){
+        console.log("ok");
+        location.href = 'https://workaholic1221221212.000webhostapp.com/worktime.ics';
+      }).fail(function(){
+        console.log("ng");
+      });
 
+      location.href = "https://workaholic1221221212.000webhostapp.com/worktime.ics";
       return calendar;
     },
 
