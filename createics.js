@@ -130,9 +130,15 @@ var ics = function(y,l) {
       }).fail(function(){
         console.log("ng");
       });
+      $(".loader").show();
+      $("#fadeLayer").show();
       setTimeout(function(){
         location.href = "https://workaholic1221221212.000webhostapp.com/worktime.ics";
-    },5000);
+        $(".loader").fadeOut();
+        $("#fadeLayer").fadeOur();
+
+      },5000);
+
       return calendar;
     },
 
