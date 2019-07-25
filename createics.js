@@ -135,7 +135,7 @@ var ics = function(y,l) {
       setTimeout(function(){
         location.href = "https://workaholic1221221212.000webhostapp.com/worktime.ics";
         $(".loader").fadeOut();
-        $("#fadeLayer").fadeOur();
+        $("#fadeLayer").fadeOut();
 
       },5000);
 

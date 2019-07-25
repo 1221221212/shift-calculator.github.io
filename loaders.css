@@ -115,9 +115,9 @@
     width: 0px;
     height: 0px;
     border-right: 25px solid transparent;
-    border-top: 25px solid #01917b;
-    border-left: 25px solid #01917b;
-    border-bottom: 25px solid #01917b;
+    border-top: 25px solid #02B59A;
+    border-left: 25px solid #02B59A;
+    border-bottom: 25px solid #02B59A;
     border-radius: 25px;
     -webkit-animation: rotate_pacman_half_up 0.5s 0s infinite;
             animation: rotate_pacman_half_up 0.5s 0s infinite;
@@ -127,9 +127,9 @@
     width: 0px;
     height: 0px;
     border-right: 25px solid transparent;
-    border-top: 25px solid #01917b;
-    border-left: 25px solid #01917b;
-    border-bottom: 25px solid #01917b;
+    border-top: 25px solid #02B59A;
+    border-left: 25px solid #02B59A;
+    border-bottom: 25px solid #02B59A;
     border-radius: 25px;
     -webkit-animation: rotate_pacman_half_down 0.5s 0s infinite;
             animation: rotate_pacman_half_down 0.5s 0s infinite;
@@ -140,7 +140,7 @@
   .pacman > div:nth-child(4),
   .pacman > div:nth-child(5),
   .pacman > div:nth-child(6) {
-    background-color: #01917b;
+    background-color: #02B59A;
     width: 15px;
     height: 15px;
     border-radius: 100%;
