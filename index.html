@@ -55,7 +55,6 @@ you cannot:
     <div class="bg-dark p-4" style="text-align: right">
       <p class="text-white khand" style="font-size: 2rem">Workaholic</p>
       <ul class="list-group">
-        <!--
         <li class="list-group-item bg-dark khand">
             <span class="settingsmenu">
               <svg height="16" class="octicon octicon-chevron-down updown" viewBox="0 0 10 16" version="1.1" width="20" aria-hidden="true"><path fill-rule="evenodd" d="M5 11L0 6l1.5-1.5L5 8.25 8.5 4.5 10 6l-5 5z"/></svg>
@@ -75,7 +74,6 @@ you cannot:
         <li class="list-group-item bg-dark khand xxx" data-toggle="collapse" data-target="#navbarToggleExternalContent" onclick="checkAddWtModalValidity();$('#addModal_date').removeClass('fpickr-valid');$('#addModal_date').addClass('fpickr-invalid');$('#addModal_date').val('');$('#addWTModal').modal()">
           Manually Addition<br>勤務手動追加
         </li>
-        -->
         <li class="list-group-item bg-dark khand">
             <span class="others">
               <svg height="16" class="octicon octicon-chevron-down updown2" viewBox="0 0 10 16" version="1.1" width="20" aria-hidden="true"><path fill-rule="evenodd" d="M5 11L0 6l1.5-1.5L5 8.25 8.5 4.5 10 6l-5 5z"/></svg>
@@ -108,8 +106,6 @@ you cannot:
 <div class="container" id="container">
 
 <div id="alert"></div>
-
-<div style="display:none">
 
 <div id="calendar" style="margin-top:2em;margin-bottom:2em">
   <table class="table" style="table-layout: fixed;">
@@ -1039,7 +1035,7 @@ you cannot:
 </div>
 <!-- /SHTFT SUBMIT　MODAL -->
 
-<div>
+
 
 
 
@@ -1107,8 +1103,7 @@ function init() {
   //message('勤務リストの右端の、カレンダーマークを押すと、スマホのカレンダーに勤務のスケジュールを追加できます。', 'success');
 
 	//テーブルに反映。init時はフェードインしたくないのでtrue
-  message('モバイルシフト形式変更のため、封鎖中', 'danger');
-
+  message('新しいシフト形式に対応しました。','success');
 	refresh(true);
 }
 

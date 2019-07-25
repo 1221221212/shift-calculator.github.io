@@ -120,7 +120,12 @@ function interpreteTA(){
 		    //}
         }
 
-        timeMatch = line.match(/(\d+)\s*:\s*(\d+)\s*[-]\s*(\d+)\s*:\s*(\d+)/);
+					var timeMatch = line.match(/(\d+)\s*:\s*(\d+)\s*[-]\s*(\d+)\s*:\s*(\d+)/);
+					console.log(timeMatch);
+					if(line.indexOf('休')!=-1){
+						timeMatch = null;
+					}
+
         // Array<String> matches
         // ["11:30-12:30", "11", "30", "12", "30"]
 
@@ -569,7 +574,7 @@ function refreshTable(oninit) {
 				makeIcs(ics_year,ics_month);
 			}
 		}).appendTo(tr);
-		
+
 		//trをtdもろともtbodyに突っ込むよ
 		tr.appendTo('#shiftList');
 	}
