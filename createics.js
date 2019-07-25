@@ -137,7 +137,7 @@ var ics = function(y,l) {
         $(".loader").fadeOut();
         $("#fadeLayer").fadeOut();
 
-      },5000);
+      },3000);
 
       return calendar;
     },
