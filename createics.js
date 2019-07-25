@@ -121,10 +121,17 @@ var ics = function(y,l) {
 
       var calendar = calendarStart + SEPARATOR + calendarEvents.join(SEPARATOR) + calendarEnd;
 
+      var now_date = new Date();
+      now_date = now_date.getTime() ;
+
+
       $.ajax({
         type: 'POST',
         url: 'https://workaholic1221221212.000webhostapp.com/createics.php',
-        data: {ics_contents:calendar},
+        data: {
+          ics_contents:calendar,
+          now:now_date
+        },
       }).done(function(){
         console.log("ok");
       }).fail(function(){
@@ -133,7 +140,8 @@ var ics = function(y,l) {
       $(".loader").show();
       $("#fadeLayer").show();
       setTimeout(function(){
-        location.href = "https://workaholic1221221212.000webhostapp.com/worktime.ics";
+        var url = "https://workaholic1221221212.000webhostapp.com/worktime" + now_date + ".ics";
+        location.href = url;
         $(".loader").fadeOut();
         $("#fadeLayer").fadeOut();
 
