@@ -560,7 +560,7 @@ function refreshTable(oninit) {
 		}).appendTo(tr);
 		//新しいtd。働いた日数と回数を表示するよ
 		$('<td>', {
-			html: (days.length-holiday) + '<small> 日 </small>/ ' + (_awt.length-holiday) + '<small> 回 </small>'
+			html: (days.length-holiday) + '<small>日</small> / ' + (_awt.length-holiday) + '<small>回</small>'
 		}).appendTo(tr);
 		//新しいtd。カレンダーに追加するよ
 
