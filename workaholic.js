@@ -37,8 +37,8 @@ function makeTimeOptions() {
 		if (attr == 'hour'){
 			//hourを追加
 			$(this).html('');
-			//0時から31時(翌7時)
-			for (var i = 0; i < 32; i++) {
+			//0時から31時(翌8時)
+			for (var i = 0; i < 33; i++) {
 				$('<option>', {
 					text: i < 24 ? parseString(i) : '翌' + parseString(i-24),
 					'value': i,
