@@ -120,8 +120,7 @@ function interpreteTA(){
 		    //}
         }
 
-					var timeMatch = line.match(/(\d+)\s*:\s*(\d+)\s*[-]\s*(\d+)\s*:\s*(\d+)/);
-					console.log(timeMatch);
+					var timeMatch = line.match(/(\d+)\s*:\s*(\d+)\s*[-](?:\(\+\))?\s*(\d+)\s*:\s*(\d+)/);
 					if(line.indexOf('休')!=-1){
 						timeMatch = null;
 					}
