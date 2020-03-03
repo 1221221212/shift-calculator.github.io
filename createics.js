@@ -127,7 +127,7 @@ var ics = function(y,l) {
 
       $.ajax({
         type: 'POST',
-        url: 'https://workaholic1221221212.000webhostapp.com/createics.php',
+        url: 'https://workaholicics.000webhostapp.com/createics.php',
         data: {
           ics_contents:calendar,
           now:now_date
@@ -140,7 +140,7 @@ var ics = function(y,l) {
       $(".loader").show();
       $("#fadeLayer").show();
       setTimeout(function(){
-        var url = "https://workaholic1221221212.000webhostapp.com/worktime" + now_date + ".ics";
+        var url = "https://workaholicics.000webhostapp.com/worktime" + now_date + ".ics";
         location.href = url;
         $(".loader").fadeOut();
         $("#fadeLayer").fadeOut();
